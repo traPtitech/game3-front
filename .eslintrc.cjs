@@ -3,7 +3,7 @@
 /** @type {import('eslint').Linter.Config} */
 const config = {
   root: true,
-  extends: ["@nuxtjs/eslint-config-typescript"],
-};
+  extends: ['@nuxtjs/eslint-config-typescript']
+}
 
-module.exports = config;
+module.exports = config
