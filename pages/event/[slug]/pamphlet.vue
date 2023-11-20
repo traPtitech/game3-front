@@ -1,4 +1,4 @@
-<!-- `/event/:slug/games` -->
+<!-- `/event/:slug/pamphlet` -->
 <script setup lang="ts">
 const route = useRoute()
 const slug = route.params.slug
@@ -7,11 +7,6 @@ const slug = route.params.slug
 
 <template>
   <div>
-    <h2>{{ slug }}ゲーム一覧</h2>
-    <ul>
-      <li>未実装</li>
-      <li>未実装</li>
-      <li>未実装</li>
-    </ul>
+    {{ slug }}のパンフレット
   </div>
 </template>
