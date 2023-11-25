@@ -4,7 +4,7 @@
       <NuxtLink to="/">
         Game<sup>3</sup>
       </NuxtLink>
-      <NuxtLink to="/register">
+      <NuxtLink to="/entry/register">
         作品を応募する
       </NuxtLink>
     </nav>

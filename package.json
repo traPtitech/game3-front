@@ -12,6 +12,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxt/content": "^2.9.0",
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
@@ -21,6 +22,6 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@nuxt/content": "^2.9.0"
+    "@tanstack/vue-query": "^5.8.7"
   }
 }

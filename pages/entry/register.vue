@@ -1,4 +1,4 @@
-<!-- `/register` -->
+<!-- `/entry/register` -->
 <template>
   <div>
     <h2>第n回 GAME<sup>3</sup>展示作品登録</h2>
