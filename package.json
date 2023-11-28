@@ -16,12 +16,15 @@
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@unocss/eslint-config": "^0.57.7",
+    "@unocss/nuxt": "^0.57.7",
     "eslint": "^8.54.0",
     "nuxt": "^3.8.1",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^5.8.7"
+    "@tanstack/vue-query": "^5.8.7",
+    "@unocss/reset": "^0.57.7"
   }
 }
