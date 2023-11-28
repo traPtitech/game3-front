@@ -27,14 +27,14 @@ export type User = {
   role: 'admin' | 'user'; // 変わるかも
 };
 
-const mockEventsData: Event[] = new Array(10).fill(null).map((_, i) => ({
+const mockEventsData: Event[] = new Array(20).fill(null).map((_, i) => ({
   id: `${i + 1}th`,
   startAt: new Date(),
   endAt: new Date(),
   title: `第${i + 1}回`
 }))
 
-const mockGamesData: Game[] = new Array(100).fill(null).map((_, i) => ({
+const mockGamesData: Game[] = new Array(200).fill(null).map((_, i) => ({
   id: i.toString(),
   eventId: `${(i % mockEventsData.length).toString()}th`,
   creator: `creator${i + 1}`,
