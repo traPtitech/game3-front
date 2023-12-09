@@ -9,7 +9,8 @@
     "lint:fix": "eslint --ignore-path .gitignore --fix .",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "gen:api-client": "docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i /local/swagger.yaml -g typescript-fetch -o /local/lib/api"
   },
   "devDependencies": {
     "@nuxt/content": "^2.9.0",
