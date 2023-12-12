@@ -10,7 +10,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "gen:api-client": "docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i /local/swagger.yaml -g typescript-fetch -o /local/lib/api"
+    "gen:api-client": "docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i https://raw.githubusercontent.com/traPtitech/game3-back/main/docs/openapi.yaml -g typescript-fetch -o /local/lib/api"
   },
   "devDependencies": {
     "@nuxt/content": "^2.9.0",
