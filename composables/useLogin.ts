@@ -1,4 +1,4 @@
-import api from '~/lib/api'
+import mock from '~/lib/mock'
 import { useMeStore } from '~/store/me'
 
 export const useLogin = () => {
@@ -7,7 +7,7 @@ export const useLogin = () => {
 
   const login = async () => {
     try {
-      await api.login()
+      await mock.login()
       await fetchMe()
       redirect()
     } catch (e) {

@@ -23,8 +23,8 @@ onServerPrefetch(async () => {
   <div v-else-if="data">
     <h2>{{ data.title }}の編集</h2>
     <div>
-      <div>開始日：{{ data.startAt.toLocaleString("ja-JP") }}</div>
-      <div>終了日：{{ data.endAt.toLocaleString("ja-JP") }}</div>
+      <div>開始日：{{ data.gameSubmissionPeriodStart.toLocaleString("ja-JP") }}</div>
+      <div>終了日：{{ data.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}</div>
     </div>
   </div>
 </template>

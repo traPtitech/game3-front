@@ -1,4 +1,5 @@
-import api, { type User } from '~/lib/api'
+import mock from '~/lib/mock'
+import { type User } from '~/lib/api'
 
 type Me = {
   user: User | undefined
@@ -9,7 +10,7 @@ export const useMeStore = () => {
 
   const fetchMe = async () => {
     try {
-      const me = await api.getMe()
+      const me = await mock.getMe()
       meState.value = {
         user: me
       }
@@ -26,7 +27,7 @@ export const useMeStore = () => {
     meState.value = {
       user: undefined
     }
-    await api.logout()
+    await mock.logout()
   }
 
   return {

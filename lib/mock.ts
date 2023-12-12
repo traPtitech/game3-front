@@ -1,43 +1,17 @@
-type Event = {
-  id: string; // = slug
-  startAt: Date;
-  endAt: Date;
-  title: string; // `第${number}回`
-};
-
-type Game = {
-  id: string; // uuid
-  eventId: Event['id'];
-  creator: string;
-  creatorId: string; // discord user id
-  organization: string;
-  twitterId: string;
-  websiteUrl: string;
-  title: string;
-  genre: string;
-  developmentEnvironment: string;
-  description: string;
-  term: string;
-};
-
-export type User = {
-  discordId: string;
-  name: string;
-  iconUrl: string;
-  role: 'admin' | 'user'; // 変わるかも
-};
+import type { Event, Game, GetEventGamesRequest, GetEventRequest, GetGameRequest, User } from './api'
 
 const mockEventsData: Event[] = new Array(20).fill(null).map((_, i) => ({
   id: `${i + 1}th`,
-  startAt: new Date(),
-  endAt: new Date(),
+  slug: `slug${i + 1}`,
+  gameSubmissionPeriodStart: new Date(),
+  gameSubmissionPeriodEnd: new Date(),
   title: `第${i + 1}回`
 }))
 
 const mockGamesData: Game[] = new Array(200).fill(null).map((_, i) => ({
   id: i.toString(),
   eventId: `${(i % mockEventsData.length).toString()}th`,
-  creator: `creator${i + 1}`,
+  creatorName: `creator${i + 1}`,
   creatorId: `creatorId${i + 1}`,
   organization: `organization${i + 1}`,
   twitterId: `twitter${i + 1}`,
@@ -49,39 +23,16 @@ const mockGamesData: Game[] = new Array(200).fill(null).map((_, i) => ({
   term: `term${i + 1}`
 }))
 
-// Event
-
-type GetEventsResponse = {
-  events: {
-    id: Event['id'];
-    title: Event['title'];
-    startAt: Event['startAt'];
-    endAt: Event['endAt'];
-  }[];
-};
-
-const getEvents = (): Promise<GetEventsResponse> => {
+// Events
+const getEvents = (): Promise<Array<Event>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({
-        events: mockEventsData.map(event => ({
-          id: event.id,
-          title: event.title,
-          startAt: event.startAt,
-          endAt: event.endAt
-        }))
-      })
+      resolve(mockEventsData)
     }, 1000)
   })
 }
 
-type GetEventRequest = {
-  eventId: Event['id'];
-}
-
-type GetEventResponse = Event;
-
-const getEvent = (req: GetEventRequest): Promise<GetEventResponse> => {
+const getEvent = (req: GetEventRequest): Promise<Event> => {
   const event = mockEventsData.find(event => event.id === req.eventId)
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -94,9 +45,7 @@ const getEvent = (req: GetEventRequest): Promise<GetEventResponse> => {
   })
 }
 
-type GetCurrentEventResponse = Event | null;
-
-const getCurrentEvent = (): Promise<GetCurrentEventResponse> => {
+const getCurrentEvent = (): Promise<Event> => {
   const event = mockEventsData[0]
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -107,43 +56,14 @@ const getCurrentEvent = (): Promise<GetCurrentEventResponse> => {
 
 // Game
 
-type GetGamesRequest = {
-  eventId: Event['id'];
-};
-
-type getGamesResponse = {
-  eventId: Event['id'];
-  games: {
-    gameId: Game['id'];
-    title: Game['title'];
-    creatorName: Game['creator'];
-    description: Game['description'];
-    term: Game['term'];
-  }[];
-};
-
-const getGames = (req: GetGamesRequest): Promise<getGamesResponse> => {
+const getGames = (req: GetEventGamesRequest): Promise<Array<Game>> => {
   const games = mockGamesData
     .filter(game => game.eventId === req.eventId)
-    .map(game => ({
-      gameId: game.id,
-      title: game.title,
-      creatorName: game.creator,
-      description: game.description,
-      term: game.term
-    }))
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({
-        eventId: req.eventId,
-        games
-      })
+      resolve(games)
     }, 1000)
   })
-}
-
-type GetGameRequest = {
-  gameId: Game['id'];
 }
 
 const getGame = (req: GetGameRequest): Promise<Game> => {
@@ -163,10 +83,12 @@ const getGame = (req: GetGameRequest): Promise<Game> => {
 
 const getMe = (): Promise<User> => {
   const user: User = {
-    discordId: 'discordId',
-    name: 'name',
-    iconUrl: 'iconUrl',
-    role: 'user'
+    user: {
+      userId: 'discordId',
+      username: 'name',
+      profileImageUrl: 'iconUrl',
+      role: 'user'
+    }
   }
   return new Promise((resolve) => {
     setTimeout(() => {

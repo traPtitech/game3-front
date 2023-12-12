@@ -1,30 +1,30 @@
 import { useQuery } from '@tanstack/vue-query'
-import api from '~/lib/api'
+import mock from '~/lib/mock'
 
 export const useEventsQuery = () => useQuery({
-  queryFn: api.getEvents
+  queryFn: mock.getEvents
 })
 
 export const useEventQuery = (eventId: string) => {
   return useQuery({
     queryKey: ['events', eventId],
-    queryFn: () => api.getEvent({ eventId })
+    queryFn: () => mock.getEvent({ eventId })
   })
 }
 
 export const useCurrentEventQuery = () => useQuery({
   queryKey: ['currentEvent'],
-  queryFn: api.getCurrentEvent
+  queryFn: mock.getCurrentEvent
 })
 
 export const useGamesQuery = (eventId: string) => useQuery({
   queryKey: ['games', eventId],
-  queryFn: () => api.getGames({
+  queryFn: () => mock.getGames({
     eventId
   })
 })
 
 export const useGameQuery = (gameId: string) => useQuery({
   queryKey: ['games', gameId],
-  queryFn: () => api.getGame({ gameId })
+  queryFn: () => mock.getGame({ gameId })
 })

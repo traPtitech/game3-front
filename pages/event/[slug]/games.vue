@@ -23,8 +23,8 @@ onServerPrefetch(async () => {
   <div v-else-if="data">
     <h2>{{ slug[0] }}ゲーム一覧</h2>
     <ul>
-      <li v-for="game in data?.games" :key="game.gameId">
-        <nuxt-link :to="`/entry/${game.gameId}`">
+      <li v-for="game in data" :key="game.id">
+        <nuxt-link :to="`/entry/${game.id}`">
           <div>
             <div>{{ game.title }}</div>
             <div>{{ game.creatorName }}</div>

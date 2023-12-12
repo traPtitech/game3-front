@@ -39,7 +39,7 @@ onServerPrefetch(async () => {
     </div>
     <div>
       <div>展示者名</div>
-      <div>{{ data?.creator }}</div>
+      <div>{{ data?.creatorName }}</div>
     </div>
     <div v-if="data?.organization">
       <div>所属</div>
