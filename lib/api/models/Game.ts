@@ -24,7 +24,7 @@ export interface Game {
      * @type {string}
      * @memberof Game
      */
-    id?: string;
+    id: string;
     /**
      * ブース展示者名
      * @type {string}
@@ -54,7 +54,7 @@ export interface Game {
      * @type {string}
      * @memberof Game
      */
-    title?: string;
+    title: string;
     /**
      * 展示するゲームのジャンル
      * @type {string}
@@ -98,7 +98,9 @@ export interface Game {
  */
 export function instanceOfGame(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "id" in value;
     isInstance = isInstance && "creatorName" in value;
+    isInstance = isInstance && "title" in value;
 
     return isInstance;
 }
@@ -113,12 +115,12 @@ export function GameFromJSONTyped(json: any, ignoreDiscriminator: boolean): Game
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'id': json['id'],
         'creatorName': json['creatorName'],
         'organization': !exists(json, 'organization') ? undefined : json['organization'],
         'twitterId': !exists(json, 'twitterId') ? undefined : json['twitterId'],
         'websiteUrl': !exists(json, 'websiteUrl') ? undefined : json['websiteUrl'],
-        'title': !exists(json, 'title') ? undefined : json['title'],
+        'title': json['title'],
         'genre': !exists(json, 'genre') ? undefined : json['genre'],
         'developmentEnvironment': !exists(json, 'developmentEnvironment') ? undefined : json['developmentEnvironment'],
         'description': !exists(json, 'description') ? undefined : json['description'],

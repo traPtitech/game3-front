@@ -11,8 +11,6 @@ models/Game.ts
 models/GetMeGames200Response.ts
 models/PostContactsRequest.ts
 models/PostEventRequest.ts
-models/PostGameRequest.ts
 models/User.ts
-models/UserUser.ts
 models/index.ts
 runtime.ts

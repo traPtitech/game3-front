@@ -16,16 +16,10 @@
 import * as runtime from '../runtime';
 import type {
   Game,
-  GameImageRequest,
-  PostGameRequest,
 } from '../models/index';
 import {
     GameFromJSON,
     GameToJSON,
-    GameImageRequestFromJSON,
-    GameImageRequestToJSON,
-    PostGameRequestFromJSON,
-    PostGameRequestToJSON,
 } from '../models/index';
 
 export interface GetEventGamesRequest {
@@ -42,11 +36,27 @@ export interface GetGameImageRequest {
 
 export interface PatchGameRequest {
     gameId: string;
-    game: Game;
+    creatorName: string;
+    title: string;
+    organization?: string;
+    twitterId?: string;
+    websiteUrl?: string;
+    genre?: string;
+    developmentEnvironment?: string;
+    description?: string;
+    image?: Blob;
 }
 
-export interface PostGameOperationRequest {
-    postGameRequest: PostGameRequest;
+export interface PostGameRequest {
+    creatorName: string;
+    title: string;
+    organization?: string;
+    twitterId?: string;
+    websiteUrl?: string;
+    genre?: string;
+    developmentEnvironment?: string;
+    description?: string;
+    image?: Blob;
 }
 
 /**
@@ -152,22 +162,76 @@ export class GamesApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('gameId','Required parameter requestParameters.gameId was null or undefined when calling patchGame.');
         }
 
-        if (requestParameters.game === null || requestParameters.game === undefined) {
-            throw new runtime.RequiredError('game','Required parameter requestParameters.game was null or undefined when calling patchGame.');
+        if (requestParameters.creatorName === null || requestParameters.creatorName === undefined) {
+            throw new runtime.RequiredError('creatorName','Required parameter requestParameters.creatorName was null or undefined when calling patchGame.');
+        }
+
+        if (requestParameters.title === null || requestParameters.title === undefined) {
+            throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling patchGame.');
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters.creatorName !== undefined) {
+            formParams.append('creatorName', requestParameters.creatorName as any);
+        }
+
+        if (requestParameters.organization !== undefined) {
+            formParams.append('organization', requestParameters.organization as any);
+        }
+
+        if (requestParameters.twitterId !== undefined) {
+            formParams.append('twitterId', requestParameters.twitterId as any);
+        }
+
+        if (requestParameters.websiteUrl !== undefined) {
+            formParams.append('websiteUrl', requestParameters.websiteUrl as any);
+        }
+
+        if (requestParameters.title !== undefined) {
+            formParams.append('title', requestParameters.title as any);
+        }
+
+        if (requestParameters.genre !== undefined) {
+            formParams.append('genre', requestParameters.genre as any);
+        }
+
+        if (requestParameters.developmentEnvironment !== undefined) {
+            formParams.append('developmentEnvironment', requestParameters.developmentEnvironment as any);
+        }
+
+        if (requestParameters.description !== undefined) {
+            formParams.append('description', requestParameters.description as any);
+        }
+
+        if (requestParameters.image !== undefined) {
+            formParams.append('image', requestParameters.image as any);
+        }
 
         const response = await this.request({
             path: `/games/{gameId}`.replace(`{${"gameId"}}`, encodeURIComponent(String(requestParameters.gameId))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: GameToJSON(requestParameters.game),
+            body: formParams,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -183,23 +247,77 @@ export class GamesApi extends runtime.BaseAPI {
     /**
      * ゲームを登録
      */
-    async postGameRaw(requestParameters: PostGameOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Game>> {
-        if (requestParameters.postGameRequest === null || requestParameters.postGameRequest === undefined) {
-            throw new runtime.RequiredError('postGameRequest','Required parameter requestParameters.postGameRequest was null or undefined when calling postGame.');
+    async postGameRaw(requestParameters: PostGameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Game>> {
+        if (requestParameters.creatorName === null || requestParameters.creatorName === undefined) {
+            throw new runtime.RequiredError('creatorName','Required parameter requestParameters.creatorName was null or undefined when calling postGame.');
+        }
+
+        if (requestParameters.title === null || requestParameters.title === undefined) {
+            throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling postGame.');
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters.creatorName !== undefined) {
+            formParams.append('creatorName', requestParameters.creatorName as any);
+        }
+
+        if (requestParameters.organization !== undefined) {
+            formParams.append('organization', requestParameters.organization as any);
+        }
+
+        if (requestParameters.twitterId !== undefined) {
+            formParams.append('twitterId', requestParameters.twitterId as any);
+        }
+
+        if (requestParameters.websiteUrl !== undefined) {
+            formParams.append('websiteUrl', requestParameters.websiteUrl as any);
+        }
+
+        if (requestParameters.title !== undefined) {
+            formParams.append('title', requestParameters.title as any);
+        }
+
+        if (requestParameters.genre !== undefined) {
+            formParams.append('genre', requestParameters.genre as any);
+        }
+
+        if (requestParameters.developmentEnvironment !== undefined) {
+            formParams.append('developmentEnvironment', requestParameters.developmentEnvironment as any);
+        }
+
+        if (requestParameters.description !== undefined) {
+            formParams.append('description', requestParameters.description as any);
+        }
+
+        if (requestParameters.image !== undefined) {
+            formParams.append('image', requestParameters.image as any);
+        }
 
         const response = await this.request({
             path: `/games`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PostGameRequestToJSON(requestParameters.postGameRequest),
+            body: formParams,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => GameFromJSON(jsonValue));
@@ -208,7 +326,7 @@ export class GamesApi extends runtime.BaseAPI {
     /**
      * ゲームを登録
      */
-    async postGame(requestParameters: PostGameOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Game> {
+    async postGame(requestParameters: PostGameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Game> {
         const response = await this.postGameRaw(requestParameters, initOverrides);
         return await response.value();
     }

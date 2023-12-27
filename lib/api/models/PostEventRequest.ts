@@ -20,7 +20,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface PostEventRequest {
     /**
-     * URL
+     * slug (URL内で使用, unique)
      * @type {string}
      * @memberof PostEventRequest
      */
@@ -36,13 +36,19 @@ export interface PostEventRequest {
      * @type {Date}
      * @memberof PostEventRequest
      */
-    gameSubmissionPeriodStart?: Date;
+    gameSubmissionPeriodStart: Date;
     /**
      * ゲーム展示の募集期間
      * @type {Date}
      * @memberof PostEventRequest
      */
-    gameSubmissionPeriodEnd?: Date;
+    gameSubmissionPeriodEnd: Date;
+    /**
+     * パンフレット用画像
+     * @type {Blob}
+     * @memberof PostEventRequest
+     */
+    image?: Blob;
 }
 
 /**
@@ -52,6 +58,8 @@ export function instanceOfPostEventRequest(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "slug" in value;
     isInstance = isInstance && "title" in value;
+    isInstance = isInstance && "gameSubmissionPeriodStart" in value;
+    isInstance = isInstance && "gameSubmissionPeriodEnd" in value;
 
     return isInstance;
 }
@@ -68,8 +76,9 @@ export function PostEventRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
         
         'slug': json['slug'],
         'title': json['title'],
-        'gameSubmissionPeriodStart': !exists(json, 'gameSubmissionPeriodStart') ? undefined : (new Date(json['gameSubmissionPeriodStart'])),
-        'gameSubmissionPeriodEnd': !exists(json, 'gameSubmissionPeriodEnd') ? undefined : (new Date(json['gameSubmissionPeriodEnd'])),
+        'gameSubmissionPeriodStart': (new Date(json['gameSubmissionPeriodStart'])),
+        'gameSubmissionPeriodEnd': (new Date(json['gameSubmissionPeriodEnd'])),
+        'image': !exists(json, 'image') ? undefined : json['image'],
     };
 }
 
@@ -84,8 +93,9 @@ export function PostEventRequestToJSON(value?: PostEventRequest | null): any {
         
         'slug': value.slug,
         'title': value.title,
-        'gameSubmissionPeriodStart': value.gameSubmissionPeriodStart === undefined ? undefined : (value.gameSubmissionPeriodStart.toISOString()),
-        'gameSubmissionPeriodEnd': value.gameSubmissionPeriodEnd === undefined ? undefined : (value.gameSubmissionPeriodEnd.toISOString()),
+        'gameSubmissionPeriodStart': (value.gameSubmissionPeriodStart.toISOString()),
+        'gameSubmissionPeriodEnd': (value.gameSubmissionPeriodEnd.toISOString()),
+        'image': value.image,
     };
 }
 

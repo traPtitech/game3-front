@@ -16,15 +16,12 @@
 import * as runtime from '../runtime';
 import type {
   Event,
-  EventImageRequest,
   Game,
   PostEventRequest,
 } from '../models/index';
 import {
     EventFromJSON,
     EventToJSON,
-    EventImageRequestFromJSON,
-    EventImageRequestToJSON,
     GameFromJSON,
     GameToJSON,
     PostEventRequestFromJSON,
@@ -49,11 +46,15 @@ export interface GetEventImageRequest {
 
 export interface PatchEventRequest {
     eventId: string;
-    event: Event;
+    body: PostEventRequest;
 }
 
-export interface PostEventOperationRequest {
-    postEventRequest: PostEventRequest;
+export interface PostEventRequest {
+    slug: string;
+    title: string;
+    gameSubmissionPeriodStart: Date;
+    gameSubmissionPeriodEnd: Date;
+    image?: Blob;
 }
 
 /**
@@ -245,8 +246,8 @@ export class EventsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling patchEvent.');
         }
 
-        if (requestParameters.event === null || requestParameters.event === undefined) {
-            throw new runtime.RequiredError('event','Required parameter requestParameters.event was null or undefined when calling patchEvent.');
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling patchEvent.');
         }
 
         const queryParameters: any = {};
@@ -260,7 +261,7 @@ export class EventsApi extends runtime.BaseAPI {
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: EventToJSON(requestParameters.event),
+            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -276,23 +277,69 @@ export class EventsApi extends runtime.BaseAPI {
     /**
      * イベントを登録
      */
-    async postEventRaw(requestParameters: PostEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>> {
-        if (requestParameters.postEventRequest === null || requestParameters.postEventRequest === undefined) {
-            throw new runtime.RequiredError('postEventRequest','Required parameter requestParameters.postEventRequest was null or undefined when calling postEvent.');
+    async postEventRaw(requestParameters: PostEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>> {
+        if (requestParameters.slug === null || requestParameters.slug === undefined) {
+            throw new runtime.RequiredError('slug','Required parameter requestParameters.slug was null or undefined when calling postEvent.');
+        }
+
+        if (requestParameters.title === null || requestParameters.title === undefined) {
+            throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling postEvent.');
+        }
+
+        if (requestParameters.gameSubmissionPeriodStart === null || requestParameters.gameSubmissionPeriodStart === undefined) {
+            throw new runtime.RequiredError('gameSubmissionPeriodStart','Required parameter requestParameters.gameSubmissionPeriodStart was null or undefined when calling postEvent.');
+        }
+
+        if (requestParameters.gameSubmissionPeriodEnd === null || requestParameters.gameSubmissionPeriodEnd === undefined) {
+            throw new runtime.RequiredError('gameSubmissionPeriodEnd','Required parameter requestParameters.gameSubmissionPeriodEnd was null or undefined when calling postEvent.');
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters.slug !== undefined) {
+            formParams.append('slug', requestParameters.slug as any);
+        }
+
+        if (requestParameters.title !== undefined) {
+            formParams.append('title', requestParameters.title as any);
+        }
+
+        if (requestParameters.gameSubmissionPeriodStart !== undefined) {
+            formParams.append('gameSubmissionPeriodStart', requestParameters.gameSubmissionPeriodStart as any);
+        }
+
+        if (requestParameters.gameSubmissionPeriodEnd !== undefined) {
+            formParams.append('gameSubmissionPeriodEnd', requestParameters.gameSubmissionPeriodEnd as any);
+        }
+
+        if (requestParameters.image !== undefined) {
+            formParams.append('image', requestParameters.image as any);
+        }
 
         const response = await this.request({
             path: `/events`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PostEventRequestToJSON(requestParameters.postEventRequest),
+            body: formParams,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => EventFromJSON(jsonValue));
@@ -301,7 +348,7 @@ export class EventsApi extends runtime.BaseAPI {
     /**
      * イベントを登録
      */
-    async postEvent(requestParameters: PostEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event> {
+    async postEvent(requestParameters: PostEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event> {
         const response = await this.postEventRaw(requestParameters, initOverrides);
         return await response.value();
     }

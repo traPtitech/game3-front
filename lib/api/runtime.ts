@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://raw.githubusercontent.com/traPtitech/game3-back/main/docs".replace(/\/+$/, "");
+export const BASE_PATH = "http://localhost:8080/api".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path

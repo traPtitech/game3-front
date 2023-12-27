@@ -13,13 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { UserUser } from './UserUser';
-import {
-    UserUserFromJSON,
-    UserUserFromJSONTyped,
-    UserUserToJSON,
-} from './UserUser';
-
 /**
  * 
  * @export
@@ -28,11 +21,40 @@ import {
 export interface User {
     /**
      * 
-     * @type {UserUser}
+     * @type {string}
      * @memberof User
      */
-    user?: UserUser;
+    userId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    username?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    profileImageUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    role?: UserRoleEnum;
 }
+
+
+/**
+ * @export
+ */
+export const UserRoleEnum = {
+    Admin: 'admin',
+    User: 'user'
+} as const;
+export type UserRoleEnum = typeof UserRoleEnum[keyof typeof UserRoleEnum];
+
 
 /**
  * Check if a given object implements the User interface.
@@ -53,7 +75,10 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
     }
     return {
         
-        'user': !exists(json, 'user') ? undefined : UserUserFromJSON(json['user']),
+        'userId': !exists(json, 'userId') ? undefined : json['userId'],
+        'username': !exists(json, 'username') ? undefined : json['username'],
+        'profileImageUrl': !exists(json, 'profileImageUrl') ? undefined : json['profileImageUrl'],
+        'role': !exists(json, 'role') ? undefined : json['role'],
     };
 }
 
@@ -66,7 +91,10 @@ export function UserToJSON(value?: User | null): any {
     }
     return {
         
-        'user': UserUserToJSON(value.user),
+        'userId': value.userId,
+        'username': value.username,
+        'profileImageUrl': value.profileImageUrl,
+        'role': value.role,
     };
 }
 
