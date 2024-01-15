@@ -1,6 +1,6 @@
-.openapi-generator-ignore
 apis/AuthApi.ts
 apis/ContactsApi.ts
+apis/DefaultApi.ts
 apis/EventsApi.ts
 apis/GamesApi.ts
 apis/UsersApi.ts
@@ -9,6 +9,7 @@ index.ts
 models/Event.ts
 models/Game.ts
 models/GetMeGames200Response.ts
+models/LoginRequest.ts
 models/PostContactsRequest.ts
 models/PostEventRequest.ts
 models/User.ts

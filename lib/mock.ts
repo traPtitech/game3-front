@@ -83,12 +83,10 @@ const getGame = (req: GetGameRequest): Promise<Game> => {
 
 const getMe = (): Promise<User> => {
   const user: User = {
-    user: {
-      userId: 'discordId',
-      username: 'name',
-      profileImageUrl: 'iconUrl',
-      role: 'user'
-    }
+    userId: 'discordId',
+    username: 'name',
+    profileImageUrl: 'iconUrl',
+    role: 'user'
   }
   return new Promise((resolve) => {
     setTimeout(() => {

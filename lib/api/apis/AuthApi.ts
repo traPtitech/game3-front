@@ -14,6 +14,21 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  LoginRequest,
+} from '../models/index';
+import {
+    LoginRequestFromJSON,
+    LoginRequestToJSON,
+} from '../models/index';
+
+export interface LoginOperationRequest {
+    loginRequest: LoginRequest;
+}
+
+export interface OauthCallbackRequest {
+    code: string;
+}
 
 /**
  * 
@@ -21,30 +36,37 @@ import * as runtime from '../runtime';
 export class AuthApi extends runtime.BaseAPI {
 
     /**
-     * Discord OAuthを使ったログイン。
+     * Discord OAuthを使ったログイン。ログイン後にリダイレクトするURLを指定。
      * ログイン
      */
-    async loginRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async loginRaw(requestParameters: LoginOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.loginRequest === null || requestParameters.loginRequest === undefined) {
+            throw new runtime.RequiredError('loginRequest','Required parameter requestParameters.loginRequest was null or undefined when calling login.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
             path: `/auth/login`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: LoginRequestToJSON(requestParameters.loginRequest),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Discord OAuthを使ったログイン。
+     * Discord OAuthを使ったログイン。ログイン後にリダイレクトするURLを指定。
      * ログイン
      */
-    async login(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.loginRaw(initOverrides);
+    async login(requestParameters: LoginOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.loginRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -70,6 +92,39 @@ export class AuthApi extends runtime.BaseAPI {
      */
     async logout(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.logoutRaw(initOverrides);
+    }
+
+    /**
+     * OAuth認証コールバック
+     */
+    async oauthCallbackRaw(requestParameters: OauthCallbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.code === null || requestParameters.code === undefined) {
+            throw new runtime.RequiredError('code','Required parameter requestParameters.code was null or undefined when calling oauthCallback.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.code !== undefined) {
+            queryParameters['code'] = requestParameters.code;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/auth/callback`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * OAuth認証コールバック
+     */
+    async oauthCallback(requestParameters: OauthCallbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.oauthCallbackRaw(requestParameters, initOverrides);
     }
 
 }
