@@ -5,6 +5,7 @@ import {
   presetUno,
   presetAttributify
 } from 'unocss'
+import transformerVariantGroup from '@unocss/transformer-variant-group'
 
 export default defineConfig({
   presets: [
@@ -26,12 +27,16 @@ export default defineConfig({
       }
     },
     fontSize: {
-      body: ['1rem']
+      body: ['1rem'],
+      button: ['2rem']
     }
   },
   rules: [
     [/^text-shadow-(\d+)$/, ([, d]) => ({
       'text-shadow': `0 ${d}px 0px #000000`
     })]
+  ],
+  transformers: [
+    transformerVariantGroup()
   ]
 })
