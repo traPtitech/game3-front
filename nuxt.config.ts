@@ -2,7 +2,12 @@
 export default defineNuxtConfig({
   css: ['@unocss/reset/tailwind.css', '~/assets/css/index.css'],
   modules: ['@nuxt/content', '@unocss/nuxt', '@nuxtjs/google-fonts'],
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+    timeline: {
+      enabled: true
+    }
+  },
   googleFonts: {
     families: {
       'Noto Sans JP': {
