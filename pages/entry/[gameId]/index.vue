@@ -5,53 +5,59 @@ import { getParamsArray } from '~/lib/url'
 const route = useRoute()
 const gameId = getParamsArray(route.params.gameId)
 if (!gameId) {
-  throw new Error('gameId is not found')
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'ゲームが見つかりませんでした'
+  })
 }
 
-// TODO: not found error handling
-const { data, status, suspense } = useGameQuery(gameId[0])
+const { data, error, suspense } = useGameQuery(gameId[0])
 onServerPrefetch(async () => {
   await suspense()
 })
+
+if (error) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: error.value?.message
+  })
+}
 </script>
 
 <template>
-  <div v-if="status === 'pending'">
-    <div>読み込み中</div>
-  </div>
-  <div v-else-if="data">
-    <h2>{{ data?.title }}</h2>
+  <div v-if="data">
+    <h2>{{ data.title }}</h2>
     <div>
       <div>タイトル</div>
-      <div>{{ data?.title }}</div>
+      <div>{{ data.title }}</div>
     </div>
     <div>
       <div>ジャンル</div>
-      <div>{{ data?.genre }}</div>
+      <div>{{ data.genre }}</div>
     </div>
     <div>
       <div>説明</div>
-      <div>{{ data?.description }}</div>
+      <div>{{ data.description }}</div>
     </div>
     <div>
       <div>開発環境</div>
-      <div>{{ data?.developmentEnvironment }}</div>
+      <div>{{ data.developmentEnvironment }}</div>
     </div>
     <div>
       <div>展示者名</div>
-      <div>{{ data?.creatorName }}</div>
+      <div>{{ data.creatorName }}</div>
     </div>
-    <div v-if="data?.organization">
+    <div v-if="data.organization">
       <div>所属</div>
       <div>{{ data.organization }}</div>
     </div>
-    <div v-if="data?.twitterId">
+    <div v-if="data.twitterId">
       <div>Twitter (X) ID</div>
       <div>
-        {{ data?.twitterId }}
+        {{ data.twitterId }}
       </div>
     </div>
-    <div v-if="data?.websiteUrl">
+    <div v-if="data.websiteUrl">
       <div>Webサイト</div>
       <div>
         <a :href="data.websiteUrl">
