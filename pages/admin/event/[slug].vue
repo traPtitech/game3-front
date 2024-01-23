@@ -1,26 +1,31 @@
-<!-- `/event/:slug/edit` -->
+<!-- `/admin/event/:slug/edit` -->
 <script setup lang="ts">
 import { getParamsArray } from '~/lib/url'
 
 const route = useRoute()
 const slug = getParamsArray(route.params.slug)
 if (!slug) {
-  throw new Error('slug is not found')
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'イベントが見つかりませんでした'
+  })
 }
 
-// TODO: not found error handling
-const { data, status, suspense } = useEventQuery(slug[0])
-
+const { data, error, suspense } = useEventQuery(slug[0])
 onServerPrefetch(async () => {
   await suspense()
 })
+
+if (error) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: error.value?.message
+  })
+}
 </script>
 
 <template>
-  <div v-if="status === 'pending'">
-    <div>読み込み中</div>
-  </div>
-  <div v-else-if="data">
+  <div v-if="data">
     <h2>{{ data.title }}の編集</h2>
     <div>
       <div>開始日：{{ data.gameSubmissionPeriodStart.toLocaleString("ja-JP") }}</div>
