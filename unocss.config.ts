@@ -28,7 +28,7 @@ export default defineConfig({
     },
     fontSize: {
       body: ['1rem'],
-      button: ['2rem']
+      button: ['1.25rem', '1.5']
     }
   },
   rules: [
