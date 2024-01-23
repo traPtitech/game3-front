@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.8.7",
-    "@unocss/reset": "^0.57.7"
+    "@unocss/reset": "^0.57.7",
+    "radix-vue": "^1.2.2"
   }
 }
