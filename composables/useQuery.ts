@@ -1,30 +1,37 @@
 import { useQuery } from '@tanstack/vue-query'
-import mock from '~/lib/mock'
+import { Configuration, EventsApi, GamesApi } from '~/lib/api'
+
+const apiConfig = new Configuration({
+  basePath: '/api'
+})
+
+const eventsApi = new EventsApi(apiConfig)
 
 export const useEventsQuery = () => useQuery({
-  queryFn: mock.getEvents
+  queryKey: ['events'],
+  queryFn: () => eventsApi.getEvents()
 })
 
 export const useEventQuery = (eventId: string) => {
   return useQuery({
     queryKey: ['events', eventId],
-    queryFn: () => mock.getEvent({ eventId })
+    queryFn: () => eventsApi.getEvent({ eventId })
   })
 }
 
 export const useCurrentEventQuery = () => useQuery({
   queryKey: ['currentEvent'],
-  queryFn: mock.getCurrentEvent
+  queryFn: () => eventsApi.getCurrentEvent()
 })
 
-export const useGamesQuery = (eventId: string) => useQuery({
-  queryKey: ['games', eventId],
-  queryFn: () => mock.getGames({
-    eventId
-  })
+export const useEventGamesQuery = (eventId: string) => useQuery({
+  queryKey: ['events', eventId, 'games'],
+  queryFn: () => eventsApi.getEventGames({ eventId })
 })
+
+const gamesApi = new GamesApi(apiConfig)
 
 export const useGameQuery = (gameId: string) => useQuery({
   queryKey: ['games', gameId],
-  queryFn: () => mock.getGame({ gameId })
+  queryFn: () => gamesApi.getGame({ gameId })
 })
