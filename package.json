@@ -11,7 +11,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "gen:api-client": "docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i https://raw.githubusercontent.com/traPtitech/game3-back/main/docs/openapi.yaml -g typescript-fetch -o /local/lib/api"
+    "gen:api-client": "rimraf -I lib/api && docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i https://raw.githubusercontent.com/traPtitech/game3-back/main/docs/openapi.yaml -g typescript-fetch -o /local/lib/api"
   },
   "devDependencies": {
     "@nuxt/content": "^2.9.0",
@@ -24,6 +24,7 @@
     "@unocss/transformer-variant-group": "^0.58.3",
     "eslint": "^8.54.0",
     "nuxt": "^3.8.1",
+    "rimraf": "^5.0.5",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
@@ -31,5 +32,6 @@
     "@tanstack/vue-query": "^5.8.7",
     "@unocss/reset": "^0.57.7",
     "radix-vue": "^1.2.2"
-  }
+  },
+  "packageManager": "pnpm@8.14.3+sha256.2d0363bb6c314daa67087ef07743eea1ba2e2d360c835e8fec6b5575e4ed9484"
 }
