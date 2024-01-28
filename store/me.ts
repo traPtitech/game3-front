@@ -1,4 +1,4 @@
-import mock from '~/lib/mock'
+import { useGetMeQuery, useMutateLogout } from '~/composables/useQuery'
 import { type User } from '~/lib/api'
 
 type Me = {
@@ -8,13 +8,15 @@ type Me = {
 export const useMeStore = () => {
   const meState = useState<Me>('me')
 
-  const fetchMe = async () => {
+  const { mutateAsync: mutateLogout } = useMutateLogout()
+
+  const fetchMe = () => {
     try {
-      const me = await mock.getMe()
+      const { data } = useGetMeQuery()
       meState.value = {
-        user: me
+        user: data.value
       }
-      return me
+      return data.value
     } catch (e) {
       meState.value = {
         user: undefined
@@ -27,7 +29,7 @@ export const useMeStore = () => {
     meState.value = {
       user: undefined
     }
-    await mock.logout()
+    await mutateLogout()
   }
 
   return {

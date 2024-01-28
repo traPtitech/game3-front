@@ -1,13 +1,14 @@
-import mock from '~/lib/mock'
+import { useMutateLogin } from './useQuery'
 import { useMeStore } from '~/store/me'
 
 export const useLogin = () => {
-  const { fetchMe } = useMeStore()
+  const { mutateAsync: mutateLogin } = useMutateLogin()
+  const { me, fetchMe, logout } = useMeStore()
   const { redirect } = useRedirectParam()
 
   const login = async () => {
     try {
-      await mock.login()
+      await mutateLogin()
       await fetchMe()
       redirect()
     } catch (e) {
@@ -16,6 +17,8 @@ export const useLogin = () => {
   }
 
   return {
-    login
+    me,
+    login,
+    logout
   }
 }
