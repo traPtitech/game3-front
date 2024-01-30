@@ -26,29 +26,29 @@ export interface Game {
      */
     id: string;
     /**
-     * ブース展示者名
+     * タームID
      * @type {string}
      * @memberof Game
      */
-    creatorName: string;
+    termId?: string;
     /**
-     * 所属団体
+     * ゲーム作成者
      * @type {string}
      * @memberof Game
      */
-    organization?: string;
+    creatorName?: string;
     /**
-     * Twitter ID
+     * ゲーム作成者のページのURL
      * @type {string}
      * @memberof Game
      */
-    twitterId?: string;
+    creatorPageUrl?: string;
     /**
-     * Webサイト等のURL
+     * ゲームページのURL
      * @type {string}
      * @memberof Game
      */
-    websiteUrl?: string;
+    gamePageUrl?: string;
     /**
      * 展示するゲームタイトル
      * @type {string}
@@ -56,29 +56,17 @@ export interface Game {
      */
     title: string;
     /**
-     * 展示するゲームのジャンル
-     * @type {string}
-     * @memberof Game
-     */
-    genre?: string;
-    /**
-     * ゲームの開発環境
-     * @type {string}
-     * @memberof Game
-     */
-    developmentEnvironment?: string;
-    /**
      * ゲームの説明
      * @type {string}
      * @memberof Game
      */
     description?: string;
     /**
-     * 用語
+     * 展示場所
      * @type {string}
      * @memberof Game
      */
-    term?: string;
+    place?: string;
     /**
      * イベントID
      * @type {string}
@@ -90,7 +78,7 @@ export interface Game {
      * @type {string}
      * @memberof Game
      */
-    discordUserId?: string;
+    discordUserId: string;
 }
 
 /**
@@ -99,8 +87,8 @@ export interface Game {
 export function instanceOfGame(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "creatorName" in value;
     isInstance = isInstance && "title" in value;
+    isInstance = isInstance && "discordUserId" in value;
 
     return isInstance;
 }
@@ -116,17 +104,15 @@ export function GameFromJSONTyped(json: any, ignoreDiscriminator: boolean): Game
     return {
         
         'id': json['id'],
-        'creatorName': json['creatorName'],
-        'organization': !exists(json, 'organization') ? undefined : json['organization'],
-        'twitterId': !exists(json, 'twitterId') ? undefined : json['twitterId'],
-        'websiteUrl': !exists(json, 'websiteUrl') ? undefined : json['websiteUrl'],
+        'termId': !exists(json, 'termId') ? undefined : json['termId'],
+        'creatorName': !exists(json, 'creatorName') ? undefined : json['creatorName'],
+        'creatorPageUrl': !exists(json, 'creatorPageUrl') ? undefined : json['creatorPageUrl'],
+        'gamePageUrl': !exists(json, 'gamePageUrl') ? undefined : json['gamePageUrl'],
         'title': json['title'],
-        'genre': !exists(json, 'genre') ? undefined : json['genre'],
-        'developmentEnvironment': !exists(json, 'developmentEnvironment') ? undefined : json['developmentEnvironment'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'term': !exists(json, 'term') ? undefined : json['term'],
+        'place': !exists(json, 'place') ? undefined : json['place'],
         'eventId': !exists(json, 'eventId') ? undefined : json['eventId'],
-        'discordUserId': !exists(json, 'discordUserId') ? undefined : json['discordUserId'],
+        'discordUserId': json['discordUserId'],
     };
 }
 
@@ -140,15 +126,13 @@ export function GameToJSON(value?: Game | null): any {
     return {
         
         'id': value.id,
+        'termId': value.termId,
         'creatorName': value.creatorName,
-        'organization': value.organization,
-        'twitterId': value.twitterId,
-        'websiteUrl': value.websiteUrl,
+        'creatorPageUrl': value.creatorPageUrl,
+        'gamePageUrl': value.gamePageUrl,
         'title': value.title,
-        'genre': value.genre,
-        'developmentEnvironment': value.developmentEnvironment,
         'description': value.description,
-        'term': value.term,
+        'place': value.place,
         'eventId': value.eventId,
         'discordUserId': value.discordUserId,
     };

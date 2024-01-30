@@ -1,5 +1,5 @@
 <template>
-  <footer class="flex flex-col gap-4 bg-brand-violet px-12 py-8 text-body font-700 text-text-primary">
+  <footer class="flex flex-col gap-4 bg-brand-violet px-12 py-8 text-body text-text-white font-700">
     <div class="flex items-end">
       <a href="https://trap.jp" class="mr-auto">
         <img src="/img/logo/traP_logo_full.svg" alt="東京工業大学デジタル創作同好会traPロゴ" class="h-auto w-64 object-contain">

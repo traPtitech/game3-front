@@ -18,7 +18,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 <template>
   <button
-    class="group relative h-14 appearance-none"
+    class="group relative h-14 w-fit appearance-none disabled:(cursor-not-allowed opacity-50)"
+    :disabled="props.disabled"
     @click="props.onClick"
   >
     <div
@@ -26,10 +27,9 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     />
     <div
       :class="[
-        'h-12 inline-flex items-center justify-center min-w-64 bg-brand-cyan b-4 b-brand-violet text-brand-violet text-button font-bold transition-all duration-200 ease-in-out translate-y--1 group-active:translate-y-1 group-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8',
+        'h-12 inline-flex items-center justify-center min-w-64 bg-brand-cyan b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8',
         {
           'w-full': props.full,
-          'opacity-50 cursor-not-allowed': props.disabled
         }
       ]"
     >

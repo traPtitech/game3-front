@@ -20,7 +20,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface PostEventRequest {
     /**
-     * slug (URL内で使用, unique)
+     * slug (URL内で使用, unique) 18th等
      * @type {string}
      * @memberof PostEventRequest
      */

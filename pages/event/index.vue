@@ -1,16 +1,9 @@
 <!-- `/event` -->
 <script setup lang="ts">
-const { data, error, suspense } = useEventsQuery()
+const { data, suspense } = useEventsQuery()
 onServerPrefetch(async () => {
   await suspense()
 })
-
-if (error) {
-  throw createError({
-    statusCode: 500,
-    statusMessage: error.value?.message
-  })
-}
 </script>
 
 <template>

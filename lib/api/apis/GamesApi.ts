@@ -16,13 +16,20 @@
 import * as runtime from '../runtime';
 import type {
   Game,
+  Term,
 } from '../models/index';
 import {
     GameFromJSON,
     GameToJSON,
+    TermFromJSON,
+    TermToJSON,
 } from '../models/index';
 
 export interface GetEventGamesRequest {
+    eventId: string;
+}
+
+export interface GetEventTermsRequest {
     eventId: string;
 }
 
@@ -30,32 +37,42 @@ export interface GetGameRequest {
     gameId: string;
 }
 
+export interface GetGameIconRequest {
+    gameId: string;
+}
+
 export interface GetGameImageRequest {
     gameId: string;
 }
 
+export interface GetGamesRequest {
+    termId?: string;
+    eventId?: string;
+    userId?: string;
+    include?: string;
+}
+
 export interface PatchGameRequest {
     gameId: string;
-    creatorName: string;
-    title: string;
-    organization?: string;
-    twitterId?: string;
-    websiteUrl?: string;
-    genre?: string;
-    developmentEnvironment?: string;
+    termId?: string;
+    discordUserId?: string;
+    creatorName?: string;
+    creatorPageUrl?: string;
+    gamePageUrl?: string;
+    title?: string;
     description?: string;
+    place?: string;
+    icon?: Blob;
     image?: Blob;
 }
 
 export interface PostGameRequest {
     creatorName: string;
     title: string;
-    organization?: string;
-    twitterId?: string;
-    websiteUrl?: string;
-    genre?: string;
-    developmentEnvironment?: string;
-    description?: string;
+    description: string;
+    icon: Blob;
+    creatorPageUrl?: string;
+    gamePageUrl?: string;
     image?: Blob;
 }
 
@@ -95,6 +112,36 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
+     * イベントに登録されているタームのリストを取得
+     */
+    async getEventTermsRaw(requestParameters: GetEventTermsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Term>>> {
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventTerms.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/events/{eventId}/terms`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TermFromJSON));
+    }
+
+    /**
+     * イベントに登録されているタームのリストを取得
+     */
+    async getEventTerms(requestParameters: GetEventTermsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Term>> {
+        const response = await this.getEventTermsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * ゲーム情報を取得
      */
     async getGameRaw(requestParameters: GetGameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Game>> {
@@ -121,6 +168,36 @@ export class GamesApi extends runtime.BaseAPI {
      */
     async getGame(requestParameters: GetGameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Game> {
         const response = await this.getGameRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * ゲームのアイコン画像を取得
+     */
+    async getGameIconRaw(requestParameters: GetGameIconRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters.gameId === null || requestParameters.gameId === undefined) {
+            throw new runtime.RequiredError('gameId','Required parameter requestParameters.gameId was null or undefined when calling getGameIcon.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/games/{gameId}/icon`.replace(`{${"gameId"}}`, encodeURIComponent(String(requestParameters.gameId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * ゲームのアイコン画像を取得
+     */
+    async getGameIcon(requestParameters: GetGameIconRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.getGameIconRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -155,19 +232,53 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
+     * ゲームのリストを取得 GET /games?termId=X&eventId=X&userId=X&include=unpublished
+     */
+    async getGamesRaw(requestParameters: GetGamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Game>>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.termId !== undefined) {
+            queryParameters['termId'] = requestParameters.termId;
+        }
+
+        if (requestParameters.eventId !== undefined) {
+            queryParameters['eventId'] = requestParameters.eventId;
+        }
+
+        if (requestParameters.userId !== undefined) {
+            queryParameters['userId'] = requestParameters.userId;
+        }
+
+        if (requestParameters.include !== undefined) {
+            queryParameters['include'] = requestParameters.include;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/games`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(GameFromJSON));
+    }
+
+    /**
+     * ゲームのリストを取得 GET /games?termId=X&eventId=X&userId=X&include=unpublished
+     */
+    async getGames(requestParameters: GetGamesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Game>> {
+        const response = await this.getGamesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * ゲーム情報を変更
      */
     async patchGameRaw(requestParameters: PatchGameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.gameId === null || requestParameters.gameId === undefined) {
             throw new runtime.RequiredError('gameId','Required parameter requestParameters.gameId was null or undefined when calling patchGame.');
-        }
-
-        if (requestParameters.creatorName === null || requestParameters.creatorName === undefined) {
-            throw new runtime.RequiredError('creatorName','Required parameter requestParameters.creatorName was null or undefined when calling patchGame.');
-        }
-
-        if (requestParameters.title === null || requestParameters.title === undefined) {
-            throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling patchGame.');
         }
 
         const queryParameters: any = {};
@@ -184,42 +295,48 @@ export class GamesApi extends runtime.BaseAPI {
         let useForm = false;
         // use FormData to transmit files using content-type "multipart/form-data"
         useForm = canConsumeForm;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
         if (useForm) {
             formParams = new FormData();
         } else {
             formParams = new URLSearchParams();
         }
 
+        if (requestParameters.termId !== undefined) {
+            formParams.append('termId', requestParameters.termId as any);
+        }
+
+        if (requestParameters.discordUserId !== undefined) {
+            formParams.append('discordUserId', requestParameters.discordUserId as any);
+        }
+
         if (requestParameters.creatorName !== undefined) {
             formParams.append('creatorName', requestParameters.creatorName as any);
         }
 
-        if (requestParameters.organization !== undefined) {
-            formParams.append('organization', requestParameters.organization as any);
+        if (requestParameters.creatorPageUrl !== undefined) {
+            formParams.append('creatorPageUrl', requestParameters.creatorPageUrl as any);
         }
 
-        if (requestParameters.twitterId !== undefined) {
-            formParams.append('twitterId', requestParameters.twitterId as any);
-        }
-
-        if (requestParameters.websiteUrl !== undefined) {
-            formParams.append('websiteUrl', requestParameters.websiteUrl as any);
+        if (requestParameters.gamePageUrl !== undefined) {
+            formParams.append('gamePageUrl', requestParameters.gamePageUrl as any);
         }
 
         if (requestParameters.title !== undefined) {
             formParams.append('title', requestParameters.title as any);
         }
 
-        if (requestParameters.genre !== undefined) {
-            formParams.append('genre', requestParameters.genre as any);
-        }
-
-        if (requestParameters.developmentEnvironment !== undefined) {
-            formParams.append('developmentEnvironment', requestParameters.developmentEnvironment as any);
-        }
-
         if (requestParameters.description !== undefined) {
             formParams.append('description', requestParameters.description as any);
+        }
+
+        if (requestParameters.place !== undefined) {
+            formParams.append('place', requestParameters.place as any);
+        }
+
+        if (requestParameters.icon !== undefined) {
+            formParams.append('icon', requestParameters.icon as any);
         }
 
         if (requestParameters.image !== undefined) {
@@ -256,6 +373,14 @@ export class GamesApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling postGame.');
         }
 
+        if (requestParameters.description === null || requestParameters.description === undefined) {
+            throw new runtime.RequiredError('description','Required parameter requestParameters.description was null or undefined when calling postGame.');
+        }
+
+        if (requestParameters.icon === null || requestParameters.icon === undefined) {
+            throw new runtime.RequiredError('icon','Required parameter requestParameters.icon was null or undefined when calling postGame.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -270,6 +395,8 @@ export class GamesApi extends runtime.BaseAPI {
         let useForm = false;
         // use FormData to transmit files using content-type "multipart/form-data"
         useForm = canConsumeForm;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
         if (useForm) {
             formParams = new FormData();
         } else {
@@ -280,32 +407,24 @@ export class GamesApi extends runtime.BaseAPI {
             formParams.append('creatorName', requestParameters.creatorName as any);
         }
 
-        if (requestParameters.organization !== undefined) {
-            formParams.append('organization', requestParameters.organization as any);
+        if (requestParameters.creatorPageUrl !== undefined) {
+            formParams.append('creatorPageUrl', requestParameters.creatorPageUrl as any);
         }
 
-        if (requestParameters.twitterId !== undefined) {
-            formParams.append('twitterId', requestParameters.twitterId as any);
-        }
-
-        if (requestParameters.websiteUrl !== undefined) {
-            formParams.append('websiteUrl', requestParameters.websiteUrl as any);
+        if (requestParameters.gamePageUrl !== undefined) {
+            formParams.append('gamePageUrl', requestParameters.gamePageUrl as any);
         }
 
         if (requestParameters.title !== undefined) {
             formParams.append('title', requestParameters.title as any);
         }
 
-        if (requestParameters.genre !== undefined) {
-            formParams.append('genre', requestParameters.genre as any);
-        }
-
-        if (requestParameters.developmentEnvironment !== undefined) {
-            formParams.append('developmentEnvironment', requestParameters.developmentEnvironment as any);
-        }
-
         if (requestParameters.description !== undefined) {
             formParams.append('description', requestParameters.description as any);
+        }
+
+        if (requestParameters.icon !== undefined) {
+            formParams.append('icon', requestParameters.icon as any);
         }
 
         if (requestParameters.image !== undefined) {

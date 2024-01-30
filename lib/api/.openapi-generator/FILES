@@ -4,6 +4,7 @@ apis/ContactsApi.ts
 apis/DefaultApi.ts
 apis/EventsApi.ts
 apis/GamesApi.ts
+apis/TermsApi.ts
 apis/UsersApi.ts
 apis/index.ts
 index.ts
@@ -11,8 +12,11 @@ models/Event.ts
 models/Game.ts
 models/GetMeGames200Response.ts
 models/LoginRequest.ts
+models/PatchTermRequest.ts
 models/PostContactsRequest.ts
 models/PostEventRequest.ts
+models/PostTermRequest.ts
+models/Term.ts
 models/User.ts
 models/index.ts
 runtime.ts

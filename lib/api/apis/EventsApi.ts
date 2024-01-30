@@ -18,6 +18,7 @@ import type {
   Event,
   Game,
   PostEventRequest,
+  Term,
 } from '../models/index';
 import {
     EventFromJSON,
@@ -26,6 +27,8 @@ import {
     GameToJSON,
     PostEventRequestFromJSON,
     PostEventRequestToJSON,
+    TermFromJSON,
+    TermToJSON,
 } from '../models/index';
 
 export interface GetEventRequest {
@@ -41,6 +44,10 @@ export interface GetEventGamesRequest {
 }
 
 export interface GetEventImageRequest {
+    eventId: string;
+}
+
+export interface GetEventTermsRequest {
     eventId: string;
 }
 
@@ -209,6 +216,36 @@ export class EventsApi extends runtime.BaseAPI {
      */
     async getEventImage(requestParameters: GetEventImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
         const response = await this.getEventImageRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * イベントに登録されているタームのリストを取得
+     */
+    async getEventTermsRaw(requestParameters: GetEventTermsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Term>>> {
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventTerms.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/events/{eventId}/terms`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TermFromJSON));
+    }
+
+    /**
+     * イベントに登録されているタームのリストを取得
+     */
+    async getEventTerms(requestParameters: GetEventTermsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Term>> {
+        const response = await this.getEventTermsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

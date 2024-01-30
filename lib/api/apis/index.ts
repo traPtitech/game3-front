@@ -5,4 +5,5 @@ export * from './ContactsApi';
 export * from './DefaultApi';
 export * from './EventsApi';
 export * from './GamesApi';
+export * from './TermsApi';
 export * from './UsersApi';

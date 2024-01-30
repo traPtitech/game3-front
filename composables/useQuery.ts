@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi } from '~/lib/api'
+import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest } from '~/lib/api'
 
 const apiConfig = new Configuration({
   basePath: '/api'
@@ -34,6 +34,10 @@ const gamesApi = new GamesApi(apiConfig)
 export const useGameQuery = (gameId: string) => useQuery({
   queryKey: ['games', gameId],
   queryFn: () => gamesApi.getGame({ gameId })
+})
+
+export const useMutatePostGame = () => useMutation({
+  mutationFn: (req: PostGameRequest) => gamesApi.postGame(req)
 })
 
 const authApi = new AuthApi(apiConfig)
