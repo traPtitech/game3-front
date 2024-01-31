@@ -65,13 +65,11 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-4 px-8 pb-16 pt-4">
-    <h2 class="text-center text-h2 text-text-white text-shadow-4">
-      <StrokedText>
-        作品情報入力フォーム
-      </StrokedText>
-    </h2>
-    <div v-if="data" class="max-w-1000px w-full">
+  <div class="w-full flex flex-col items-center gap-4">
+    <ContentH2>
+      作品情報入力フォーム
+    </ContentH2>
+    <div v-if="data" class="w-full">
       <div class="text-center text-brand-violet font-700">
         <div>現在の出展対象イベント：{{ data.title }} Game<sup>3</sup></div>
         <div>出展締め切り：{{ data.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}</div>

@@ -50,7 +50,7 @@ export default defineConfig({
           'font-weight': '700'
         }
       ],
-      body: ['1rem'],
+      body: ['1rem', 1.7],
       caption: [
         '0.875rem',
         {
