@@ -27,15 +27,25 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     />
     <div
       :class="[
-        'h-12 inline-flex items-center justify-center min-w-64 bg-brand-cyan b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8',
+        'h-12 inline-flex items-center justify-center min-w-64 bg-brand-cyan b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8 relative',
         {
           'w-full': props.full,
         }
       ]"
     >
+      <div class="absolute left-4">
+        <slot name="prefix">
+          <div />
+        </slot>
+      </div>
       <StrokedText class="text-stroke-white" width="text-stroke-4">
-        <slot />
+        <slot name="label" />
       </StrokedText>
+      <div class="absolute right-4">
+        <slot name="suffix">
+          <div />
+        </slot>
+      </div>
     </div>
   </button>
 </template>

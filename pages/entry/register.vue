@@ -101,7 +101,9 @@ const onSubmit = handleSubmit(async (values) => {
               :disabled="!meta.valid || meta.pending || !meta.dirty"
               @click="confirmModalOpen = true"
             >
-              登録確認
+              <template #label>
+                登録確認
+              </template>
             </UIButton>
             <UIDialog>
               <div>
@@ -117,13 +119,17 @@ const onSubmit = handleSubmit(async (values) => {
                   <UIButton
                     type="button"
                   >
-                    キャンセル
+                    <template #label>
+                      キャンセル
+                    </template>
                   </UIButton>
                   <UIButton
                     type="submit"
                     @click="onSubmit"
                   >
-                    登録する
+                    <template #label>
+                      登録する
+                    </template>
                   </UIButton>
                 </div>
               </div>
