@@ -3,7 +3,8 @@
 import { getParamsArray } from '~/lib/url'
 
 const route = useRoute()
-const gameId = getParamsArray(route.params.gameId)
+const gameIdArray = getParamsArray(route.params.gameId)
+const gameId = gameIdArray?.[0]
 if (!gameId) {
   throw createError({
     statusCode: 404,
@@ -11,7 +12,7 @@ if (!gameId) {
   })
 }
 
-const { data, error, suspense } = useGameQuery(gameId[0])
+const { data, error, suspense } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
   await suspense()
 })

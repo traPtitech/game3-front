@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   Event,
   Game,
-  PostEventRequest,
+  PatchEventRequest,
   Term,
 } from '../models/index';
 import {
@@ -25,35 +25,35 @@ import {
     EventToJSON,
     GameFromJSON,
     GameToJSON,
-    PostEventRequestFromJSON,
-    PostEventRequestToJSON,
+    PatchEventRequestFromJSON,
+    PatchEventRequestToJSON,
     TermFromJSON,
     TermToJSON,
 } from '../models/index';
 
 export interface GetEventRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
 export interface GetEventCsvRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
 export interface GetEventGamesRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
 export interface GetEventImageRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
 export interface GetEventTermsRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
-export interface PatchEventRequest {
-    eventId: string;
-    body: PostEventRequest;
+export interface PatchEventOperationRequest {
+    eventSlug: string;
+    patchEventRequest: PatchEventRequest;
 }
 
 export interface PostEventRequest {
@@ -99,8 +99,8 @@ export class EventsApi extends runtime.BaseAPI {
      * イベントの情報を取得
      */
     async getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEvent.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEvent.');
         }
 
         const queryParameters: any = {};
@@ -108,7 +108,7 @@ export class EventsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -129,8 +129,8 @@ export class EventsApi extends runtime.BaseAPI {
      * イベントとイベントに登録されているゲームの情報をCSV形式で取得
      */
     async getEventCsvRaw(requestParameters: GetEventCsvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventCsv.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEventCsv.');
         }
 
         const queryParameters: any = {};
@@ -138,7 +138,7 @@ export class EventsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}/csv`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}/csv`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -163,8 +163,8 @@ export class EventsApi extends runtime.BaseAPI {
      * イベントに登録されているゲームのリストを取得
      */
     async getEventGamesRaw(requestParameters: GetEventGamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Game>>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventGames.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEventGames.');
         }
 
         const queryParameters: any = {};
@@ -172,7 +172,7 @@ export class EventsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}/games`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}/games`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -193,8 +193,8 @@ export class EventsApi extends runtime.BaseAPI {
      * イベントの画像を取得
      */
     async getEventImageRaw(requestParameters: GetEventImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventImage.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEventImage.');
         }
 
         const queryParameters: any = {};
@@ -202,7 +202,7 @@ export class EventsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}/image`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}/image`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -223,8 +223,8 @@ export class EventsApi extends runtime.BaseAPI {
      * イベントに登録されているタームのリストを取得
      */
     async getEventTermsRaw(requestParameters: GetEventTermsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Term>>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventTerms.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEventTerms.');
         }
 
         const queryParameters: any = {};
@@ -232,7 +232,7 @@ export class EventsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}/terms`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}/terms`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -278,13 +278,13 @@ export class EventsApi extends runtime.BaseAPI {
     /**
      * イベントの情報を変更
      */
-    async patchEventRaw(requestParameters: PatchEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling patchEvent.');
+    async patchEventRaw(requestParameters: PatchEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling patchEvent.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling patchEvent.');
+        if (requestParameters.patchEventRequest === null || requestParameters.patchEventRequest === undefined) {
+            throw new runtime.RequiredError('patchEventRequest','Required parameter requestParameters.patchEventRequest was null or undefined when calling patchEvent.');
         }
 
         const queryParameters: any = {};
@@ -294,11 +294,11 @@ export class EventsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/events/{eventId}`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: PatchEventRequestToJSON(requestParameters.patchEventRequest),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -307,7 +307,7 @@ export class EventsApi extends runtime.BaseAPI {
     /**
      * イベントの情報を変更
      */
-    async patchEvent(requestParameters: PatchEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+    async patchEvent(requestParameters: PatchEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.patchEventRaw(requestParameters, initOverrides);
     }
 

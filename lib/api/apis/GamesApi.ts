@@ -26,11 +26,11 @@ import {
 } from '../models/index';
 
 export interface GetEventGamesRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
 export interface GetEventTermsRequest {
-    eventId: string;
+    eventSlug: string;
 }
 
 export interface GetGameRequest {
@@ -47,7 +47,7 @@ export interface GetGameImageRequest {
 
 export interface GetGamesRequest {
     termId?: string;
-    eventId?: string;
+    eventSlug?: string;
     userId?: string;
     include?: string;
 }
@@ -56,10 +56,10 @@ export interface PatchGameRequest {
     gameId: string;
     termId?: string;
     discordUserId?: string;
+    title?: string;
     creatorName?: string;
     creatorPageUrl?: string;
     gamePageUrl?: string;
-    title?: string;
     description?: string;
     place?: string;
     icon?: Blob;
@@ -67,8 +67,8 @@ export interface PatchGameRequest {
 }
 
 export interface PostGameRequest {
-    creatorName: string;
     title: string;
+    creatorName: string;
     description: string;
     icon: Blob;
     creatorPageUrl?: string;
@@ -85,8 +85,8 @@ export class GamesApi extends runtime.BaseAPI {
      * イベントに登録されているゲームのリストを取得
      */
     async getEventGamesRaw(requestParameters: GetEventGamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Game>>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventGames.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEventGames.');
         }
 
         const queryParameters: any = {};
@@ -94,7 +94,7 @@ export class GamesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}/games`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}/games`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -115,8 +115,8 @@ export class GamesApi extends runtime.BaseAPI {
      * イベントに登録されているタームのリストを取得
      */
     async getEventTermsRaw(requestParameters: GetEventTermsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Term>>> {
-        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
-            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getEventTerms.');
+        if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
+            throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling getEventTerms.');
         }
 
         const queryParameters: any = {};
@@ -124,7 +124,7 @@ export class GamesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/events/{eventId}/terms`.replace(`{${"eventId"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            path: `/events/{eventSlug}/terms`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -232,7 +232,7 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
-     * ゲームのリストを取得 GET /games?termId=X&eventId=X&userId=X&include=unpublished
+     * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&include=unpublished
      */
     async getGamesRaw(requestParameters: GetGamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Game>>> {
         const queryParameters: any = {};
@@ -241,8 +241,8 @@ export class GamesApi extends runtime.BaseAPI {
             queryParameters['termId'] = requestParameters.termId;
         }
 
-        if (requestParameters.eventId !== undefined) {
-            queryParameters['eventId'] = requestParameters.eventId;
+        if (requestParameters.eventSlug !== undefined) {
+            queryParameters['eventSlug'] = requestParameters.eventSlug;
         }
 
         if (requestParameters.userId !== undefined) {
@@ -266,7 +266,7 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
-     * ゲームのリストを取得 GET /games?termId=X&eventId=X&userId=X&include=unpublished
+     * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&include=unpublished
      */
     async getGames(requestParameters: GetGamesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Game>> {
         const response = await this.getGamesRaw(requestParameters, initOverrides);
@@ -311,6 +311,10 @@ export class GamesApi extends runtime.BaseAPI {
             formParams.append('discordUserId', requestParameters.discordUserId as any);
         }
 
+        if (requestParameters.title !== undefined) {
+            formParams.append('title', requestParameters.title as any);
+        }
+
         if (requestParameters.creatorName !== undefined) {
             formParams.append('creatorName', requestParameters.creatorName as any);
         }
@@ -321,10 +325,6 @@ export class GamesApi extends runtime.BaseAPI {
 
         if (requestParameters.gamePageUrl !== undefined) {
             formParams.append('gamePageUrl', requestParameters.gamePageUrl as any);
-        }
-
-        if (requestParameters.title !== undefined) {
-            formParams.append('title', requestParameters.title as any);
         }
 
         if (requestParameters.description !== undefined) {
@@ -365,12 +365,12 @@ export class GamesApi extends runtime.BaseAPI {
      * ゲームを登録
      */
     async postGameRaw(requestParameters: PostGameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Game>> {
-        if (requestParameters.creatorName === null || requestParameters.creatorName === undefined) {
-            throw new runtime.RequiredError('creatorName','Required parameter requestParameters.creatorName was null or undefined when calling postGame.');
-        }
-
         if (requestParameters.title === null || requestParameters.title === undefined) {
             throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling postGame.');
+        }
+
+        if (requestParameters.creatorName === null || requestParameters.creatorName === undefined) {
+            throw new runtime.RequiredError('creatorName','Required parameter requestParameters.creatorName was null or undefined when calling postGame.');
         }
 
         if (requestParameters.description === null || requestParameters.description === undefined) {
@@ -403,6 +403,10 @@ export class GamesApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
+        if (requestParameters.title !== undefined) {
+            formParams.append('title', requestParameters.title as any);
+        }
+
         if (requestParameters.creatorName !== undefined) {
             formParams.append('creatorName', requestParameters.creatorName as any);
         }
@@ -413,10 +417,6 @@ export class GamesApi extends runtime.BaseAPI {
 
         if (requestParameters.gamePageUrl !== undefined) {
             formParams.append('gamePageUrl', requestParameters.gamePageUrl as any);
-        }
-
-        if (requestParameters.title !== undefined) {
-            formParams.append('title', requestParameters.title as any);
         }
 
         if (requestParameters.description !== undefined) {

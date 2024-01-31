@@ -15,18 +15,11 @@ import { toTypedSchema } from '@vee-validate/valibot'
 import {
   DialogRoot
 } from 'radix-vue'
-import type { Event } from '~/lib/api'
 
-const data: Event = {
-  id: '18th',
-  title: '第18回',
-  gameSubmissionPeriodStart: new Date('2024-01-01T00:00:00.000Z'),
-  gameSubmissionPeriodEnd: new Date('2024-02-01T00:00:00.000Z')
-}
-// const { data, suspense } = useCurrentEventQuery()
-// onServerPrefetch(async () => {
-//   await suspense()
-// })
+const { data, suspense } = useCurrentEventQuery()
+onServerPrefetch(async () => {
+  await suspense()
+})
 
 const { handleSubmit, meta, values } = useForm({
   validationSchema: toTypedSchema(

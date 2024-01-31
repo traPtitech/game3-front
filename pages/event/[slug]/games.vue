@@ -4,14 +4,15 @@ import { getParamsArray } from '~/lib/url'
 
 const route = useRoute()
 const slug = getParamsArray(route.params.slug)
-if (!slug) {
+const eventSlug = slug?.[0]
+if (!eventSlug) {
   throw createError({
     statusCode: 404,
     statusMessage: 'ゲームが見つかりませんでした'
   })
 }
 
-const { data, error, suspense } = useEventGamesQuery(slug[0])
+const { data, error, suspense } = useEventGamesQuery({ eventSlug })
 onServerPrefetch(async () => {
   await suspense()
 })
@@ -26,7 +27,7 @@ if (error) {
 
 <template>
   <div>
-    <h2>{{ slug[0] }}ゲーム一覧</h2>
+    <h2>{{ eventSlug }}ゲーム一覧</h2>
     <ul>
       <li v-for="game in data" :key="game.id">
         <nuxt-link :to="`/entry/${game.id}`">

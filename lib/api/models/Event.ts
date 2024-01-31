@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Event {
     /**
-     * イベントID (slugとしても使用)
+     * イベントslug (イベントのID的な立ち位置)
      * @type {string}
      * @memberof Event
      */
-    id: string;
+    slug: string;
     /**
      * イベントのタイトル (例: 第18回)
      * @type {string}
@@ -50,7 +50,7 @@ export interface Event {
  */
 export function instanceOfEvent(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "id" in value;
+    isInstance = isInstance && "slug" in value;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "gameSubmissionPeriodStart" in value;
     isInstance = isInstance && "gameSubmissionPeriodEnd" in value;
@@ -68,7 +68,7 @@ export function EventFromJSONTyped(json: any, ignoreDiscriminator: boolean): Eve
     }
     return {
         
-        'id': json['id'],
+        'slug': json['slug'],
         'title': json['title'],
         'gameSubmissionPeriodStart': (new Date(json['gameSubmissionPeriodStart'])),
         'gameSubmissionPeriodEnd': (new Date(json['gameSubmissionPeriodEnd'])),
@@ -84,7 +84,7 @@ export function EventToJSON(value?: Event | null): any {
     }
     return {
         
-        'id': value.id,
+        'slug': value.slug,
         'title': value.title,
         'gameSubmissionPeriodStart': (value.gameSubmissionPeriodStart.toISOString()),
         'gameSubmissionPeriodEnd': (value.gameSubmissionPeriodEnd.toISOString()),
