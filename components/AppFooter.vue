@@ -25,9 +25,9 @@
           お問い合わせ
         </StrokedText>
       </NuxtLink>
-      <NuxtLink to="/policy">
+      <NuxtLink to="/about-google-analytics">
         <StrokedText>
-          プライバシーポリシー
+          Googleアナリティクスについて
         </StrokedText>
       </NuxtLink>
       <NuxtLink to="/login">
