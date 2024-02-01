@@ -1,6 +1,11 @@
 <!-- `/admin` -->
 <template>
   <div>
-    管理者ページ
+    <ProseH1>
+      管理者ページ
+    </ProseH1>
+    <NuxtLink to="/admin/event">
+      イベント管理ページ
+    </NuxtLink>
   </div>
 </template>

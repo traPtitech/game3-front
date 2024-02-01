@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import type { InputTypeHTMLAttribute } from 'vue'
+import VueDatePicker from '@vuepic/vue-datepicker'
 import { useField } from 'vee-validate'
+import { ja } from 'date-fns/locale'
 
 type Props = {
   label: string;
   name: string;
-  type?: Exclude<InputTypeHTMLAttribute, 'file'>;
   placeholder?: string;
   helperText?: string;
-}
+};
 const props = defineProps<Props>()
-const { value, errorMessage, meta } = useField(() => props.name)
+const { value, errorMessage, meta } = useField<Date>(() => props.name)
 </script>
 
 <template>
-  <label class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2">
     <div class="flex items-end gap-2 text-label text-brand-violet">
       {{ props.label }}
       <div v-if="meta.required" class="text-caption text-text-semantic-error">
@@ -24,20 +24,20 @@ const { value, errorMessage, meta } = useField(() => props.name)
     <div v-if="$props.helperText" class="text-text-secondary">
       {{ props.helperText }}
     </div>
-    <input
+    <VueDatePicker
       v-model="value"
-      :type="props.type"
-      :name="props.name"
-      :aria-invalid="meta.validated && !meta.valid"
+      locale="ja-JP"
+      :format-locale="ja"
+      time-picker-inline
+      format="yyyy/MM/dd (E) HH:mm"
       :data-invalid="meta.validated && !meta.valid"
-      :placeholder="props.placeholder"
-      class="w-full border b-border-primary rounded-2 px-4 py-3 data-[invalid=true]:b-border-semantic-error focus-visible:(outline-2 outline-brand-violet outline)"
-    >
+      class="data-[invalid=true]:[--dp-border-color:#EC0000]"
+    />
     <div
       v-if="errorMessage"
       class="text-caption text-text-semantic-error"
     >
       {{ errorMessage }}
     </div>
-  </label>
+  </div>
 </template>

@@ -2,9 +2,11 @@
 export default defineNuxtConfig({
   css: [
     '@unocss/reset/tailwind.css',
+    'vue-advanced-cropper/dist/style.css',
+    '@vuepic/vue-datepicker/dist/main.css',
     '~/assets/css/index.css',
     '~/assets/css/toast.css',
-    'vue-advanced-cropper/dist/style.css'
+    '~/assets/css/date-picker.css'
   ],
   modules: ['@nuxt/content', '@unocss/nuxt', '@nuxtjs/google-fonts'],
   devtools: {
@@ -12,6 +14,9 @@ export default defineNuxtConfig({
     timeline: {
       enabled: true
     }
+  },
+  build: {
+    transpile: ['@vuepic/vue-datepicker']
   },
   googleFonts: {
     families: {

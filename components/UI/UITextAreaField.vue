@@ -6,6 +6,7 @@ type Props = {
   label: string;
   name: string;
   placeholder?: string;
+  helperText?: string;
 }
 const props = defineProps<Props>()
 const { textarea, input } = useTextareaAutosize()
@@ -23,6 +24,9 @@ const onInput = () => {
       <div v-if="meta.required" class="text-caption text-text-semantic-error">
         必須
       </div>
+    </div>
+    <div v-if="$props.helperText" class="text-text-secondary">
+      {{ props.helperText }}
     </div>
     <textarea
       ref="textarea"

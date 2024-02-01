@@ -21,9 +21,7 @@ onServerPrefetch(async () => {
       <UIButton
         variant="secondary"
       >
-        <template #label>
-          {{ currentEvent.title }}
-        </template>
+        {{ currentEvent.title }}
         <template #suffix>
           <img :src="ListImage" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270">
         </template>

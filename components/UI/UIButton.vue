@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
         </slot>
       </div>
       <StrokedText class="text-stroke-white" width="text-stroke-4">
-        <slot name="label" />
+        <slot />
       </StrokedText>
       <div class="absolute right-4">
         <slot name="suffix">

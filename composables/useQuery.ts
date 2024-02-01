@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest } from '~/lib/api'
+import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest, type PostEventRequest, type PatchEventRequest, type PatchEventOperationRequest } from '~/lib/api'
 
 const apiConfig = new Configuration({
   basePath: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : '/api'
@@ -34,6 +34,14 @@ export const useCurrentEventQuery = () => useQuery({
 export const useEventGamesQuery = (req: GetEventGamesRequest) => useQuery({
   queryKey: ['events', req, 'games'],
   queryFn: () => eventsApi.getEventGames(req)
+})
+
+export const useMutatePostEvent = () => useMutation({
+  mutationFn: (req: PostEventRequest) => eventsApi.postEvent(req)
+})
+
+export const useMutatePatchEvent = () => useMutation({
+  mutationFn: (req: PatchEventOperationRequest) => eventsApi.patchEvent(req)
 })
 
 const gamesApi = new GamesApi(apiConfig)

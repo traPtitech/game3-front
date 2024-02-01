@@ -11,6 +11,7 @@ type Props = {
   label: string;
   name: string;
   accept?: string;
+  helperText?: string;
 } & (
   | {
       useCrop: true;
@@ -95,6 +96,9 @@ const onInputChange: HTMLInputElement['onchange'] = (e) => {
       <div v-if="meta.required" class="text-caption text-text-semantic-error">
         必須
       </div>
+    </div>
+    <div v-if="$props.helperText" class="text-text-secondary">
+      {{ props.helperText }}
     </div>
     <div
       v-if="imgSrc || inputImgSrc"

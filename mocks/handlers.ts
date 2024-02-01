@@ -267,10 +267,10 @@ export function getPingServer200Response() {
 
 export function getGetGames200Response() {
   return [
-    "0","1","2","3","4",
-    "0","1","2","3","4",
-    "0","1","2","3","4",
-    "0","1","2","3","4",
+    "0","1","2","3",
+    "0","1","2","3",
+    "0","1","2","3",
+    "0","1","2","3",
   ].map((term) => ({
     id: faker.datatype.uuid(),
     termId: term,
@@ -416,8 +416,8 @@ export function getGetEventTerms200Response() {
       id: "0",
       eventSlug: "17th",
       isDefault: true,
-      startAt: faker.date.past(),
-      endAt: faker.date.past(),
+      startAt: undefined,
+      endAt: undefined,
     },
     {
       id: "1",

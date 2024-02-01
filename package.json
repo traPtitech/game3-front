@@ -38,8 +38,11 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.8.7",
+    "@tanstack/vue-table": "^8.11.7",
     "@unocss/reset": "^0.57.7",
     "@vee-validate/valibot": "^4.12.4",
+    "@vuepic/vue-datepicker": "^7.4.1",
+    "date-fns": "^3.3.1",
     "radix-vue": "^1.2.2",
     "valibot": "^0.24.1",
     "vee-validate": "^4.12.4",

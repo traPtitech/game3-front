@@ -27,9 +27,7 @@ onServerPrefetch(async () => {
       <UIButton
         variant="secondary"
       >
-        <template #label>
-          過去の開催
-        </template>
+        過去の開催
         <template #suffix>
           <img :src="ListImage" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270">
         </template>
