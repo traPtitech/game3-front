@@ -15,6 +15,25 @@ export default defineNuxtConfig({
       enabled: true
     }
   },
+  ssr: true,
+  // see: https://nuxt.com/docs/guide/concepts/rendering#hybrid-rendering
+  routeRules: {
+    '/**': {
+      ssr: true
+    },
+    '/admin/**': {
+      ssr: false
+    },
+    '/entry/**/edit': {
+      ssr: false
+    },
+    '/entry/register': {
+      ssr: false
+    },
+    '/login': {
+      ssr: false
+    }
+  },
   build: {
     transpile: ['@vuepic/vue-datepicker']
   },

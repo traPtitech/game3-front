@@ -2,6 +2,10 @@
 <script setup lang="ts">
 import { getParamsArray } from '~/lib/url'
 
+definePageMeta({
+  middleware: ['login']
+})
+
 const route = useRoute()
 const gameIdArray = getParamsArray(route.params.gameId)
 const gameId = gameIdArray?.[0]
@@ -12,17 +16,10 @@ if (!gameId) {
   })
 }
 
-const { data, error, suspense } = useGameQuery({ gameId })
+const { data, suspense } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
-  await suspense()
+  await suspense().catch(() => {})
 })
-
-if (error) {
-  throw createError({
-    statusCode: 500,
-    statusMessage: error.value?.message
-  })
-}
 </script>
 
 <template>

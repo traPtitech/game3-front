@@ -16,6 +16,10 @@ import {
   DialogRoot
 } from 'radix-vue'
 
+definePageMeta({
+  middleware: ['login']
+})
+
 const { data, suspense } = useCurrentEventQuery()
 onServerPrefetch(async () => {
   await suspense().catch(() => {})

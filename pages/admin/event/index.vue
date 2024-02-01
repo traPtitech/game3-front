@@ -3,6 +3,10 @@ import { FlexRender, createColumnHelper, getCoreRowModel, useVueTable } from '@t
 import UIButton from '~/components/UI/UIButton.vue'
 import type { Event } from '~/lib/api'
 
+definePageMeta({
+  middleware: ['login']
+})
+
 const { data: events, suspense } = useEventsQuery()
 onServerPrefetch(async () => {
   await suspense().catch(() => {})

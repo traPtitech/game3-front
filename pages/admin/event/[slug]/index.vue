@@ -10,6 +10,10 @@ import {
 } from '@tanstack/vue-table'
 import { eventImageUrl, getParamsArray } from '~/lib/url'
 
+definePageMeta({
+  middleware: ['login']
+})
+
 const route = useRoute()
 const slugArray = getParamsArray(route.params.slug)
 const eventSlug = slugArray?.[0]

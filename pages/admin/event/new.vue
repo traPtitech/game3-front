@@ -15,6 +15,10 @@ import {
   DialogRoot
 } from 'radix-vue'
 
+definePageMeta({
+  middleware: ['login']
+})
+
 const { handleSubmit, meta, values } = useForm({
   validationSchema: toTypedSchema(
     object({

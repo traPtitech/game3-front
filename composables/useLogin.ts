@@ -4,13 +4,12 @@ import { useMeStore } from '~/store/me'
 export const useLogin = () => {
   const { mutateAsync: mutateLogin } = useMutateLogin()
   const { me, fetchMe, logout } = useMeStore()
-  const { redirect } = useRedirectParam()
+  const { redirectPath } = useRedirectParam()
 
   const login = async () => {
     try {
-      await mutateLogin()
+      await mutateLogin(redirectPath.value)
       await fetchMe()
-      redirect()
     } catch (e) {
       console.error(e)
     }
