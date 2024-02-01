@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const { data: currentEvent, suspense } = useCurrentEventQuery()
 onServerPrefetch(async () => {
-  await suspense()
+  // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
+  await suspense().catch(() => {})
 })
 </script>
 
@@ -23,7 +24,7 @@ onServerPrefetch(async () => {
             Game³
           </h1>
         </div>
-        <a :href="`/event/${currentEvent?.slug}`">
+        <a v-if="currentEvent" :href="`/event/${currentEvent?.slug}`">
           <div class="flex items-center gap-18">
             <div class="text-16 text-brand-violet font-700 space-y-6">
               <div class="w-fit bg-surface-primary px-5">

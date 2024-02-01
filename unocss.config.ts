@@ -20,6 +20,8 @@ export default defineConfig({
         primary: '#000000',
         secondary: '#767676',
         white: '#ffffff',
+        link: '#0017C1',
+        visited: '#000082',
         semantic: {
           error: '#EC0000',
           success: '#669211'
@@ -27,6 +29,7 @@ export default defineConfig({
       },
       border: {
         primary: '#000000',
+        secondary: '#B9B9B9',
         semantic: {
           error: '#EC0000'
         }
@@ -44,8 +47,20 @@ export default defineConfig({
       }
     },
     fontSize: {
+      h1: [
+        '2.5rem',
+        {
+          'font-weight': '700'
+        }
+      ],
       h2: [
         '2rem',
+        {
+          'font-weight': '700'
+        }
+      ],
+      h3: [
+        '1.5rem',
         {
           'font-weight': '700'
         }

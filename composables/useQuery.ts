@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest } from '~/lib/api'
+import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest } from '~/lib/api'
 
 const apiConfig = new Configuration({
   basePath: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : '/api'
@@ -19,6 +19,13 @@ export const useEventQuery = (req: GetEventRequest) => {
   })
 }
 
+export const useEventTermsQuery = (req: GetEventTermsRequest) => {
+  return useQuery({
+    queryKey: ['events', req, 'terms'],
+    queryFn: () => eventsApi.getEventTerms(req)
+  })
+}
+
 export const useCurrentEventQuery = () => useQuery({
   queryKey: ['currentEvent'],
   queryFn: () => eventsApi.getCurrentEvent()
@@ -30,6 +37,11 @@ export const useEventGamesQuery = (req: GetEventGamesRequest) => useQuery({
 })
 
 const gamesApi = new GamesApi(apiConfig)
+
+export const useGamesQuery = (req: GetGamesRequest) => useQuery({
+  queryKey: ['games'],
+  queryFn: () => gamesApi.getGames(req)
+})
 
 export const useGameQuery = (req: GetGameRequest) => useQuery({
   queryKey: ['games', req],
