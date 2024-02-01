@@ -30,6 +30,7 @@ const { value, errorMessage, meta } = useField(() => props.name)
       class="w-full border b-border-primary rounded-2 px-4 py-3 data-[invalid=true]:b-border-semantic-error focus-visible:(outline-2 outline-brand-violet outline)"
     >
     <div
+      v-if="errorMessage"
       class="text-caption text-text-semantic-error"
     >
       {{ errorMessage }}

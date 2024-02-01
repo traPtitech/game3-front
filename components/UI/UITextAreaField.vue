@@ -36,6 +36,7 @@ const onInput = () => {
       @input="onInput"
     />
     <div
+      v-if="errorMessage"
       class="text-caption text-text-semantic-error"
     >
       {{ errorMessage }}

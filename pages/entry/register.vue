@@ -29,9 +29,9 @@ const { handleSubmit, meta, values } = useForm({
       ]),
       gamePageUrl: optional(
         union([
-          string([url('ゲームページURLは正しいURL形式で入力してください')]),
-          literal('')
-        ])
+          literal(''),
+          string([url('ゲームページURLは正しいURL形式で入力してください')])
+        ], 'ゲームページURLは正しいURL形式で入力してください')
       ),
       creatorName: string([
         minLength(1, '出展者名は1文字以上で入力してください')
@@ -40,7 +40,7 @@ const { handleSubmit, meta, values } = useForm({
         union([
           string([url('出展者ページURLは正しいURL形式で入力してください')]),
           literal('')
-        ])
+        ], 'ゲームページURLは正しいURL形式で入力してください')
       ),
       icon: blob(),
       description: optional(string(), ''),
