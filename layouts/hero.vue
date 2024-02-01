@@ -10,7 +10,7 @@ onServerPrefetch(async () => {
     <div class="grid grid-cols-[1fr_auto] h-100vh w-full overflow-hidden">
       <!-- TODO: use event image from api -->
       <!-- <img :src="`/api/events/${data?.slug}/image`" alt=""> -->
-      <img src="/hero.png" class="h-full w-full overflow-hidden object-cover">
+      <img src="/hero-resized.png" class="h-full w-full overflow-hidden object-cover">
       <div class="h-full flex flex-col justify-center gap-12 bg-brand-violet p-6 text-text-white">
         <div>
           <div class="mb-4 text-9 font-700">
