@@ -16,12 +16,13 @@ const top3Events = computed(() => {
 })
 
 onServerPrefetch(async () => {
-  await suspenseEvents()
+  // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
+  await suspenseEvents().catch(() => {})
 })
 </script>
 
 <template>
-  <PopoverRoot>
+  <PopoverRoot v-if="top3Events.length > 0">
     <PopoverTrigger as-child class="group">
       <UIButton>
         <template #label>

@@ -10,7 +10,8 @@ import ListImage from '~/assets/list-marker.svg'
 const { data: currentEvent, suspense: suspenseCurrentEvent } = useCurrentEventQuery()
 
 onServerPrefetch(async () => {
-  await suspenseCurrentEvent()
+  // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
+  await suspenseCurrentEvent().catch(() => {})
 })
 </script>
 
