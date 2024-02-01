@@ -18,7 +18,7 @@ import {
 
 const { data, suspense } = useCurrentEventQuery()
 onServerPrefetch(async () => {
-  await suspense()
+  await suspense().catch(() => {})
 })
 
 const { handleSubmit, meta, values } = useForm({
@@ -50,26 +50,30 @@ const { handleSubmit, meta, values } = useForm({
 })
 
 const confirmModalOpen = ref(false)
+const { $toast } = useNuxtApp()
 
 const { mutateAsync } = useMutatePostGame()
 const onSubmit = handleSubmit(async (values) => {
   try {
-    // TODO: show confirm dialog
-    await mutateAsync(values)
-    // TODO: redirect
-    // TODO: toast
+    const submittedGame = await mutateAsync(values)
+    $toast.success('ゲームの登録が完了しました！')
+    await navigateTo(`/entry/${submittedGame.id}`)
   } catch (e) {
+    $toast.error('ゲームの登録に失敗しました')
     console.error(e)
   }
 })
 </script>
 
 <template>
-  <div class="w-full flex flex-col items-center gap-4">
+  <div>
+    <ProseH1>
+      作品登録ページ
+    </ProseH1>
     <ProseH2>
       作品情報入力フォーム
     </ProseH2>
-    <div v-if="data" class="w-full">
+    <div v-if="data" class="w-full flex flex-col gap-4">
       <div class="text-center text-brand-violet font-700">
         <div>現在の出展対象イベント：{{ data.title }} Game<sup>3</sup></div>
         <div>出展締め切り：{{ data.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}</div>
@@ -88,7 +92,12 @@ const onSubmit = handleSubmit(async (values) => {
           use-crop
           :aspect-ratio="1"
         />
-        <!-- TODO: preview -->
+        <ProseH3>
+          登録内容プレビュー
+        </ProseH3>
+        <EntryPreview
+          :game-req="values"
+        />
         <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
         <div class="flex justify-center">
           <DialogRoot
@@ -96,7 +105,7 @@ const onSubmit = handleSubmit(async (values) => {
           >
             <UIButton
               type="button"
-              :disabled="!meta.valid || meta.pending || !meta.dirty"
+              :disabled="!meta.valid"
               @click="confirmModalOpen = true"
             >
               <template #label>
@@ -104,18 +113,21 @@ const onSubmit = handleSubmit(async (values) => {
               </template>
             </UIButton>
             <UIDialog>
-              <div>
-                以下の内容で登録します。よろしいですか？
-                <div>
+              <div class="text-body">
+                <div class="text-5 font-500">
+                  以下の内容で登録します。よろしいですか？
+                </div>
+                <div class="mb-8 space-y-2">
                   <div>ゲーム名：{{ values.title }}</div>
-                  <div>ゲームページリンク：{{ values.gamePageUrl }}</div>
+                  <div>ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}</div>
                   <div>出展者名：{{ values.creatorName }}</div>
-                  <div>出展者ホームページ：{{ values.creatorPageUrl }}</div>
-                  <div>ゲーム詳細：{{ values.description }}</div>
+                  <div>出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}</div>
+                  <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
                 <div class="flex gap-4">
                   <UIButton
                     type="button"
+                    variant="secondary"
                   >
                     <template #label>
                       キャンセル
@@ -123,6 +135,7 @@ const onSubmit = handleSubmit(async (values) => {
                   </UIButton>
                   <UIButton
                     type="submit"
+                    :disabled="meta.pending"
                     @click="onSubmit"
                   >
                     <template #label>
@@ -137,7 +150,7 @@ const onSubmit = handleSubmit(async (values) => {
       </form>
     </div>
     <div v-else>
-      申し込み対象のイベントがありません
+      現在申し込み対象のイベントがありません
     </div>
   </div>
 </template>

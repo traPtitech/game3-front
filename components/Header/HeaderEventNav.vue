@@ -18,7 +18,9 @@ onServerPrefetch(async () => {
 <template>
   <PopoverRoot v-if="currentEvent">
     <PopoverTrigger as-child class="group">
-      <UIButton>
+      <UIButton
+        variant="secondary"
+      >
         <template #label>
           {{ currentEvent.title }}
         </template>

@@ -24,7 +24,9 @@ onServerPrefetch(async () => {
 <template>
   <PopoverRoot v-if="top3Events.length > 0">
     <PopoverTrigger as-child class="group">
-      <UIButton>
+      <UIButton
+        variant="secondary"
+      >
         <template #label>
           過去の開催
         </template>

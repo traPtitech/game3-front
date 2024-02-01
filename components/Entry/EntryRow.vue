@@ -11,7 +11,6 @@ const props = defineProps<Props>()
 
 <template>
   <NuxtLink :to="`/entry/${props.game.id}`" class="block w-full flex gap-5">
-    <!-- TODO: 画像URL取得関数に切り出し -->
     <img :src="gameIconUrl(props.game.id)" width="200px" height="200px" class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary">
     <div class="w-full flex flex-col gap2">
       <div class="text-8 font-700">

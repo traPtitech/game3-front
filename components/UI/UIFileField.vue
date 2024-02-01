@@ -6,7 +6,6 @@ import {
   type ImageTransforms,
   type ImageSize
 } from 'vue-advanced-cropper'
-import 'vue-advanced-cropper/dist/style.css'
 
 type Props = {
   label: string;

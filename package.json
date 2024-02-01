@@ -43,7 +43,8 @@
     "radix-vue": "^1.2.2",
     "valibot": "^0.24.1",
     "vee-validate": "^4.12.4",
-    "vue-advanced-cropper": "^2.8.8"
+    "vue-advanced-cropper": "^2.8.8",
+    "vue-toast-notification": "^3"
   },
   "packageManager": "pnpm@8.14.3+sha256.2d0363bb6c314daa67087ef07743eea1ba2e2d360c835e8fec6b5575e4ed9484",
   "msw": {
