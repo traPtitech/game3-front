@@ -1,6 +1,6 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
-import { getParamsArray } from '~/lib/url'
+import { gameIconUrl, gameImageUrl, getParamsArray } from '~/lib/url'
 
 const route = useRoute()
 const gameIdArray = getParamsArray(route.params.gameId)
@@ -12,33 +12,53 @@ if (!gameId) {
   })
 }
 
-const { data, error, suspense } = useGameQuery({ gameId })
+const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
-  await suspense()
+  await suspenseGame()
 })
-
-if (error) {
-  throw createError({
-    statusCode: 500,
-    statusMessage: error.value?.message
-  })
-}
 </script>
 
 <template>
-  <div v-if="data">
-    <h2>{{ data.title }}</h2>
+  <div v-if="game">
+    <ProseH1>{{ game.title }}</ProseH1>
     <div>
-      <div>タイトル</div>
-      <div>{{ data.title }}</div>
-    </div>
-    <div>
-      <div>説明</div>
-      <div>{{ data.description }}</div>
-    </div>
-    <div>
-      <div>展示者名</div>
-      <div>{{ data.creatorName }}</div>
+      <img
+        :src="gameImageUrl(gameId)"
+        alt=""
+        class="mx-auto h-120 w-auto object-contain"
+        @error="
+          (e) => {
+            if (
+              (e.currentTarget as HTMLImageElement).src !== gameIconUrl(gameId)
+            ) {
+              (e.currentTarget as HTMLImageElement).src = gameIconUrl(gameId);
+            }
+          }
+        "
+      >
+      <div class="flex gap-4 text-caption text-text-secondary!">
+        <div class="flex items-center gap-1">
+          <div class="i-tabler:user h-6 w-6" />
+          <ProseA
+            :href="game.creatorPageUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ game.creatorName }}
+          </ProseA>
+        </div>
+        <div class="flex items-center gap-1">
+          <div class="i-tabler:link h-6 w-6" />
+          <ProseA
+            :href="game.gamePageUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ game.gamePageUrl }}
+          </ProseA>
+        </div>
+      </div>
+      <ProseP>{{ game.description }}</ProseP>
     </div>
   </div>
 </template>

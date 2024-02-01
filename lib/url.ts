@@ -13,3 +13,7 @@ export const getParamsArray = (params: string | string[] | undefined) => {
   }
   return params ? [params] : undefined
 }
+
+export const gameImageUrl = (gameId: string) => `/api/games/${gameId}/image`
+export const gameIconUrl = (gameId: string) => `/api/games/${gameId}/icon`
+export const eventImageUrl = (eventSlug: string) => `/api/events/${eventSlug}/image`
