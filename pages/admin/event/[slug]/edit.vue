@@ -1,4 +1,4 @@
-<!-- `/entry/register` -->
+<!-- `/admin/event/:slug/edit` -->
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import {
@@ -75,8 +75,8 @@ const onSubmit = handleSubmit(async (values) => {
 
 <template>
   <div>
-    <ProseH1> イベント新規作成ページ </ProseH1>
-    <ProseH2> イベント情報入力フォーム </ProseH2>
+    <ProseH1>イベント編集ページ</ProseH1>
+    <ProseH2>イベント情報入力フォーム</ProseH2>
     <div class="w-full flex flex-col gap-4">
       <form class="flex flex-col gap-4">
         <UITextField
@@ -116,12 +116,12 @@ const onSubmit = handleSubmit(async (values) => {
               :disabled="!meta.valid"
               @click="confirmModalOpen = true"
             >
-              登録確認
+              更新確認
             </UIButton>
             <UIDialog>
               <div class="text-body">
                 <div class="text-5 font-500">
-                  以下の内容で登録します。よろしいですか？
+                  以下の内容で更新します。よろしいですか？
                 </div>
                 <div class="mb-8 space-y-2">
                   <div>イベント名：{{ values.title }}</div>
