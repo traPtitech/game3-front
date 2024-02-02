@@ -42,19 +42,23 @@ const termMap = computed(
         ?.sort((a, b) =>
           a.startAt && b.startAt && a.startAt > b.startAt ? 1 : -1
         )
-        .map((term, i) => ([term.id!, {
-          term,
-          termName: term.isDefault ? 'ターム未割当' : `ターム${i}`
-        }])) ?? []
+        .map((term, i) => [
+          term.id,
+          {
+            term,
+            termName: term.isDefault ? 'ターム未割当' : `ターム${i}`
+          }
+        ]) ?? []
     )
 )
 
-const displayGames = computed(() => games.value?.map(
-  game => ({
-    ...game,
-    ...termMap.value.get(game.termId)
-  })
-) ?? [])
+const displayGames = computed(
+  () =>
+    games.value?.map(game => ({
+      ...game,
+      ...termMap.value.get(game.termId)
+    })) ?? []
+)
 
 const termColumnHelper =
   createColumnHelper<(typeof displayGames)['value'][number]>()
@@ -105,23 +109,28 @@ const table = useVueTable({
   <div>
     <div v-if="event">
       <ProseH1>{{ event.title }}</ProseH1>
-      <div>
-        <img
-          :src="eventImageUrl(eventSlug)"
-          alt=""
-          class="mx-auto h-120 w-auto object-contain"
+      <div class="flex flex-col gap-4">
+        <ProseImg :src="eventImageUrl(eventSlug)" />
+        <div>タイトル:{{ event.title }}</div>
+        <div>slug: {{ event.slug }}</div>
+        <div>
+          出展受付開始日時:{{
+            event.gameSubmissionPeriodStart.toLocaleString("ja-JP")
+          }}
+        </div>
+        <div>
+          出展受付終了日時:{{
+            event.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
+          }}
+        </div>
+        <UIButton
+          @click="async () => await navigateTo(`/admin/event/${eventSlug}/edit`)"
         >
-        タイトル: {{ event.title }} slug: {{ event.slug }} 出展受付開始日時:
-        {{
-          event.gameSubmissionPeriodStart.toLocaleString("ja-JP")
-        }}
-        出展受付終了日時:
-        {{ event.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}
+          イベント編集ページへ
+        </UIButton>
       </div>
     </div>
-    <ProseH2>
-      ゲーム一覧
-    </ProseH2>
+    <ProseH2> ゲーム一覧 </ProseH2>
     <ProseTable>
       <thead>
         <tr
@@ -143,9 +152,7 @@ const table = useVueTable({
               :props="header.getContext()"
             />
             {{
-              { asc: ' 🔼', desc: ' 🔽' }[
-                header.column.getIsSorted() as string
-              ]
+              { asc: " 🔼", desc: " 🔽" }[header.column.getIsSorted() as string]
             }}
           </th>
         </tr>

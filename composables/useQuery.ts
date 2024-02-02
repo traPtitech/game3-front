@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest, type PostEventRequest, type PatchEventOperationRequest, type GetEventImageRequest } from '~/lib/api'
+import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest, type PostEventRequest, type PatchEventOperationRequest, type GetEventImageRequest, type PatchGameRequest, type GetGameIconRequest, type GetGameImageRequest, TermsApi } from '~/lib/api'
 
 const apiConfig = new Configuration({
   basePath: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : '/api'
@@ -63,8 +63,29 @@ export const useGameQuery = (req: GetGameRequest) => useQuery({
   queryFn: () => gamesApi.getGame(req)
 })
 
+export const useGameIconQuery = (req: GetGameIconRequest) => useQuery({
+  queryKey: ['games', req, 'icon'],
+  queryFn: () => gamesApi.getGameIcon(req)
+})
+
+export const useGameImageQuery = (req: GetGameImageRequest) => useQuery({
+  queryKey: ['games', req, 'image'],
+  queryFn: () => gamesApi.getGameImage(req)
+})
+
 export const useMutatePostGame = () => useMutation({
   mutationFn: (req: PostGameRequest) => gamesApi.postGame(req)
+})
+
+export const useMutatePatchGame = () => useMutation({
+  mutationFn: (req: PatchGameRequest) => gamesApi.patchGame(req)
+})
+
+const termsApi = new TermsApi(apiConfig)
+
+export const useTermsQuery = () => useQuery({
+  queryKey: ['terms'],
+  queryFn: () => termsApi.getTerms()
 })
 
 const authApi = new AuthApi(apiConfig)

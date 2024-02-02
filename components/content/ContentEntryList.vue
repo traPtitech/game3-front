@@ -28,7 +28,7 @@ const termGamesMap = computed(() => {
     .sort((a, b) => (a.startAt && b.startAt && a.startAt > b.startAt ? 1 : -1))
     .map(term => ({
       term,
-      games: termIdMap[term.id!] || []
+      games: termIdMap[term.id] || []
     }))
 })
 
@@ -54,7 +54,7 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
       <TabsTrigger
         v-for="(term, i) in termGamesMap"
         :key="term.term.id"
-        :value="term.term.id!"
+        :value="term.term.id"
         class="data-[state=inactive]:text-text-secondary!"
       >
         <div class="text-8 font-500">
@@ -80,7 +80,7 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
     <TabsContent
       v-for="term in termGamesMap"
       :key="term.term.id"
-      :value="term.term.id!"
+      :value="term.term.id"
     >
       <ul class="space-y-6">
         <li v-for="game in term.games" :key="game.id">

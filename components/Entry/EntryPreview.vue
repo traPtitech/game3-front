@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PostGameRequest } from '~/lib/api'
+import type { PostGameRequest, PatchGameRequest } from '~/lib/api'
 import PlaceHolderImg from '~/assets/img/placeholder.png'
 
 type Props = {
-  gameReq: Partial<PostGameRequest>;
+  gameReq: Partial<PostGameRequest | PatchGameRequest>;
 };
 const props = defineProps<Props>()
 
@@ -35,7 +35,7 @@ onUnmounted(() => {
         </div>
         <div class="flex items-center gap-1">
           <div class="i-tabler:map-pin h-6 w-6" />
-          1-A
+          {{ props.gameReq.place ?? "1-A" }}
         </div>
       </div>
       <div

@@ -24,25 +24,25 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    userId?: string;
+    userId: string;
     /**
      * 
      * @type {string}
      * @memberof User
      */
-    username?: string;
+    username: string;
     /**
      * 
      * @type {string}
      * @memberof User
      */
-    profileImageUrl?: string;
+    role: UserRoleEnum;
     /**
      * 
      * @type {string}
      * @memberof User
      */
-    role?: UserRoleEnum;
+    profileImageUrl: string;
 }
 
 
@@ -50,8 +50,9 @@ export interface User {
  * @export
  */
 export const UserRoleEnum = {
-    Admin: 'admin',
-    User: 'user'
+    Guest: 'guest',
+    User: 'user',
+    Admin: 'admin'
 } as const;
 export type UserRoleEnum = typeof UserRoleEnum[keyof typeof UserRoleEnum];
 
@@ -61,6 +62,10 @@ export type UserRoleEnum = typeof UserRoleEnum[keyof typeof UserRoleEnum];
  */
 export function instanceOfUser(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "userId" in value;
+    isInstance = isInstance && "username" in value;
+    isInstance = isInstance && "role" in value;
+    isInstance = isInstance && "profileImageUrl" in value;
 
     return isInstance;
 }
@@ -75,10 +80,10 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
     }
     return {
         
-        'userId': !exists(json, 'userId') ? undefined : json['userId'],
-        'username': !exists(json, 'username') ? undefined : json['username'],
-        'profileImageUrl': !exists(json, 'profileImageUrl') ? undefined : json['profileImageUrl'],
-        'role': !exists(json, 'role') ? undefined : json['role'],
+        'userId': json['userId'],
+        'username': json['username'],
+        'role': json['role'],
+        'profileImageUrl': json['profileImageUrl'],
     };
 }
 
@@ -93,8 +98,8 @@ export function UserToJSON(value?: User | null): any {
         
         'userId': value.userId,
         'username': value.username,
-        'profileImageUrl': value.profileImageUrl,
         'role': value.role,
+        'profileImageUrl': value.profileImageUrl,
     };
 }
 

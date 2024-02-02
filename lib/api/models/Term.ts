@@ -24,31 +24,31 @@ export interface Term {
      * @type {string}
      * @memberof Term
      */
-    id?: string;
+    id: string;
     /**
      * イベントのslug
      * @type {string}
      * @memberof Term
      */
-    eventSlug?: string;
+    eventSlug: string;
     /**
      * ゲーム登録時に割り当てられるTermならばTrue
      * @type {boolean}
      * @memberof Term
      */
-    isDefault?: boolean;
+    isDefault: boolean;
     /**
      * タームが始まる時間
      * @type {Date}
      * @memberof Term
      */
-    startAt?: Date;
+    startAt: Date;
     /**
      * タームが終わる時間
      * @type {Date}
      * @memberof Term
      */
-    endAt?: Date;
+    endAt: Date;
 }
 
 /**
@@ -56,6 +56,11 @@ export interface Term {
  */
 export function instanceOfTerm(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "id" in value;
+    isInstance = isInstance && "eventSlug" in value;
+    isInstance = isInstance && "isDefault" in value;
+    isInstance = isInstance && "startAt" in value;
+    isInstance = isInstance && "endAt" in value;
 
     return isInstance;
 }
@@ -70,11 +75,11 @@ export function TermFromJSONTyped(json: any, ignoreDiscriminator: boolean): Term
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'eventSlug': !exists(json, 'eventSlug') ? undefined : json['eventSlug'],
-        'isDefault': !exists(json, 'isDefault') ? undefined : json['isDefault'],
-        'startAt': !exists(json, 'startAt') ? undefined : (new Date(json['startAt'])),
-        'endAt': !exists(json, 'endAt') ? undefined : (new Date(json['endAt'])),
+        'id': json['id'],
+        'eventSlug': json['eventSlug'],
+        'isDefault': json['isDefault'],
+        'startAt': (new Date(json['startAt'])),
+        'endAt': (new Date(json['endAt'])),
     };
 }
 
@@ -90,8 +95,8 @@ export function TermToJSON(value?: Term | null): any {
         'id': value.id,
         'eventSlug': value.eventSlug,
         'isDefault': value.isDefault,
-        'startAt': value.startAt === undefined ? undefined : (value.startAt.toISOString()),
-        'endAt': value.endAt === undefined ? undefined : (value.endAt.toISOString()),
+        'startAt': (value.startAt.toISOString()),
+        'endAt': (value.endAt.toISOString()),
     };
 }
 
