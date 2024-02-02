@@ -4,7 +4,7 @@
       <NuxtLink to="/" class="mr-auto">
         <img
           src="/img/logo/Gamecube_logo_full.svg"
-          alt="Game3ロゴ"
+          alt="Game³ロゴ"
           class="h-16"
         >
       </NuxtLink>

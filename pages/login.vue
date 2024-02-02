@@ -26,7 +26,7 @@ callOnce(() => {
         Discordでログイン
       </ProseH2>
       <ProseP>
-        Game3への参加登録にはDiscordでのGame3サーバーへの参加によるログインが必須です。
+        Game³への参加登録にはDiscordでのGame³サーバーへの参加によるログインが必須です。
         Discordのアカウントをお持ちでない方は
         <ProseA
           href="https://discord.com/login"
