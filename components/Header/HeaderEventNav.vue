@@ -36,7 +36,7 @@ onServerPrefetch(async () => {
             <li>
               <NuxtLink
                 class="w-full inline-flex items-center gap-2"
-                :to="`/event/${currentEvent.slug}`"
+                :to="`/event/${currentEvent.slug}#開催概要`"
               >
                 <img :src="ListImage" aria-hidden>
                 <StrokedText
@@ -50,7 +50,7 @@ onServerPrefetch(async () => {
             <li>
               <NuxtLink
                 class="w-full inline-flex items-center gap-2"
-                :to="`/event/${currentEvent.slug}/games`"
+                :to="`/event/${currentEvent.slug}/#出展情報`"
               >
                 <img :src="ListImage" aria-hidden>
                 <StrokedText
