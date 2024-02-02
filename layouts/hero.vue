@@ -11,7 +11,10 @@ onServerPrefetch(async () => {
     <div class="grid grid-cols-[1fr_auto] h-100vh w-full overflow-hidden">
       <!-- TODO: use event image from api -->
       <!-- <img :src="`/api/events/${data?.slug}/image`" alt=""> -->
-      <img src="/hero-resized.png" class="h-full w-full overflow-hidden object-cover">
+      <div class="relative h-full w-full overflow-hidden">
+        <img src="/hero-resized.png" class="h-full w-full object-cover">
+        <img src="/img/logo/Gamecube_logo_full.svg" class="absolute bottom-0 right-0 w-[min(100%,max(60%,500px))] p-4">
+      </div>
       <div class="h-full flex flex-col justify-center gap-12 bg-brand-violet p-6 text-text-white">
         <div>
           <div class="mb-4 text-9 font-700">
@@ -25,7 +28,7 @@ onServerPrefetch(async () => {
           </h1>
         </div>
         <a v-if="currentEvent" :href="`/event/${currentEvent?.slug}`">
-          <div class="flex items-center gap-18">
+          <div class="flex items-center gap-8">
             <div class="text-16 text-brand-violet font-700 space-y-6">
               <div class="w-fit bg-surface-primary px-5">
                 {{ currentEvent?.slug }} Game³
@@ -34,7 +37,7 @@ onServerPrefetch(async () => {
                 3/16 (Sun)
               </div>
             </div>
-            <div class="i-tabler:chevron-right h-32 w-32 color-text-white" />
+            <div class="i-tabler:chevron-right h-24 w-24 color-text-white" />
           </div>
         </a>
       </div>
