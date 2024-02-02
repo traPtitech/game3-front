@@ -1,6 +1,8 @@
 import type { LocationQueryValue } from 'vue-router'
 
-export const getFirstQuery = (query: LocationQueryValue | LocationQueryValue[] | undefined) => {
+export const getFirstQuery = (
+  query: LocationQueryValue | LocationQueryValue[] | undefined
+) => {
   if (Array.isArray(query)) {
     return query[0] ?? undefined
   }
@@ -13,7 +15,3 @@ export const getParamsArray = (params: string | string[] | undefined) => {
   }
   return params ? [params] : undefined
 }
-
-export const gameImageUrl = (gameId: string) => `/api/games/${gameId}/image`
-export const gameIconUrl = (gameId: string) => `/api/games/${gameId}/icon`
-export const eventImageUrl = (eventSlug: string) => `/api/events/${eventSlug}/image`

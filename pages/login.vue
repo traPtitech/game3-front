@@ -14,6 +14,9 @@ callOnce(() => {
   }
 })
 
+useSeoMeta({
+  title: 'ログイン'
+})
 </script>
 
 <template>

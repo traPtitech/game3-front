@@ -44,15 +44,24 @@ export default defineNuxtConfig({
       }
     }
   },
+  runtimeConfig: {
+    public: {
+      basePath: process.env.NUXT_BASE_PATH || 'https://game3.trap.games'
+    }
+  },
   app: {
     head: {
+      title: 'Game³ | ゲーム制作者交流イベントGame³',
       link: [
         {
           rel: 'icon',
           type: 'image/svg+xml',
           href: '/favicon.svg'
         }
-      ]
+      ],
+      htmlAttrs: {
+        lang: 'ja'
+      }
     }
   }
 })

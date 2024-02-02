@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { eventImageUrl } from '~/lib/url'
 import type { Event } from '~/lib/api'
 
 type Props = {
@@ -11,7 +10,7 @@ const props = defineProps<Props>()
 <template>
   <NuxtLink :to="`/event/${event.slug}`" class="block flex items-center gap-8 text-text-secondary">
     <img
-      :src="eventImageUrl(props.event.slug)"
+      :src="useEventImageUrl(props.event.slug)"
       class="h-30 w-30 b-1 b-border-primary"
     >
     <div class="flex flex-col gap-2">

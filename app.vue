@@ -1,5 +1,52 @@
+<script setup lang="ts">
+const { data: currentEvent, suspense: suspenseCurrentEvent } =
+  useCurrentEventQuery()
+
+onServerPrefetch(async () => {
+  // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
+  await suspenseCurrentEvent().catch(() => {})
+})
+
+const config = useRuntimeConfig()
+
+const ogImageUrl = computed(() =>
+  currentEvent.value
+    ? useEventImageUrl(currentEvent.value?.slug, true)
+    : useDefaultOgpImageUrl()
+)
+
+const description = computed(
+  () =>
+    (currentEvent.value
+      ? `${
+          currentEvent.value.title
+        }Game³は${currentEvent.value.gameSubmissionPeriodStart.toLocaleDateString(
+          'ja-JP'
+        )}に開催予定です。`
+      : '') +
+    'Game³（ゲームキューブ）とは、クリエイター同士の交流を目的としたゲーム展示イベントです。ターム制の採用や懇親会など、ほか展示イベントよりも交流を重視したプログラムが特徴です。主に関東圏の同人ゲーム制作者・サークル様に数多くご参加頂いています。本イベントは「すべてのゲームクリエイターへ。」をコンセプトに、学生などの「はじめての出展」を応援しています。「ゲームを作ったけど人に見せる機会がない」「プレイヤーから直接フィードバックを受けたい」などでお困りの方が、まず作品を公開してみようと思える場を目指しています。'
+)
+
+useSeoMeta({
+  title: 'トップページ',
+  titleTemplate: title => `${title} | ゲーム制作者交流イベントGame³`,
+  description: () => description.value,
+  ogDescription: () => description.value,
+  twitterDescription: () => description.value,
+  // useSeoMeta内ではuseRuntimeConfigが使えないので<Meta />コンポーネントを使用してog imageを設定
+  // see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
+  // ogImage: () => ogImageUrl.value,
+  twitterCard: 'summary_large_image'
+})
+</script>
+
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <Meta name="twitter:image" :content="ogImageUrl" />
+    <Meta property="og:image" :content="ogImageUrl" />
+    <Meta property="og:url" :content="config.public.basePath" />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>

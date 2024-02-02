@@ -3,6 +3,10 @@
 definePageMeta({
   middleware: ['need-admin']
 })
+
+useSeoMeta({
+  title: '管理者ページ'
+})
 </script>
 
 <template>
@@ -10,8 +14,8 @@ definePageMeta({
     <ProseH1>
       管理者ページ
     </ProseH1>
-    <NuxtLink to="/admin/event">
+    <ProseA to="/admin/event">
       イベント管理ページ
-    </NuxtLink>
+    </ProseA>
   </div>
 </template>

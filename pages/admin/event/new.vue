@@ -50,6 +50,10 @@ const onSubmit = handleSubmit(async (values) => {
     console.error(e)
   }
 })
+
+useSeoMeta({
+  title: 'イベント新規作成'
+})
 </script>
 
 <template>

@@ -98,6 +98,10 @@ const onSubmit = handleSubmit(async (values) => {
     console.error(e)
   }
 })
+
+useSeoMeta({
+  title: () => game.value ? `${game.value.title} by ${game.value.creatorName} | 編集ページ` : 'ゲーム編集'
+})
 </script>
 
 <template>

@@ -4,6 +4,10 @@ const { data: events, suspense: suspenseEvents } = useEventsQuery()
 onServerPrefetch(async () => {
   await suspenseEvents().catch(() => {})
 })
+
+useSeoMeta({
+  title: '過去の開催'
+})
 </script>
 
 <template>

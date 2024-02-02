@@ -67,6 +67,10 @@ const onSubmit = handleSubmit(async (values) => {
     console.error(e)
   }
 })
+
+useSeoMeta({
+  title: '作品登録ページ'
+})
 </script>
 
 <template>

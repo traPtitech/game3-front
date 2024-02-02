@@ -1,6 +1,6 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
-import { gameIconUrl, gameImageUrl, getParamsArray } from '~/lib/url'
+import { getParamsArray } from '~/lib/url'
 
 const route = useRoute()
 const gameIdArray = getParamsArray(route.params.gameId)
@@ -16,6 +16,10 @@ const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
   await suspenseGame().catch(() => {})
 })
+
+useSeoMeta({
+  title: () => game.value ? `${game.value.title} by ${game.value.creatorName}` : 'ゲーム詳細'
+})
 </script>
 
 <template>
@@ -23,15 +27,17 @@ onServerPrefetch(async () => {
     <ProseH1>{{ game.title }}</ProseH1>
     <div>
       <img
-        :src="gameImageUrl(gameId)"
+        :src="useGameImageUrl(gameId)"
         alt=""
         class="mx-auto h-120 w-auto object-contain"
         @error="
           (e) => {
             if (
-              (e.currentTarget as HTMLImageElement).src !== gameIconUrl(gameId)
+              (e.currentTarget as HTMLImageElement).src !==
+              useGameIconUrl(gameId)
             ) {
-              (e.currentTarget as HTMLImageElement).src = gameIconUrl(gameId);
+              (e.currentTarget as HTMLImageElement).src =
+                useGameIconUrl(gameId);
             }
           }
         "

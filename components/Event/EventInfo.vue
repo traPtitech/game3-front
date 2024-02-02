@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { eventImageUrl } from '~/lib/url'
 import type { Event } from '~/lib/api'
 
 type Props = {
@@ -11,7 +10,7 @@ const props = defineProps<Props>()
 <template>
   <div>
     <ProseH2> イベント情報 </ProseH2>
-    <ProseImg :src="eventImageUrl(props.event.slug)" />
+    <ProseImg :src="useEventImageUrl(props.event.slug)" />
     <ProseTable>
       <tbody>
         <tr>
