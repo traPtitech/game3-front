@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest, type PostEventRequest, type PatchEventOperationRequest } from '~/lib/api'
+import { AuthApi, Configuration, EventsApi, GamesApi, UsersApi, type PostGameRequest, type GetEventRequest, type GetEventGamesRequest, type GetGameRequest, type GetGamesRequest, type GetEventTermsRequest, type PostEventRequest, type PatchEventOperationRequest, type GetEventImageRequest } from '~/lib/api'
 
 const apiConfig = new Configuration({
   basePath: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : '/api'
@@ -16,6 +16,13 @@ export const useEventQuery = (req: GetEventRequest) => {
   return useQuery({
     queryKey: ['events', req],
     queryFn: () => eventsApi.getEvent(req)
+  })
+}
+
+export const useEventImageQuery = (req: GetEventImageRequest) => {
+  return useQuery({
+    queryKey: ['events', req, 'image'],
+    queryFn: () => eventsApi.getEventImage(req)
   })
 }
 
