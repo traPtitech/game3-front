@@ -3,7 +3,7 @@
 import { getParamsArray } from '~/lib/url'
 
 definePageMeta({
-  middleware: ['login']
+  middleware: ['redirect-login']
 })
 
 const route = useRoute()

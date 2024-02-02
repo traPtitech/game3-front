@@ -1,6 +1,6 @@
 const isAuthenticated = () => {
-  const { me } = useLogin()
-  console.log('me', me.value)
+  const { useMeStore } = useLogin()
+  const me = useMeStore()
   return me.value.user !== undefined
 }
 

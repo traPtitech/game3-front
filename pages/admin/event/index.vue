@@ -4,7 +4,7 @@ import UIButton from '~/components/UI/UIButton.vue'
 import type { Event } from '~/lib/api'
 
 definePageMeta({
-  middleware: ['login']
+  middleware: ['redirect-login']
 })
 
 const { data: events, suspense } = useEventsQuery()

@@ -5,20 +5,21 @@ type Me = {
   user: User | undefined
 }
 
-export const useMeStore = () => {
-  const meState = useState<Me>('me')
+export const useMe = () => {
+  const useMeStore = () => useState<Me>('me', () => ({ user: undefined }))
 
   const { mutateAsync: mutateLogout } = useMutateLogout()
 
   const fetchMe = () => {
+    const me = useMeStore()
     try {
       const { data } = useGetMeQuery()
-      meState.value = {
+      me.value = {
         user: data.value
       }
       return data.value
     } catch (e) {
-      meState.value = {
+      me.value = {
         user: undefined
       }
       return undefined
@@ -26,14 +27,15 @@ export const useMeStore = () => {
   }
 
   const logout = async () => {
-    meState.value = {
+    const me = useMeStore()
+    me.value = {
       user: undefined
     }
     await mutateLogout()
   }
 
   return {
-    me: meState,
+    useMeStore,
     fetchMe,
     logout
   }

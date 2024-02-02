@@ -1,9 +1,9 @@
 import { useMutateLogin } from './useQuery'
-import { useMeStore } from '~/store/me'
+import { useMe } from '~/store/me'
 
 export const useLogin = () => {
   const { mutateAsync: mutateLogin } = useMutateLogin()
-  const { me, fetchMe, logout } = useMeStore()
+  const { useMeStore, fetchMe, logout } = useMe()
   const { redirectPath } = useRedirectParam()
 
   const login = async () => {
@@ -16,7 +16,7 @@ export const useLogin = () => {
   }
 
   return {
-    me,
+    useMeStore,
     login,
     logout
   }

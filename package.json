@@ -10,6 +10,7 @@
     "lint:fix": "eslint --ignore-path .gitignore --fix .",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "analyze": "nuxt analyze",
     "postinstall": "nuxt prepare",
     "gen:api-client": "rimraf -I lib/api && docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate -i https://raw.githubusercontent.com/traPtitech/game3-back/main/docs/openapi.yaml -g typescript-fetch -o /local/lib/api",
     "gen:api-mock": "msw-auto-mock https://raw.githubusercontent.com/traPtitech/game3-back/main/docs/openapi.yaml -o ./mocks/handlers.server.ts --node --base-url http://localhost:3000/api && msw-auto-mock https://raw.githubusercontent.com/traPtitech/game3-back/main/docs/openapi.yaml -o ./mocks/handlers.client.ts --base-url http://localhost:3000/api"

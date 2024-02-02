@@ -1,7 +1,7 @@
 <!-- `/admin` -->
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['login']
+  middleware: ['redirect-login']
 })
 </script>
 

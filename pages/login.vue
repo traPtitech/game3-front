@@ -1,10 +1,11 @@
 <script setup lang="ts">
-const { me, login, logout } = useLogin()
+const { useMeStore, login, logout } = useLogin()
+const me = useMeStore()
 </script>
 
 <template>
   <div>
-    <div v-if="me?.user === undefined">
+    <div v-if="me.user === undefined">
       <ProseH1>
         ログインページ
       </ProseH1>
