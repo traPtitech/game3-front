@@ -1,17 +1,25 @@
 <!-- `/event` -->
 <script setup lang="ts">
-const { data, suspense } = useEventsQuery()
+const { data: events, suspense: suspenseEvents } = useEventsQuery()
 onServerPrefetch(async () => {
-  await suspense()
+  await suspenseEvents().catch(() => {})
 })
 </script>
 
 <template>
-  <ul>
-    <li v-for="event in data" :key="event.id">
-      <NuxtLink :to="`/event/${event.id}`">
-        {{ event.title }}
-      </NuxtLink>
-    </li>
-  </ul>
+  <div>
+    <ProseH1>
+      過去の開催
+    </ProseH1>
+    <ProseH2>
+      開催イベント一覧
+    </ProseH2>
+    <ul class="divide-y-2">
+      <li v-for="event in events" :key="event.slug" class="py-5">
+        <EventRow
+          :event="event"
+        />
+      </li>
+    </ul>
+  </div>
 </template>
