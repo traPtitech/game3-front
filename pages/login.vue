@@ -1,6 +1,19 @@
 <script setup lang="ts">
+import { getFirstQuery } from '~/lib/url'
+
 const { useMeStore, login, logout } = useLogin()
 const me = useMeStore()
+
+const route = useRoute()
+const query = computed(() => getFirstQuery(route.query.redirect))
+const { $toast } = useNuxtApp()
+
+callOnce(() => {
+  if (query.value !== undefined) {
+    $toast.info(`${query.value}からリダイレクトしました`)
+  }
+})
+
 </script>
 
 <template>
