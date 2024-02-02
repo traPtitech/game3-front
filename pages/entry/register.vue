@@ -17,7 +17,7 @@ import {
 } from 'radix-vue'
 
 definePageMeta({
-  middleware: ['redirect-login']
+  middleware: ['need-login']
 })
 
 const { data, suspense } = useCurrentEventQuery()

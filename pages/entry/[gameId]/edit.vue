@@ -16,7 +16,7 @@ import { getParamsArray } from '~/lib/url'
 import { useMe } from '~/store/me'
 
 definePageMeta({
-  middleware: ['redirect-login']
+  middleware: ['need-login']
 })
 
 const route = useRoute()

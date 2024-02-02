@@ -1,3 +1,8 @@
 :root {
   font-family: "Noto Sans JP", sans-serif;
 }
+
+th, td {
+  padding: 0.5rem;
+  border: solid 1px #B9B9B9;
+}

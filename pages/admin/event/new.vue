@@ -16,7 +16,7 @@ import {
 } from 'radix-vue'
 
 definePageMeta({
-  middleware: ['redirect-login']
+  middleware: ['need-admin']
 })
 
 const { handleSubmit, meta, values } = useForm({

@@ -1,4 +1,3 @@
-<!-- `/admin/event/:slug/edit` -->
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import {
@@ -12,25 +11,16 @@ import {
 } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
-import { getParamsArray } from '~/lib/url'
+import type { Event } from '~/lib/api'
 
-definePageMeta({
-  middleware: ['redirect-login']
-})
-
-const route = useRoute()
-const slugArray = getParamsArray(route.params.slug)
-const eventSlug = slugArray?.[0]
-if (!eventSlug) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'イベントが見つかりませんでした'
-  })
+type Props = {
+  event: Event
 }
-const { data: event, suspense: suspenseEvent } = useEventQuery({ eventSlug })
-const { data: eventImage, suspense: suspenseEventImage } = useEventImageQuery({ eventSlug })
+const props = defineProps<Props>()
+
+const { data: eventImage, suspense: suspenseEventImage } = useEventImageQuery({ eventSlug: props.event.slug })
 onServerPrefetch(async () => {
-  await Promise.all([suspenseEvent(), suspenseEventImage()]).catch(() => {})
+  await suspenseEventImage().catch(() => {})
 })
 
 const { handleSubmit, meta, values } = useForm({
@@ -49,7 +39,7 @@ const { handleSubmit, meta, values } = useForm({
     })
   ),
   initialValues: {
-    ...event.value,
+    ...props.event,
     image: eventImage.value
   }
 })
@@ -75,8 +65,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 <template>
   <div>
-    <ProseH1>イベント編集ページ</ProseH1>
-    <ProseH2>イベント情報入力フォーム</ProseH2>
+    <ProseH2>イベント編集フォーム</ProseH2>
     <div class="w-full flex flex-col gap-4">
       <form class="flex flex-col gap-4">
         <UITextField
@@ -95,13 +84,11 @@ const onSubmit = handleSubmit(async (values) => {
           label="出展受付開始日時"
           helper-text="ゲーム登録期間開始日時"
           name="gameSubmissionPeriodStart"
-          type="date"
         />
         <UIDatePicker
           label="出展受付終了日時"
           helper-text="ゲーム登録期間終了日時"
           name="gameSubmissionPeriodEnd"
-          type="date"
         />
         <UIFileField
           label="イベントトップ画像"
