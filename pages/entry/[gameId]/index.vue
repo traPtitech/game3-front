@@ -14,7 +14,7 @@ if (!gameId) {
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
-  await suspenseGame()
+  await suspenseGame().catch(() => {})
 })
 </script>
 
