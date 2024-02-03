@@ -41,7 +41,7 @@ const eventsApi = new EventsApi(apiConfig)
 type DateToString<T> = {
   [K in keyof T]: T[K] extends Date ? string : T[K];
 };
-const dateToString = <T extends { [k: string]: unknown }>(
+const dateToString = <T extends object>(
   obj: T
 ): DateToString<T> => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
@@ -88,13 +88,13 @@ export const useCurrentEventQuery = () =>
 
 export const useMutatePostEvent = () =>
   useMutation({
-    mutationFn: (req: DateToString<PostEventRequest>) =>
+    mutationFn: (req: PostEventRequest) =>
       eventsApi.postEvent(dateToString(req) as any as PostEventRequest)
   })
 
 export const useMutatePatchEvent = () =>
   useMutation({
-    mutationFn: (req: DateToString<PatchEventRequest>) =>
+    mutationFn: (req: PatchEventRequest) =>
       eventsApi.patchEvent(dateToString(req) as any as PatchEventRequest)
   })
 
@@ -144,13 +144,13 @@ export const useTermsQuery = () =>
 
 export const useMutatePostTerm = () =>
   useMutation({
-    mutationFn: (req: DateToString<PostTermOperationRequest>) =>
+    mutationFn: (req: PostTermOperationRequest) =>
       termsApi.postTerm(dateToString(req) as any as PostTermOperationRequest)
   })
 
 export const useMutatePatchTerm = () =>
   useMutation({
-    mutationFn: (req: DateToString<PatchTermOperationRequest>) =>
+    mutationFn: (req: PatchTermOperationRequest) =>
       termsApi.patchTerm(dateToString(req) as any as PatchTermOperationRequest)
   })
 
