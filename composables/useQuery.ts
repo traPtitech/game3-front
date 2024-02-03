@@ -36,6 +36,23 @@ const apiConfig = new Configuration({
 
 const eventsApi = new EventsApi(apiConfig)
 
+// form-dataで送信するときにDate型を文字列に変換する必要がある
+// see: https://github.com/OpenAPITools/openapi-generator/issues/7584
+type DateToString<T> = {
+  [K in keyof T]: T[K] extends Date ? string : T[K];
+};
+const dateToString = <T extends { [k: string]: unknown }>(
+  obj: T
+): DateToString<T> => {
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    if (value instanceof Date) {
+      return { ...acc, [key]: value.toISOString() }
+    } else {
+      return { ...acc, [key]: value }
+    }
+  }, {} as DateToString<T>)
+}
+
 export const useEventsQuery = () =>
   useQuery({
     queryKey: ['events'],
@@ -71,12 +88,14 @@ export const useCurrentEventQuery = () =>
 
 export const useMutatePostEvent = () =>
   useMutation({
-    mutationFn: (req: PostEventRequest) => eventsApi.postEvent(req)
+    mutationFn: (req: DateToString<PostEventRequest>) =>
+      eventsApi.postEvent(dateToString(req) as any as PostEventRequest)
   })
 
 export const useMutatePatchEvent = () =>
   useMutation({
-    mutationFn: (req: PatchEventRequest) => eventsApi.patchEvent(req)
+    mutationFn: (req: DateToString<PatchEventRequest>) =>
+      eventsApi.patchEvent(dateToString(req) as any as PatchEventRequest)
   })
 
 const gamesApi = new GamesApi(apiConfig)
@@ -125,12 +144,14 @@ export const useTermsQuery = () =>
 
 export const useMutatePostTerm = () =>
   useMutation({
-    mutationFn: (req: PostTermOperationRequest) => termsApi.postTerm(req)
+    mutationFn: (req: DateToString<PostTermOperationRequest>) =>
+      termsApi.postTerm(dateToString(req) as any as PostTermOperationRequest)
   })
 
 export const useMutatePatchTerm = () =>
   useMutation({
-    mutationFn: (req: PatchTermOperationRequest) => termsApi.patchTerm(req)
+    mutationFn: (req: DateToString<PatchTermOperationRequest>) =>
+      termsApi.patchTerm(dateToString(req) as any as PatchTermOperationRequest)
   })
 
 export const authApi = new AuthApi(apiConfig)
