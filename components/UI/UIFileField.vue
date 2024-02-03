@@ -42,9 +42,12 @@ const {
 } = useField<Blob | undefined>(() => props.name)
 
 // トリミングする場合はinput要素から読み込んだ画像をここに入れる
-const inputImgSrc = ref<string | undefined>(
-  blobValue.value ? URL.createObjectURL(blobValue.value) : undefined
-)
+const inputImgSrc = ref<string | undefined>(undefined)
+watch(blobValue, (newVal, oldVal) => {
+  if (newVal && oldVal === undefined) {
+    inputImgSrc.value = URL.createObjectURL(newVal)
+  }
+})
 
 // トリミングしない場合の画像表示用src
 const imgSrc = computed(() => {
@@ -60,9 +63,16 @@ const defaultSize = ({ imageSize }: { imageSize: ImageSize }): ImageSize => {
 }
 
 const removeImage = () => {
+  if (inputImgSrc.value) {
+    URL.revokeObjectURL(inputImgSrc.value)
+  }
   inputImgSrc.value = undefined
+
   URL.revokeObjectURL(imgSrc.value)
   resetField()
+  if (inputRef.value) {
+    inputRef.value.value = ''
+  }
 }
 
 const onCropChange = (
@@ -70,24 +80,11 @@ const onCropChange = (
     imageTransforms: ImageTransforms;
   }
 ) => {
-  URL.revokeObjectURL(imgSrc.value)
   data.canvas?.toBlob((blob) => {
     if (blob) {
       setValue(blob)
     }
   })
-}
-
-const onInputChange: HTMLInputElement['onchange'] = (e) => {
-  if (props.useCrop) {
-    const file = (e.target as HTMLInputElement).files?.[0]
-    if (file) {
-      inputImgSrc.value = URL.createObjectURL(file)
-    }
-  } else {
-    // トリミングしない場合はそのまま渡す
-    handleChange(e)
-  }
 }
 </script>
 
@@ -149,8 +146,8 @@ const onInputChange: HTMLInputElement['onchange'] = (e) => {
       :accept="props.accept"
       :aria-invalid="meta.validated && !meta.valid"
       :data-invalid="meta.validated && !meta.valid"
-      class="hidden"
-      @change="onInputChange"
+      class=""
+      @input="handleChange"
       @blur="handleBlur"
     >
     <div v-if="errorMessage" class="text-caption text-text-semantic-error">
