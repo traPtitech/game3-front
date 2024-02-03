@@ -2,7 +2,9 @@
 import type { PostGameRequest, PatchGameRequest } from '~/lib/api'
 
 type Props = {
-  gameReq: Partial<PostGameRequest | PatchGameRequest>;
+  gameReq: Partial<PostGameRequest | PatchGameRequest> & {
+    place?: string;
+  };
 };
 const props = defineProps<Props>()
 
@@ -22,7 +24,12 @@ onUnmounted(() => {
 
 <template>
   <div class="block w-full flex gap-5">
-    <img :src="iconImgSrc ?? '/img/placeholder.png'" width="200px" height="200px" class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary">
+    <img
+      :src="iconImgSrc ?? '/img/placeholder.png'"
+      width="200px"
+      height="200px"
+      class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary"
+    >
     <div class="w-full flex flex-col gap2">
       <div class="text-8 font-700">
         {{ props.gameReq.title ?? "ゲームタイトルを入力してください" }}
@@ -37,9 +44,7 @@ onUnmounted(() => {
           {{ props.gameReq.place ?? "1-A" }}
         </div>
       </div>
-      <div
-        class="line-clamp-3 text-ellipsis text-body"
-      >
+      <div class="line-clamp-3 text-ellipsis text-body">
         {{ props.gameReq.description ?? "ゲーム詳細を入力してください" }}
       </div>
     </div>
