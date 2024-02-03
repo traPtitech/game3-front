@@ -45,6 +45,10 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    discord: {
+      clientId: process.env.NUXT_DISCORD_CLIENT_ID,
+      redirectUri: process.env.NUXT_DISCORD_REDIRECT_URI
+    },
     public: {
       basePath: process.env.NUXT_BASE_PATH || 'https://game3.trap.games'
     }
