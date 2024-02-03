@@ -12,9 +12,7 @@ import {
   literal
 } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
-import {
-  DialogRoot
-} from 'radix-vue'
+import { DialogRoot } from 'radix-vue'
 
 definePageMeta({
   middleware: ['need-login']
@@ -32,19 +30,25 @@ const { handleSubmit, meta, values } = useForm({
         minLength(1, '作品タイトルは1文字以上で入力してください')
       ]),
       gamePageUrl: optional(
-        union([
-          literal(''),
-          string([url('ゲームページURLは正しいURL形式で入力してください')])
-        ], 'ゲームページURLは正しいURL形式で入力してください')
+        union(
+          [
+            literal(''),
+            string([url('ゲームページURLは正しいURL形式で入力してください')])
+          ],
+          'ゲームページURLは正しいURL形式で入力してください'
+        )
       ),
       creatorName: string([
         minLength(1, '出展者名は1文字以上で入力してください')
       ]),
       creatorPageUrl: optional(
-        union([
-          string([url('出展者ページURLは正しいURL形式で入力してください')]),
-          literal('')
-        ], 'ゲームページURLは正しいURL形式で入力してください')
+        union(
+          [
+            string([url('出展者ページURLは正しいURL形式で入力してください')]),
+            literal('')
+          ],
+          'ゲームページURLは正しいURL形式で入力してください'
+        )
       ),
       icon: blob(),
       description: optional(string(), ''),
@@ -75,22 +79,30 @@ useSeoMeta({
 
 <template>
   <div>
-    <ProseH1>
-      作品登録ページ
-    </ProseH1>
-    <ProseH2>
-      作品情報入力フォーム
-    </ProseH2>
+    <ProseH1> 作品登録ページ </ProseH1>
+    <ProseH2> 作品情報入力フォーム </ProseH2>
     <div v-if="data" class="w-full flex flex-col gap-4">
       <div class="text-center text-brand-violet font-700">
         <div>現在の出展対象イベント：{{ data.title }} Game³</div>
-        <div>出展締め切り：{{ data.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}</div>
+        <div>
+          出展締め切り：{{
+            data.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
+          }}
+        </div>
       </div>
       <form class="flex flex-col gap-4">
         <UITextField label="ゲーム名" name="title" />
-        <UITextField label="ゲームページリンク" name="gamePageUrl" placeholder="https://example.com" />
+        <UITextField
+          label="ゲームページリンク"
+          name="gamePageUrl"
+          placeholder="https://example.com"
+        />
         <UITextField label="出展者名" name="creatorName" />
-        <UITextField label="出展者ホームページ" name="creatorPageUrl" placeholder="https://example.com" />
+        <UITextField
+          label="出展者ホームページ"
+          name="creatorPageUrl"
+          placeholder="https://example.com"
+        />
         <UITextAreaField label="ゲーム詳細" name="description" />
         <UIFileField label="ゲーム画像" accept="image/*" name="image" />
         <UIFileField
@@ -100,17 +112,11 @@ useSeoMeta({
           use-crop
           :aspect-ratio="1"
         />
-        <ProseH3>
-          登録内容プレビュー
-        </ProseH3>
-        <EntryPreview
-          :game-req="values"
-        />
+        <ProseH3> 登録内容プレビュー </ProseH3>
+        <EntryPreview :game-req="values" />
         <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
         <div class="flex justify-center">
-          <DialogRoot
-            v-model:open="confirmModalOpen"
-          >
+          <DialogRoot v-model:open="confirmModalOpen">
             <UIButton
               type="button"
               :disabled="!meta.valid"
@@ -125,15 +131,20 @@ useSeoMeta({
                 </div>
                 <div class="mb-8 space-y-2">
                   <div>ゲーム名：{{ values.title }}</div>
-                  <div>ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}</div>
+                  <div>
+                    ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}
+                  </div>
                   <div>出展者名：{{ values.creatorName }}</div>
-                  <div>出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}</div>
+                  <div>
+                    出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
+                  </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
                 <div class="flex gap-4">
                   <UIButton
                     type="button"
                     variant="secondary"
+                    @click="confirmModalOpen = false"
                   >
                     キャンセル
                   </UIButton>
