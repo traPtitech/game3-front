@@ -15,7 +15,8 @@ onServerPrefetch(async () => {
     <div class="grid grid-cols-[1fr_auto] h-100vh w-full overflow-hidden">
       <div class="relative h-full w-full overflow-hidden">
         <NuxtImg
-          :src="currentEvent ? useEventImageUrl(currentEvent.slug) : ''"
+          v-if="currentEvent"
+          :src="useEventImageUrl(currentEvent.slug)"
           class="h-full w-full object-cover"
         />
         <NuxtImg
