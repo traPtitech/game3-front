@@ -17,5 +17,6 @@ useSeoMeta({
     <ProseA to="/admin/event">
       イベント管理ページ
     </ProseA>
+    <!-- TODO: add document -->
   </div>
 </template>

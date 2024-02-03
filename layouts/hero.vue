@@ -11,6 +11,7 @@ onServerPrefetch(async () => {
 
 <template>
   <div>
+    <!-- TODO: add effect animation -->
     <div class="grid grid-cols-[1fr_auto] h-100vh w-full overflow-hidden">
       <!-- TODO: use event image from api -->
       <!-- <NuxtImg :src="`/api/events/${data?.slug}/image`" alt=""> -->

@@ -18,6 +18,8 @@ const { data: eventTerms, suspense: suspenseEventTerms } = useEventTermsQuery({
   eventSlug: props.eventSlug
 })
 
+// TODO: タームが作成されていない場合はすべてのゲームを表示する
+
 const termGamesMap = computed(() => {
   if (!eventGames.value || !eventTerms.value) {
     return []
