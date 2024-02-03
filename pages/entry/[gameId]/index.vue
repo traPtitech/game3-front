@@ -17,6 +17,16 @@ onServerPrefetch(async () => {
   await suspenseGame().catch(() => {})
 })
 
+const { useMeStore } = useLogin()
+const me = useMeStore()
+
+const canEdit = computed(() => {
+  return (
+    me.value.user?.role === 'admin' ||
+    (me.value.user && me.value.user.userId === game.value?.discordUserId)
+  )
+})
+
 useSeoMeta({
   title: () =>
     game.value
@@ -58,6 +68,13 @@ useSeoMeta({
         </div>
       </div>
       <ProseP>{{ game.description }}</ProseP>
+      <div v-if="canEdit" class="w-full flex justify-center">
+        <UIButton
+          @click="navigateTo(`/entry/${gameId}/edit`)"
+        >
+          ゲーム情報を編集する
+        </UIButton>
+      </div>
     </div>
   </div>
 </template>

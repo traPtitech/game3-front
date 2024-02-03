@@ -1,6 +1,7 @@
 <!-- `/entry/:gameId/edit` -->
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/valibot'
+import { DialogRoot } from 'radix-vue'
 import {
   object,
   string,
