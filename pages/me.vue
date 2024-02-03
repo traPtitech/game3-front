@@ -1,5 +1,9 @@
 <!-- `/me` -->
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['need-login']
+})
+
 const { useMeStore } = useLogin()
 const me = useMeStore()
 
