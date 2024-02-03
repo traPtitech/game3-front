@@ -18,7 +18,10 @@ onServerPrefetch(async () => {
 })
 
 useSeoMeta({
-  title: () => game.value ? `${game.value.title} by ${game.value.creatorName}` : 'ゲーム詳細'
+  title: () =>
+    game.value
+      ? `${game.value.title} by ${game.value.creatorName}`
+      : 'ゲーム詳細'
 })
 </script>
 
@@ -34,10 +37,12 @@ useSeoMeta({
           (e) => {
             if (
               (e.currentTarget as HTMLImageElement).src !==
-              useGameIconUrl(gameId)
+              useGameIconUrl(gameId, true)
             ) {
-              (e.currentTarget as HTMLImageElement).src =
-                useGameIconUrl(gameId);
+              (e.currentTarget as HTMLImageElement).src = useGameIconUrl(
+                gameId,
+                true
+              );
             }
           }
         "
