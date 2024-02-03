@@ -9,6 +9,10 @@ export const useLogin = () => {
   const login = async () => {
     await authApi.login({
       redirect: encodeURI(config.public.basePath + (redirectPath.value ?? '/'))
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
     })
   }
 
