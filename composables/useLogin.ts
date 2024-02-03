@@ -6,11 +6,14 @@ export const useLogin = () => {
   const config = useRuntimeConfig()
 
   const login = () => {
+    const params = new URLSearchParams({
+      redirect: config.public.basePath + (redirectPath.value ?? '/')
+    })
     const authPath =
-      config.public.basePath +
-      '/api/auth/login?' +
-      encodeURIComponent(config.public.basePath + (redirectPath.value ?? '/'))
+      config.public.basePath + '/api/auth/login?' + params.toString()
 
+    // 本来はAuthApi.login()を使うべきだが
+    // CORSの問題で使えないため直接location.hrefを変更しています
     window.location.href = authPath
   }
 
