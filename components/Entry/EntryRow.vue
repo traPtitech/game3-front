@@ -44,8 +44,8 @@ const event = computed(
         {{ props.game.title }}
       </div>
       <div class="flex gap-4 text-caption text-text-secondary!">
-        <div v-if="props.variant === 'myPage' && term">
-          <div v-if="!term.isDefault">
+        <div v-if="props.variant === 'myPage'">
+          <div v-if="props.game.isPublished">
             公開中
           </div>
           <TooltipRoot v-else>

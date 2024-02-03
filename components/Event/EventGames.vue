@@ -18,7 +18,8 @@ const { data: terms, suspense: suspenseTerms } = useEventTermsQuery({
   eventSlug: props.eventSlug
 })
 const { data: games, suspense: suspenseGames } = useGamesQuery({
-  eventSlug: props.eventSlug
+  eventSlug: props.eventSlug,
+  includeUnpublished: true
 })
 onServerPrefetch(async () => {
   await Promise.all([suspenseTerms(), suspenseGames()]).catch(() => {})

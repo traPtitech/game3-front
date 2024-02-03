@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import type { User } from '~/lib/api'
+
 type Props = {
   user: User;
 };
 const props = defineProps<Props>()
 
 const { data: games, suspense: suspenseGames } = useGamesQuery({
-  include: 'unpublished',
-  userId: props.user.id
+  userId: props.user.userId,
+  includeUnpublished: true
 })
 onServerPrefetch(async () => {
   await suspenseGames().catch(() => {})

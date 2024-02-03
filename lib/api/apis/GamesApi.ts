@@ -49,7 +49,7 @@ export interface GetGamesRequest {
     termId?: string;
     eventSlug?: string;
     userId?: string;
-    include?: string;
+    includeUnpublished?: boolean;
 }
 
 export interface PatchGameRequest {
@@ -57,6 +57,7 @@ export interface PatchGameRequest {
     termId?: string;
     discordUserId?: string;
     title?: string;
+    isPublished?: boolean;
     creatorName?: string;
     creatorPageUrl?: string;
     gamePageUrl?: string;
@@ -232,7 +233,7 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
-     * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&include=unpublished
+     * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&includeUnpublished=true
      */
     async getGamesRaw(requestParameters: GetGamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Game>>> {
         const queryParameters: any = {};
@@ -249,8 +250,8 @@ export class GamesApi extends runtime.BaseAPI {
             queryParameters['userId'] = requestParameters.userId;
         }
 
-        if (requestParameters.include !== undefined) {
-            queryParameters['include'] = requestParameters.include;
+        if (requestParameters.includeUnpublished !== undefined) {
+            queryParameters['includeUnpublished'] = requestParameters.includeUnpublished;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -266,7 +267,7 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
-     * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&include=unpublished
+     * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&includeUnpublished=true
      */
     async getGames(requestParameters: GetGamesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Game>> {
         const response = await this.getGamesRaw(requestParameters, initOverrides);
@@ -313,6 +314,10 @@ export class GamesApi extends runtime.BaseAPI {
 
         if (requestParameters.title !== undefined) {
             formParams.append('title', requestParameters.title as any);
+        }
+
+        if (requestParameters.isPublished !== undefined) {
+            formParams.append('isPublished', requestParameters.isPublished as any);
         }
 
         if (requestParameters.creatorName !== undefined) {

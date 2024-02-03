@@ -38,6 +38,12 @@ export interface Game {
      */
     discordUserId: string;
     /**
+     * 公開されているかどうか
+     * @type {boolean}
+     * @memberof Game
+     */
+    isPublished: boolean;
+    /**
      * 展示するゲームタイトル
      * @type {string}
      * @memberof Game
@@ -83,6 +89,7 @@ export function instanceOfGame(value: object): boolean {
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "termId" in value;
     isInstance = isInstance && "discordUserId" in value;
+    isInstance = isInstance && "isPublished" in value;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "creatorName" in value;
     isInstance = isInstance && "description" in value;
@@ -103,6 +110,7 @@ export function GameFromJSONTyped(json: any, ignoreDiscriminator: boolean): Game
         'id': json['id'],
         'termId': json['termId'],
         'discordUserId': json['discordUserId'],
+        'isPublished': json['isPublished'],
         'title': json['title'],
         'creatorName': json['creatorName'],
         'creatorPageUrl': !exists(json, 'creatorPageUrl') ? undefined : json['creatorPageUrl'],
@@ -124,6 +132,7 @@ export function GameToJSON(value?: Game | null): any {
         'id': value.id,
         'termId': value.termId,
         'discordUserId': value.discordUserId,
+        'isPublished': value.isPublished,
         'title': value.title,
         'creatorName': value.creatorName,
         'creatorPageUrl': value.creatorPageUrl,
