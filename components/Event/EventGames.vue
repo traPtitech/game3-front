@@ -65,14 +65,29 @@ const columns = [
     header: '出展者名'
   }),
   termColumnHelper.display({
-    id: 'edit',
+    id: 'links',
     cell: info =>
       h(
-        ProseA,
+        'div',
         {
-          to: `/entry/${info.row.original.id}/edit`
+          class: 'flex gap-2'
         },
-        ['編集ページ']
+        [
+          h(
+            ProseA,
+            {
+              to: `/entry/${info.row.original.id}`
+            },
+            ['詳細ページ']
+          ),
+          h(
+            ProseA,
+            {
+              to: `/entry/${info.row.original.id}/edit`
+            },
+            ['編集ページ']
+          )
+        ]
       ),
     header: '編集ページ'
   })
@@ -131,8 +146,14 @@ const table = useVueTable({
                 :props="header.getContext()"
               />
               <div v-if="header.column.getCanSort()">
-                <div v-if="header.column.getIsSorted() === 'asc'" class="i-tabler:arrow-narrow-up" />
-                <div v-else-if="header.column.getIsSorted() === 'desc'" class="i-tabler:arrow-narrow-down" />
+                <div
+                  v-if="header.column.getIsSorted() === 'asc'"
+                  class="i-tabler:arrow-narrow-up"
+                />
+                <div
+                  v-else-if="header.column.getIsSorted() === 'desc'"
+                  class="i-tabler:arrow-narrow-down"
+                />
                 <div v-else class="i-tabler:arrows-sort" />
               </div>
             </div>
