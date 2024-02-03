@@ -6,6 +6,7 @@
 /* tslint:disable */
 import { HttpResponse, http } from "msw";
 import { faker } from "@faker-js/faker";
+import { setupWorker } from "msw/browser";
 
 faker.seed(1);
 
@@ -280,6 +281,7 @@ export function getGetGames200Response() {
     id: faker.datatype.uuid(),
     termId: term,
     discordUserId: faker.lorem.slug(1),
+    isPublished: faker.datatype.boolean(),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -294,6 +296,7 @@ export function getPostGame201Response() {
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
+    isPublished: faker.datatype.boolean(),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -308,6 +311,7 @@ export function getGetGame200Response() {
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
+    isPublished: faker.datatype.boolean(),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -364,6 +368,7 @@ export function getGetTermGames200Response() {
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
+    isPublished: faker.datatype.boolean(),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -377,8 +382,9 @@ export function getPostEvent201Response() {
   return {
     slug: `${faker.number.int(99)}th`,
     title: `第${faker.number.int(99)}回`,
-    gameSubmissionPeriodStart: faker.date.future(),
-    gameSubmissionPeriodEnd: faker.date.future(),
+    date: faker.date.past(),
+    gameSubmissionPeriodStart: faker.date.past(),
+    gameSubmissionPeriodEnd: faker.date.past(),
   };
 }
 
@@ -388,8 +394,9 @@ export function getGetEvents200Response() {
   ].map((_) => ({
     slug: `${faker.number.int(99)}th`,
     title: `第${faker.number.int(99)}回`,
-    gameSubmissionPeriodStart: faker.date.future(),
-    gameSubmissionPeriodEnd: faker.date.future(),
+    date: faker.date.past(),
+    gameSubmissionPeriodStart: faker.date.past(),
+    gameSubmissionPeriodEnd: faker.date.past(),
   }));
 }
 
@@ -397,8 +404,9 @@ export function getGetCurrentEvent200Response() {
   return {
     slug: `${faker.number.int(99)}th`,
     title: `第${faker.number.int(99)}回`,
-    gameSubmissionPeriodStart: faker.date.future(),
-    gameSubmissionPeriodEnd: faker.date.future(),
+    date: faker.date.past(),
+    gameSubmissionPeriodStart: faker.date.past(),
+    gameSubmissionPeriodEnd: faker.date.past(),
   };
 }
 
@@ -406,8 +414,9 @@ export function getGetEvent200Response() {
   return {
     slug: `${faker.number.int(99)}th`,
     title: `第${faker.number.int(99)}回`,
-    gameSubmissionPeriodStart: faker.date.future(),
-    gameSubmissionPeriodEnd: faker.date.future(),
+    date: faker.date.past(),
+    gameSubmissionPeriodStart: faker.date.past(),
+    gameSubmissionPeriodEnd: faker.date.past(),
   };
 }
 
@@ -464,6 +473,7 @@ export function getGetEventGames200Response() {
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
+    isPublished: faker.datatype.boolean(),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -495,6 +505,7 @@ export function getGetMeGames200Response() {
       id: faker.datatype.uuid(),
       termId: faker.datatype.uuid(),
       discordUserId: faker.lorem.slug(1),
+      isPublished: faker.datatype.boolean(),
       title: faker.lorem.slug(1),
       creatorName: faker.person.fullName(),
       creatorPageUrl: faker.internet.url(),
@@ -522,6 +533,7 @@ export function getGetUserGames200Response() {
       id: faker.datatype.uuid(),
       termId: faker.datatype.uuid(),
       discordUserId: faker.lorem.slug(1),
+      isPublished: faker.datatype.boolean(),
       title: faker.lorem.slug(1),
       creatorName: faker.person.fullName(),
       creatorPageUrl: faker.internet.url(),

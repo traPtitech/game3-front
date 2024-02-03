@@ -32,6 +32,12 @@ export interface Event {
      */
     title: string;
     /**
+     * イベント開催日
+     * @type {Date}
+     * @memberof Event
+     */
+    date: Date;
+    /**
      * ゲーム展示の募集開始期間
      * @type {Date}
      * @memberof Event
@@ -52,6 +58,7 @@ export function instanceOfEvent(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "slug" in value;
     isInstance = isInstance && "title" in value;
+    isInstance = isInstance && "date" in value;
     isInstance = isInstance && "gameSubmissionPeriodStart" in value;
     isInstance = isInstance && "gameSubmissionPeriodEnd" in value;
 
@@ -70,6 +77,7 @@ export function EventFromJSONTyped(json: any, ignoreDiscriminator: boolean): Eve
         
         'slug': json['slug'],
         'title': json['title'],
+        'date': (new Date(json['date'])),
         'gameSubmissionPeriodStart': (new Date(json['gameSubmissionPeriodStart'])),
         'gameSubmissionPeriodEnd': (new Date(json['gameSubmissionPeriodEnd'])),
     };
@@ -86,6 +94,7 @@ export function EventToJSON(value?: Event | null): any {
         
         'slug': value.slug,
         'title': value.title,
+        'date': (value.date.toISOString()),
         'gameSubmissionPeriodStart': (value.gameSubmissionPeriodStart.toISOString()),
         'gameSubmissionPeriodEnd': (value.gameSubmissionPeriodEnd.toISOString()),
     };

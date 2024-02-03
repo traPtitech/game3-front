@@ -52,6 +52,7 @@ export interface PatchEventRequest {
     eventSlug: string;
     slug?: string;
     title?: string;
+    date?: Date;
     gameSubmissionPeriodStart?: Date;
     gameSubmissionPeriodEnd?: Date;
     image?: Blob;
@@ -60,6 +61,7 @@ export interface PatchEventRequest {
 export interface PostEventRequest {
     slug: string;
     title: string;
+    date: Date;
     gameSubmissionPeriodStart: Date;
     gameSubmissionPeriodEnd: Date;
     image?: Blob;
@@ -312,6 +314,10 @@ export class EventsApi extends runtime.BaseAPI {
             formParams.append('title', requestParameters.title as any);
         }
 
+        if (requestParameters.date !== undefined) {
+            formParams.append('date', requestParameters.date as any);
+        }
+
         if (requestParameters.gameSubmissionPeriodStart !== undefined) {
             formParams.append('gameSubmissionPeriodStart', requestParameters.gameSubmissionPeriodStart as any);
         }
@@ -354,6 +360,10 @@ export class EventsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('title','Required parameter requestParameters.title was null or undefined when calling postEvent.');
         }
 
+        if (requestParameters.date === null || requestParameters.date === undefined) {
+            throw new runtime.RequiredError('date','Required parameter requestParameters.date was null or undefined when calling postEvent.');
+        }
+
         if (requestParameters.gameSubmissionPeriodStart === null || requestParameters.gameSubmissionPeriodStart === undefined) {
             throw new runtime.RequiredError('gameSubmissionPeriodStart','Required parameter requestParameters.gameSubmissionPeriodStart was null or undefined when calling postEvent.');
         }
@@ -388,6 +398,10 @@ export class EventsApi extends runtime.BaseAPI {
 
         if (requestParameters.title !== undefined) {
             formParams.append('title', requestParameters.title as any);
+        }
+
+        if (requestParameters.date !== undefined) {
+            formParams.append('date', requestParameters.date as any);
         }
 
         if (requestParameters.gameSubmissionPeriodStart !== undefined) {
