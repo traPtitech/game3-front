@@ -101,14 +101,18 @@ const table = useVueTable({
             "
             @click="header.column.getToggleSortingHandler()?.($event)"
           >
-            <FlexRender
-              v-if="!header.isPlaceholder"
-              :render="header.column.columnDef.header"
-              :props="header.getContext()"
-            />
-            {{
-              { asc: " 🔼", desc: " 🔽" }[header.column.getIsSorted() as string]
-            }}
+            <div class="flex items-center gap-1">
+              <FlexRender
+                v-if="!header.isPlaceholder"
+                :render="header.column.columnDef.header"
+                :props="header.getContext()"
+              />
+              <div v-if="header.column.getCanSort()">
+                <div v-if="header.column.getIsSorted() === 'asc'" class="i-tabler:arrow-narrow-up" />
+                <div v-else-if="header.column.getIsSorted() === 'desc'" class="i-tabler:arrow-narrow-down" />
+                <div v-else class="i-tabler:arrows-sort" />
+              </div>
+            </div>
           </th>
         </tr>
       </thead>

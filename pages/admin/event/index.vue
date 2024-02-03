@@ -43,14 +43,13 @@ const table = useVueTable({
 
 <template>
   <div>
-    <ProseH1>
-      イベント管理ページ
-    </ProseH1>
-    <UIButton
-      @click="async () => await navigateTo('/admin/event/new')"
+    <ProseH1
+      :breadcrumbs="[
+        { label: '管理者ページ', to: '/admin' },
+      ]"
     >
-      新規イベント作成ページへ
-    </UIButton>
+      イベント管理
+    </ProseH1>
     <ProseH2>
       イベント一覧
     </ProseH2>
@@ -65,11 +64,18 @@ const table = useVueTable({
             :key="header.id"
             :colSpan="header.colSpan"
           >
-            <FlexRender
-              v-if="!header.isPlaceholder"
-              :render="header.column.columnDef.header"
-              :props="header.getContext()"
-            />
+            <div class="flex items-center gap-1">
+              <FlexRender
+                v-if="!header.isPlaceholder"
+                :render="header.column.columnDef.header"
+                :props="header.getContext()"
+              />
+              <div v-if="header.column.getCanSort()">
+                <div v-if="header.column.getIsSorted() === 'asc'" class="i-tabler:arrow-narrow-up" />
+                <div v-else-if="header.column.getIsSorted() === 'desc'" class="i-tabler:arrow-narrow-down" />
+                <div v-else class="i-tabler:arrows-sort" />
+              </div>
+            </div>
           </th>
         </tr>
       </thead>
@@ -89,5 +95,12 @@ const table = useVueTable({
         </tr>
       </tbody>
     </ProseTable>
+    <div class="mt-4 w-full flex justify-center">
+      <UIButton
+        @click="navigateTo('/admin/event/new')"
+      >
+        新規イベント作成
+      </UIButton>
+    </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 import { useMe } from '~/store/me'
 
 const params = new URLSearchParams({
-  client_id: '1188893707215315045',
+  client_id: '1202854661363867648',
   response_type: 'code',
   redirect_uri:
     process.env.NODE_ENV === 'production'

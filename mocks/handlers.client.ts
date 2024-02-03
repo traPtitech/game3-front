@@ -8,7 +8,7 @@ import { setupWorker } from "msw/browser";
 import { handlers } from "./handlers";
 
 // This configures a Service Worker with the given request handlers.
-export const startWorker = () => {
+export const startWorker = async () => {
   const worker = setupWorker(...handlers);
-  worker.start();
+  await worker.start();
 };

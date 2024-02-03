@@ -1,4 +1,4 @@
-import { useGetMeQuery, useMutateLogout } from '~/composables/useQuery'
+import { useMutateLogout } from '~/composables/useQuery'
 import { type User } from '~/lib/api'
 
 type Me = {
@@ -10,14 +10,14 @@ export const useMe = () => {
 
   const { mutateAsync: mutateLogout } = useMutateLogout()
 
-  const fetchMe = () => {
+  const fetchMe = async () => {
     const me = useMeStore()
     try {
-      const { data } = useGetMeQuery()
+      const data = await usersApi.getMe()
       me.value = {
-        user: data.value
+        user: data
       }
-      return data.value
+      return data
     } catch (e) {
       me.value = {
         user: undefined
@@ -31,7 +31,13 @@ export const useMe = () => {
     me.value = {
       user: undefined
     }
-    await mutateLogout()
+    try {
+      await mutateLogout()
+    } catch (e) {
+      console.error(e)
+    } finally {
+      await navigateTo('/')
+    }
   }
 
   return {

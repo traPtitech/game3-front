@@ -125,7 +125,11 @@ const onSubmit = handleSubmit(async (values) => {
                   </div>
                 </div>
                 <div class="flex gap-4">
-                  <UIButton type="button" variant="secondary">
+                  <UIButton
+                    type="button"
+                    variant="secondary"
+                    @click="confirmModalOpen = false"
+                  >
                     キャンセル
                   </UIButton>
                   <UIButton

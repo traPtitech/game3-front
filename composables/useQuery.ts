@@ -8,7 +8,6 @@ import {
   TermsApi,
   type PostGameRequest,
   type GetEventRequest,
-  type GetEventGamesRequest,
   type GetGameRequest,
   type GetGamesRequest,
   type GetEventTermsRequest,
@@ -22,6 +21,12 @@ import {
   type PostTermOperationRequest
 } from '~/lib/api'
 
+// 本来なら
+// const config = useRuntimeConfig()
+// basePath: config.public.apiUrl
+// のように書くべきだが
+// composableの外で`useRuntimeConfig()`が使用できないのでハードコードしています
+// see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
 const apiConfig = new Configuration({
   basePath:
     process.env.NODE_ENV === 'development'
@@ -62,12 +67,6 @@ export const useCurrentEventQuery = () =>
   useQuery({
     queryKey: ['currentEvent'],
     queryFn: () => eventsApi.getCurrentEvent()
-  })
-
-export const useEventGamesQuery = (req: GetEventGamesRequest) =>
-  useQuery({
-    queryKey: ['events', req, 'games'],
-    queryFn: () => eventsApi.getEventGames(req)
   })
 
 export const useMutatePostEvent = () =>
@@ -148,9 +147,3 @@ export const useMutateLogout = () =>
   })
 
 export const usersApi = new UsersApi(apiConfig)
-
-export const useGetMeQuery = () =>
-  useQuery({
-    queryKey: ['me'],
-    queryFn: () => usersApi.getMe()
-  })

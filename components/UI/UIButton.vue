@@ -4,6 +4,7 @@ import type { Events } from 'vue'
 interface ButtonProps {
   variant?: 'primary' | 'secondary';
   full?: boolean;
+  ignoreMinWidth?: boolean;
   disabled?: boolean;
   onClick?: (event: Events['onClick']) => void;
 }
@@ -11,6 +12,7 @@ interface ButtonProps {
 const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'primary',
   full: false,
+  ignoreMinWidth: false,
   disabled: false,
   onClick: () => {}
 })
@@ -27,8 +29,9 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     />
     <div
       :class="[
-        'h-12 inline-flex items-center justify-center min-w-64 b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8 relative',
+        'h-12 inline-flex items-center justify-center b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8 relative px-4',
         {
+          'min-w-64': !props.ignoreMinWidth,
           'w-full': props.full,
           'bg-brand-yellow': props.variant === 'primary',
           'bg-brand-cyan': props.variant === 'secondary'

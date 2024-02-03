@@ -370,10 +370,10 @@ export function getGetTermGames200Response() {
 
 export function getPostEvent201Response() {
   return {
-    slug: faker.lorem.slug(1),
-    title: faker.lorem.slug(1),
-    gameSubmissionPeriodStart: faker.date.past(),
-    gameSubmissionPeriodEnd: faker.date.past(),
+    slug: `${faker.number.int(99)}th`,
+    title: `第${faker.number.int(99)}回`,
+    gameSubmissionPeriodStart: faker.date.future(),
+    gameSubmissionPeriodEnd: faker.date.future(),
   };
 }
 
@@ -381,28 +381,28 @@ export function getGetEvents200Response() {
   return [
     ...new Array(faker.number.int({ min: 1, max: MAX_ARRAY_LENGTH })).keys(),
   ].map((_) => ({
-    slug: faker.lorem.slug(1),
-    title: faker.lorem.slug(1),
-    gameSubmissionPeriodStart: faker.date.past(),
-    gameSubmissionPeriodEnd: faker.date.past(),
+    slug: `${faker.number.int(99)}th`,
+    title: `第${faker.number.int(99)}回`,
+    gameSubmissionPeriodStart: faker.date.future(),
+    gameSubmissionPeriodEnd: faker.date.future(),
   }));
 }
 
 export function getGetCurrentEvent200Response() {
   return {
-    slug: faker.lorem.slug(1),
-    title: faker.lorem.slug(1),
-    gameSubmissionPeriodStart: faker.date.past(),
-    gameSubmissionPeriodEnd: faker.date.past(),
+    slug: `${faker.number.int(99)}th`,
+    title: `第${faker.number.int(99)}回`,
+    gameSubmissionPeriodStart: faker.date.future(),
+    gameSubmissionPeriodEnd: faker.date.future(),
   };
 }
 
 export function getGetEvent200Response() {
   return {
-    slug: faker.lorem.slug(1),
-    title: faker.lorem.slug(1),
-    gameSubmissionPeriodStart: faker.date.past(),
-    gameSubmissionPeriodEnd: faker.date.past(),
+    slug: `${faker.number.int(99)}th`,
+    title: `第${faker.number.int(99)}回`,
+    gameSubmissionPeriodStart: faker.date.future(),
+    gameSubmissionPeriodEnd: faker.date.future(),
   };
 }
 
@@ -477,7 +477,8 @@ export function getGetMe200Response() {
     userId: faker.lorem.slug(1),
     username: faker.person.fullName(),
     profileImageUrl: faker.image.url(),
-    role: faker.helpers.arrayElement(["admin", "user"]),
+    // role: faker.helpers.arrayElement(["user"]),
+    role: faker.helpers.arrayElement(["admin"]),
   };
 }
 
