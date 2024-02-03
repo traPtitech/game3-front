@@ -34,6 +34,8 @@ export const handlers = [
   http.get(`${baseURL}/games`, () => {
     const resultArray = [
       [getGetGames200Response(), { status: 200 }],
+      [null, { status: 401 }],
+      [null, { status: 403 }],
       [null, { status: 404 }],
     ];
 
@@ -43,6 +45,7 @@ export const handlers = [
     const resultArray = [
       [getPostGame201Response(), { status: 201 }],
       [null, { status: 400 }],
+      [null, { status: 401 }],
       [null, { status: 403 }],
     ];
 
@@ -52,6 +55,7 @@ export const handlers = [
     const resultArray = [
       [null, { status: 204 }],
       [null, { status: 400 }],
+      [null, { status: 401 }],
       [null, { status: 403 }],
       [null, { status: 404 }],
     ];
@@ -61,6 +65,8 @@ export const handlers = [
   http.get(`${baseURL}/games/:gameId`, () => {
     const resultArray = [
       [getGetGame200Response(), { status: 200 }],
+      [null, { status: 401 }],
+      [null, { status: 403 }],
       [null, { status: 404 }],
     ];
 
@@ -94,6 +100,8 @@ export const handlers = [
     const resultArray = [
       [getPostTerm201Response(), { status: 201 }],
       [null, { status: 400 }],
+      [null, { status: 401 }],
+      [null, { status: 403 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -110,6 +118,8 @@ export const handlers = [
     const resultArray = [
       [null, { status: 204 }],
       [null, { status: 400 }],
+      [null, { status: 401 }],
+      [null, { status: 403 }],
       [null, { status: 404 }],
     ];
 
@@ -127,6 +137,8 @@ export const handlers = [
     const resultArray = [
       [getPostEvent201Response(), { status: 201 }],
       [null, { status: 400 }],
+      [null, { status: 401 }],
+      [null, { status: 403 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -151,6 +163,7 @@ export const handlers = [
     const resultArray = [
       [null, { status: 204 }],
       [null, { status: 400 }],
+      [null, { status: 401 }],
       [null, { status: 403 }],
       [null, { status: 404 }],
     ];
@@ -197,7 +210,7 @@ export const handlers = [
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
   }),
-  http.post(`${baseURL}/auth/login`, () => {
+  http.get(`${baseURL}/auth/login`, () => {
     const resultArray = [
       [null, { status: 302 }],
       [null, { status: 400 }],
@@ -222,7 +235,7 @@ export const handlers = [
   http.get(`${baseURL}/users/me`, () => {
     const resultArray = [
       [getGetMe200Response(), { status: 200 }],
-      // [null, { status: 404 }],
+      [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -251,14 +264,6 @@ export const handlers = [
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
   }),
-  http.post(`${baseURL}/contacts`, () => {
-    const resultArray = [
-      [null, { status: 200 }],
-      [null, { status: 400 }],
-    ];
-
-    return HttpResponse.json(...resultArray[next() % resultArray.length]);
-  }),
 ];
 
 export function getPingServer200Response() {
@@ -274,12 +279,12 @@ export function getGetGames200Response() {
   ].map((term) => ({
     id: faker.datatype.uuid(),
     termId: term,
-    discordUserId: faker.datatype.uuid(),
+    discordUserId: faker.lorem.slug(1),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.words({min:20, max: 50}),
+    description: faker.lorem.slug(1),
     place: faker.lorem.slug(1),
   }));
 }
@@ -288,12 +293,12 @@ export function getPostGame201Response() {
   return {
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
-    discordUserId: faker.datatype.uuid(),
+    discordUserId: faker.lorem.slug(1),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.words(20),
+    description: faker.lorem.slug(1),
     place: faker.lorem.slug(1),
   };
 }
@@ -302,12 +307,12 @@ export function getGetGame200Response() {
   return {
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
-    discordUserId: faker.datatype.uuid(),
+    discordUserId: faker.lorem.slug(1),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.words(20),
+    description: faker.lorem.slug(1),
     place: faker.lorem.slug(1),
   };
 }
@@ -358,7 +363,7 @@ export function getGetTermGames200Response() {
   ].map((_) => ({
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
-    discordUserId: faker.datatype.uuid(),
+    discordUserId: faker.lorem.slug(1),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -420,12 +425,12 @@ export function getGetEventTerms200Response() {
       endAt: undefined,
     },
     {
-      id: "1",
-      eventSlug: "17th",
-      isDefault: false,
-      startAt: faker.date.past(),
-      endAt: faker.date.past(),
-    },
+    id: "1",
+    eventSlug: "17th",
+    isDefault: false,
+    startAt: faker.date.past(),
+    endAt: faker.date.past(),
+  },
     {
       id: "2",
       eventSlug: "17th",
@@ -458,7 +463,7 @@ export function getGetEventGames200Response() {
   ].map((_) => ({
     id: faker.datatype.uuid(),
     termId: faker.datatype.uuid(),
-    discordUserId: faker.datatype.uuid(),
+    discordUserId: faker.lorem.slug(1),
     title: faker.lorem.slug(1),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
@@ -476,8 +481,8 @@ export function getGetMe200Response() {
   return {
     userId: faker.lorem.slug(1),
     username: faker.person.fullName(),
-    profileImageUrl: faker.image.url(),
-    // role: faker.helpers.arrayElement(["user"]),
+        profileImageUrl: faker.image.url(),
+// role: faker.helpers.arrayElement(["user"]),
     role: faker.helpers.arrayElement(["admin"]),
   };
 }
@@ -489,7 +494,7 @@ export function getGetMeGames200Response() {
     ].map((_) => ({
       id: faker.datatype.uuid(),
       termId: faker.datatype.uuid(),
-      discordUserId: faker.datatype.uuid(),
+      discordUserId: faker.lorem.slug(1),
       title: faker.lorem.slug(1),
       creatorName: faker.person.fullName(),
       creatorPageUrl: faker.internet.url(),
@@ -504,8 +509,8 @@ export function getGetUser200Response() {
   return {
     userId: faker.lorem.slug(1),
     username: faker.person.fullName(),
-    profileImageUrl: faker.image.url(),
-    role: faker.helpers.arrayElement(["admin", "user"]),
+        profileImageUrl: faker.image.url(),
+role: faker.helpers.arrayElement(["admin", "user"]),
   };
 }
 
@@ -516,7 +521,7 @@ export function getGetUserGames200Response() {
     ].map((_) => ({
       id: faker.datatype.uuid(),
       termId: faker.datatype.uuid(),
-      discordUserId: faker.datatype.uuid(),
+      discordUserId: faker.lorem.slug(1),
       title: faker.lorem.slug(1),
       creatorName: faker.person.fullName(),
       creatorPageUrl: faker.internet.url(),

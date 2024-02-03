@@ -51,8 +51,8 @@ const { mutateAsync } = useMutatePatchEvent()
 const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync({
-      eventSlug: values.slug,
-      patchEventRequest: values
+      ...values,
+      slug: props.event.slug
     })
     $toast.success('イベントの編集が完了しました！')
     await navigateTo(`/admin/event/${values.slug}`)

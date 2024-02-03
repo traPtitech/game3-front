@@ -12,14 +12,13 @@ import {
   type GetGamesRequest,
   type GetEventTermsRequest,
   type PostEventRequest,
-  type PatchEventOperationRequest,
   type GetEventImageRequest,
   type PatchGameRequest,
   type GetGameIconRequest,
   type GetGameImageRequest,
   type PatchTermOperationRequest,
   type PostTermOperationRequest,
-  type LoginRequest
+  type PatchEventRequest
 } from '~/lib/api'
 
 // 本来なら
@@ -77,7 +76,7 @@ export const useMutatePostEvent = () =>
 
 export const useMutatePatchEvent = () =>
   useMutation({
-    mutationFn: (req: PatchEventOperationRequest) => eventsApi.patchEvent(req)
+    mutationFn: (req: PatchEventRequest) => eventsApi.patchEvent(req)
   })
 
 const gamesApi = new GamesApi(apiConfig)
