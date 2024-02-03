@@ -146,7 +146,7 @@ const onCropChange = (
       :accept="props.accept"
       :aria-invalid="meta.validated && !meta.valid"
       :data-invalid="meta.validated && !meta.valid"
-      class=""
+      class="hidden"
       @input="handleChange"
       @blur="handleBlur"
     >
