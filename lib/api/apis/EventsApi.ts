@@ -17,7 +17,6 @@ import * as runtime from '../runtime';
 import type {
   Event,
   Game,
-  PatchEventRequest,
   Term,
 } from '../models/index';
 import {
@@ -25,8 +24,6 @@ import {
     EventToJSON,
     GameFromJSON,
     GameToJSON,
-    PatchEventRequestFromJSON,
-    PatchEventRequestToJSON,
     TermFromJSON,
     TermToJSON,
 } from '../models/index';
@@ -51,9 +48,13 @@ export interface GetEventTermsRequest {
     eventSlug: string;
 }
 
-export interface PatchEventOperationRequest {
+export interface PatchEventRequest {
     eventSlug: string;
-    patchEventRequest: PatchEventRequest;
+    slug?: string;
+    title?: string;
+    gameSubmissionPeriodStart?: Date;
+    gameSubmissionPeriodEnd?: Date;
+    image?: Blob;
 }
 
 export interface PostEventRequest {
@@ -278,27 +279,57 @@ export class EventsApi extends runtime.BaseAPI {
     /**
      * イベントの情報を変更
      */
-    async patchEventRaw(requestParameters: PatchEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async patchEventRaw(requestParameters: PatchEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.eventSlug === null || requestParameters.eventSlug === undefined) {
             throw new runtime.RequiredError('eventSlug','Required parameter requestParameters.eventSlug was null or undefined when calling patchEvent.');
-        }
-
-        if (requestParameters.patchEventRequest === null || requestParameters.patchEventRequest === undefined) {
-            throw new runtime.RequiredError('patchEventRequest','Required parameter requestParameters.patchEventRequest was null or undefined when calling patchEvent.');
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters.slug !== undefined) {
+            formParams.append('slug', requestParameters.slug as any);
+        }
+
+        if (requestParameters.title !== undefined) {
+            formParams.append('title', requestParameters.title as any);
+        }
+
+        if (requestParameters.gameSubmissionPeriodStart !== undefined) {
+            formParams.append('gameSubmissionPeriodStart', requestParameters.gameSubmissionPeriodStart as any);
+        }
+
+        if (requestParameters.gameSubmissionPeriodEnd !== undefined) {
+            formParams.append('gameSubmissionPeriodEnd', requestParameters.gameSubmissionPeriodEnd as any);
+        }
+
+        if (requestParameters.image !== undefined) {
+            formParams.append('image', requestParameters.image as any);
+        }
 
         const response = await this.request({
             path: `/events/{eventSlug}`.replace(`{${"eventSlug"}}`, encodeURIComponent(String(requestParameters.eventSlug))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: PatchEventRequestToJSON(requestParameters.patchEventRequest),
+            body: formParams,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -307,7 +338,7 @@ export class EventsApi extends runtime.BaseAPI {
     /**
      * イベントの情報を変更
      */
-    async patchEvent(requestParameters: PatchEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+    async patchEvent(requestParameters: PatchEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.patchEventRaw(requestParameters, initOverrides);
     }
 

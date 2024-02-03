@@ -14,16 +14,9 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  LoginRequest,
-} from '../models/index';
-import {
-    LoginRequestFromJSON,
-    LoginRequestToJSON,
-} from '../models/index';
 
-export interface LoginOperationRequest {
-    loginRequest: LoginRequest;
+export interface LoginRequest {
+    redirect: string;
 }
 
 export interface OauthCallbackRequest {
@@ -36,36 +29,37 @@ export interface OauthCallbackRequest {
 export class AuthApi extends runtime.BaseAPI {
 
     /**
-     * Discord OAuthを使ったログイン。ログイン後にリダイレクトするURLを指定。
+     * Discord OAuthを使ったログイン。ログイン後にリダイレクトするURLをクエリパラメータで指定。
      * ログイン
      */
-    async loginRaw(requestParameters: LoginOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.loginRequest === null || requestParameters.loginRequest === undefined) {
-            throw new runtime.RequiredError('loginRequest','Required parameter requestParameters.loginRequest was null or undefined when calling login.');
+    async loginRaw(requestParameters: LoginRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.redirect === null || requestParameters.redirect === undefined) {
+            throw new runtime.RequiredError('redirect','Required parameter requestParameters.redirect was null or undefined when calling login.');
         }
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        if (requestParameters.redirect !== undefined) {
+            queryParameters['redirect'] = requestParameters.redirect;
+        }
 
-        headerParameters['Content-Type'] = 'application/json';
+        const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
             path: `/auth/login`,
-            method: 'POST',
+            method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-            body: LoginRequestToJSON(requestParameters.loginRequest),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Discord OAuthを使ったログイン。ログイン後にリダイレクトするURLを指定。
+     * Discord OAuthを使ったログイン。ログイン後にリダイレクトするURLをクエリパラメータで指定。
      * ログイン
      */
-    async login(requestParameters: LoginOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+    async login(requestParameters: LoginRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.loginRaw(requestParameters, initOverrides);
     }
 

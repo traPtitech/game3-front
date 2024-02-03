@@ -18,7 +18,8 @@ import {
   type GetGameIconRequest,
   type GetGameImageRequest,
   type PatchTermOperationRequest,
-  type PostTermOperationRequest
+  type PostTermOperationRequest,
+  type LoginRequest
 } from '~/lib/api'
 
 // 本来なら
@@ -133,13 +134,7 @@ export const useMutatePatchTerm = () =>
     mutationFn: (req: PatchTermOperationRequest) => termsApi.patchTerm(req)
   })
 
-const authApi = new AuthApi(apiConfig)
-
-export const useMutateLogin = () =>
-  useMutation({
-    mutationFn: (redirect?: string) =>
-      authApi.login({ loginRequest: { redirect } })
-  })
+export const authApi = new AuthApi(apiConfig)
 
 export const useMutateLogout = () =>
   useMutation({

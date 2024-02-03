@@ -10,8 +10,6 @@ index.ts
 models/Event.ts
 models/Game.ts
 models/GetMeGames200Response.ts
-models/LoginRequest.ts
-models/PatchEventRequest.ts
 models/PatchTermRequest.ts
 models/PostTermRequest.ts
 models/Term.ts
