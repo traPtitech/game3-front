@@ -41,9 +41,7 @@ const eventsApi = new EventsApi(apiConfig)
 type DateToString<T> = {
   [K in keyof T]: T[K] extends Date ? string : T[K];
 };
-const dateToString = <T extends object>(
-  obj: T
-): DateToString<T> => {
+const dateToString = <T extends object>(obj: T): DateToString<T> => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
     if (value instanceof Date) {
       return { ...acc, [key]: value.toISOString() }
@@ -82,20 +80,22 @@ export const useEventTermsQuery = (req: GetEventTermsRequest) => {
 
 export const useCurrentEventQuery = () =>
   useQuery({
-    queryKey: ['currentEvent'],
+    queryKey: ['events', 'current'],
     queryFn: () => eventsApi.getCurrentEvent()
   })
 
 export const useMutatePostEvent = () =>
   useMutation({
     mutationFn: (req: PostEventRequest) =>
-      eventsApi.postEvent(dateToString(req) as any as PostEventRequest)
+      eventsApi.postEvent(dateToString(req) as any as PostEventRequest),
+    mutationKey: ['events']
   })
 
 export const useMutatePatchEvent = () =>
   useMutation({
     mutationFn: (req: PatchEventRequest) =>
-      eventsApi.patchEvent(dateToString(req) as any as PatchEventRequest)
+      eventsApi.patchEvent(dateToString(req) as any as PatchEventRequest),
+    mutationKey: ['events']
   })
 
 const gamesApi = new GamesApi(apiConfig)
@@ -126,12 +126,14 @@ export const useGameImageQuery = (req: GetGameImageRequest) =>
 
 export const useMutatePostGame = () =>
   useMutation({
-    mutationFn: (req: PostGameRequest) => gamesApi.postGame(req)
+    mutationFn: (req: PostGameRequest) => gamesApi.postGame(req),
+    mutationKey: ['games']
   })
 
 export const useMutatePatchGame = () =>
   useMutation({
-    mutationFn: (req: PatchGameRequest) => gamesApi.patchGame(req)
+    mutationFn: (req: PatchGameRequest) => gamesApi.patchGame(req),
+    mutationKey: ['games']
   })
 
 const termsApi = new TermsApi(apiConfig)
@@ -145,13 +147,15 @@ export const useTermsQuery = () =>
 export const useMutatePostTerm = () =>
   useMutation({
     mutationFn: (req: PostTermOperationRequest) =>
-      termsApi.postTerm(dateToString(req) as any as PostTermOperationRequest)
+      termsApi.postTerm(dateToString(req) as any as PostTermOperationRequest),
+    mutationKey: ['terms']
   })
 
 export const useMutatePatchTerm = () =>
   useMutation({
     mutationFn: (req: PatchTermOperationRequest) =>
-      termsApi.patchTerm(dateToString(req) as any as PatchTermOperationRequest)
+      termsApi.patchTerm(dateToString(req) as any as PatchTermOperationRequest),
+    mutationKey: ['terms']
   })
 
 export const authApi = new AuthApi(apiConfig)
