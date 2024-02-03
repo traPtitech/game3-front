@@ -72,7 +72,7 @@ onServerPrefetch(async () => {
                   >
                     {{
                       me.user === undefined
-                        ? "ログインして作品登録する"
+                        ? "ログイン/作品登録"
                         : "作品登録"
                     }}
                   </StrokedText>
