@@ -7,21 +7,12 @@ import {
   TabsRoot,
   TabsTrigger
 } from 'radix-vue'
-import { getParamsArray } from '~/lib/url'
 
 definePageMeta({
   middleware: ['need-admin']
 })
 
-const route = useRoute()
-const slugArray = getParamsArray(route.params.slug)
-const eventSlug = slugArray?.[0]
-if (!eventSlug) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'イベントが見つかりませんでした'
-  })
-}
+const eventSlug = usePathParams('slug')
 
 const { data: event, suspense: suspenseEvent } = useEventQuery({ eventSlug })
 onServerPrefetch(async () => {

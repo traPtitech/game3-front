@@ -14,22 +14,13 @@ import {
   boolean
 } from 'valibot'
 import { useForm } from 'vee-validate'
-import { getParamsArray } from '~/lib/url'
 import { useMe } from '~/store/me'
 
 definePageMeta({
   middleware: ['need-login']
 })
 
-const route = useRoute()
-const gameIdArray = getParamsArray(route.params.gameId)
-const gameId = gameIdArray?.[0]
-if (!gameId) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'ゲームが見つかりませんでした'
-  })
-}
+const gameId = usePathParams('gameId')
 
 const { useMeStore } = useMe()
 const me = useMeStore()

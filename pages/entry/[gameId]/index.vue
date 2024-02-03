@@ -1,16 +1,6 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
-import { getParamsArray } from '~/lib/url'
-
-const route = useRoute()
-const gameIdArray = getParamsArray(route.params.gameId)
-const gameId = gameIdArray?.[0]
-if (!gameId) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'ゲームが見つかりませんでした'
-  })
-}
+const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
