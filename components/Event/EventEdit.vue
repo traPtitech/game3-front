@@ -33,6 +33,7 @@ const { handleSubmit, meta, values } = useForm({
         minLength(1, 'slugは1文字以上で入力してください'),
         regex(/^[a-z0-9]+$/, 'slugは半角英数字のみで入力してください')
       ]),
+      date: date(),
       gameSubmissionPeriodStart: date(),
       gameSubmissionPeriodEnd: date(),
       image: optional(blob())
@@ -79,6 +80,11 @@ const onSubmit = handleSubmit(async (values) => {
           helper-text="半角英数字で入力。'/event/99th/...'などのURL内やトップページでの表示に使用します。"
           name="slug"
           placeholder="99th"
+        />
+        <UIDatePicker
+          label="開催日"
+          helper-text="イベント開催日"
+          name="date"
         />
         <UIDatePicker
           label="出展受付開始日時"

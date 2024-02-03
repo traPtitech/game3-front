@@ -22,6 +22,10 @@ const columns = [
     cell: info => info.getValue(),
     header: 'イベントタイトル'
   }),
+  columnHelper.accessor('date', {
+    cell: info => info.getValue().toLocaleString('ja-JP'),
+    header: '開催日'
+  }),
   columnHelper.accessor('gameSubmissionPeriodStart', {
     cell: info => info.getValue().toLocaleString('ja-JP'),
     header: '出展受付開始日時'

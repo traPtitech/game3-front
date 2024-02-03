@@ -20,8 +20,7 @@ const props = defineProps<Props>()
       </h3>
       <div class="flex items-center gap-1 text-caption">
         <div class="i-tabler:clock h-6 w-6" />
-        <!-- TODO: 開催日に変更 -->
-        {{ props.event.gameSubmissionPeriodStart.toLocaleDateString("ja-JP") }}
+        {{ props.event.date.toLocaleDateString("ja-JP") }}
       </div>
     </div>
     <div class="i-tabler:circle-chevron-right ml-auto mr-3 h-12 w-12" />

@@ -31,6 +31,14 @@ const props = defineProps<Props>()
         </tr>
         <tr>
           <td>
+            開催日
+          </td>
+          <td>
+            {{ props.event.date.toLocaleString("ja-JP") }}
+          </td>
+        </tr>
+        <tr>
+          <td>
             出展受付開始日時
           </td>
           <td>

@@ -80,9 +80,7 @@ const event = computed(
           class="flex items-center gap-1"
         >
           <div class="i-tabler:clock h-6 w-6" />
-          <!-- TODO: 開催日を表示 -->
-          {{ event?.title }}
-          {{ event?.gameSubmissionPeriodEnd.toLocaleDateString("ja-JP") }}
+          {{ event?.title }} {{ event?.date.toLocaleDateString("ja-JP") }}
         </div>
       </div>
       <div class="line-clamp-3 text-ellipsis text-body">
