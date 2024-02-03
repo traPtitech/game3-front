@@ -29,6 +29,8 @@ const description = computed(
     'Game³（ゲームキューブ）とは、クリエイター同士の交流を目的としたゲーム展示イベントです。ターム制の採用や懇親会など、ほか展示イベントよりも交流を重視したプログラムが特徴です。主に関東圏の同人ゲーム制作者・サークル様に数多くご参加頂いています。本イベントは「すべてのゲームクリエイターへ。」をコンセプトに、学生などの「はじめての出展」を応援しています。「ゲームを作ったけど人に見せる機会がない」「プレイヤーから直接フィードバックを受けたい」などでお困りの方が、まず作品を公開してみようと思える場を目指しています。'
 )
 
+const route = useRoute()
+
 useSeoMeta({
   title: 'トップページ',
   titleTemplate: title => `${title} | ゲーム制作者交流イベントGame³`,
@@ -38,7 +40,8 @@ useSeoMeta({
   // useSeoMeta内ではuseRuntimeConfigが使えないので<Meta />コンポーネントを使用してog imageを設定
   // see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
   // ogImage: () => ogImageUrl.value,
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
+  ogUrl: () => route.fullPath
 })
 </script>
 
@@ -46,7 +49,7 @@ useSeoMeta({
   <div>
     <Meta name="twitter:image" :content="ogImageUrl" />
     <Meta property="og:image" :content="ogImageUrl" />
-    <Meta property="og:url" :content="config.public.basePath" />
+    <Meta property="og:url" :content="config.public.basePath + route.fullPath" />
     <TooltipProvider
       :delay-duration="500"
     >

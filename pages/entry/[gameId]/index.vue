@@ -27,16 +27,26 @@ const canEdit = computed(() => {
   )
 })
 
+const seoDescription = computed(() => game.value ? `Game3展示作品 「${game.value.title}」 by ${game.value.creatorName} ${game.value.description}` : undefined)
+
+const ogImageUrl = computed(() => game.value ? useGameIconUrl(gameId, true) : undefined)
+
 useSeoMeta({
   title: () =>
     game.value
-      ? `${game.value.title} by ${game.value.creatorName}`
-      : 'ゲーム詳細'
+      ? `「${game.value.title}」 by ${game.value.creatorName}`
+      : 'ゲーム詳細',
+  description: () => seoDescription.value,
+  ogDescription: () => seoDescription.value,
+  twitterDescription: () => seoDescription.value,
+  twitterCard: 'summary'
 })
 </script>
 
 <template>
   <div v-if="game">
+    <Meta name="twitter:image" :content="ogImageUrl" />
+    <Meta property="og:image" :content="ogImageUrl" />
     <ProseH1>{{ game.title }}</ProseH1>
     <div>
       <NuxtImg
