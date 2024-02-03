@@ -10,7 +10,8 @@ import {
   blob,
   optional,
   union,
-  literal
+  literal,
+  boolean
 } from 'valibot'
 import { useForm } from 'vee-validate'
 import { getParamsArray } from '~/lib/url'
@@ -34,17 +35,12 @@ const { useMeStore } = useMe()
 const me = useMeStore()
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
-const { data: gameIcon, suspense: suspenseIcon } = useGameIconQuery({ gameId })
-const { data: gameImage, suspense: suspenseImage } = useGameImageQuery({
+const { suspense: suspenseIcon } = useGameIconQuery({ gameId })
+const { suspense: suspenseImage } = useGameImageQuery({
   gameId
 })
-onServerPrefetch(async () => {
-  await Promise.all([suspenseGame(), suspenseIcon(), suspenseImage()]).catch(
-    () => {}
-  )
-})
 
-const { handleSubmit, meta, values } = useForm({
+const { handleSubmit, meta, values, setFieldValue } = useForm({
   validationSchema: toTypedSchema(
     object({
       gameId: string(),
@@ -75,15 +71,36 @@ const { handleSubmit, meta, values } = useForm({
       icon: blob(),
       description: optional(string(), ''),
       place: optional(string(), ''),
-      image: optional(blob())
+      image: optional(blob()),
+      isPublished: optional(boolean())
     })
   ),
   initialValues: {
-    ...game.value,
-    icon: gameIcon.value,
-    image: gameImage.value
+    gameId
   }
 })
+
+suspenseGame().then((res) => {
+  if (res) {
+    setFieldValue('title', res.data?.title)
+    setFieldValue('gamePageUrl', res.data?.gamePageUrl)
+    setFieldValue('creatorName', res.data?.creatorName)
+    setFieldValue('creatorPageUrl', res.data?.creatorPageUrl)
+    setFieldValue('description', res.data?.description)
+    setFieldValue('place', res.data?.place)
+    setFieldValue('isPublished', res.data?.isPublished)
+  }
+})
+suspenseIcon().then((res) => {
+  if (res) {
+    setFieldValue('icon', res.data)
+  }
+}).catch(() => {})
+suspenseImage().then((res) => {
+  if (res) {
+    setFieldValue('image', res.data)
+  }
+}).catch(() => {})
 
 const confirmModalOpen = ref(false)
 const { $toast } = useNuxtApp()
@@ -143,6 +160,13 @@ useSeoMeta({
           label="ターム (admin only)"
           name="termId"
         />
+        <UISwitch
+          v-if="me.user?.role === 'admin'"
+          label="公開状態 (admin only)"
+          name="isPublished"
+          true-state="全体に公開 (非ログインユーザー含む全員がページ上で閲覧可能)"
+          false-state="非公開 (管理者/登録申請したユーザーのみがページ上で閲覧可能)"
+        />
         <ProseH3> 登録内容プレビュー </ProseH3>
         <EntryPreview :game-req="values" />
         <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
@@ -172,7 +196,11 @@ useSeoMeta({
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
                 <div class="flex gap-4">
-                  <UIButton type="button" variant="secondary">
+                  <UIButton
+                    type="button"
+                    variant="secondary"
+                    @click="confirmModalOpen = false"
+                  >
                     キャンセル
                   </UIButton>
                   <UIButton

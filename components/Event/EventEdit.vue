@@ -14,16 +14,15 @@ import { DialogRoot } from 'radix-vue'
 import type { Event } from '~/lib/api'
 
 type Props = {
-  event: Event
-}
+  event: Event;
+};
 const props = defineProps<Props>()
 
-const { data: eventImage, suspense: suspenseEventImage } = useEventImageQuery({ eventSlug: props.event.slug })
-onServerPrefetch(async () => {
-  await suspenseEventImage().catch(() => {})
+const { suspense: suspenseEventImage } = useEventImageQuery({
+  eventSlug: props.event.slug
 })
 
-const { handleSubmit, meta, values } = useForm({
+const { handleSubmit, meta, values, setValues } = useForm({
   validationSchema: toTypedSchema(
     object({
       title: string([
@@ -40,9 +39,14 @@ const { handleSubmit, meta, values } = useForm({
     })
   ),
   initialValues: {
-    ...props.event,
-    image: eventImage.value
+    ...props.event
   }
+})
+
+suspenseEventImage().then((res) => {
+  setValues({
+    image: res.data
+  })
 })
 
 const confirmModalOpen = ref(false)
@@ -53,7 +57,7 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync({
       ...values,
-      slug: props.event.slug
+      eventSlug: props.event.slug
     })
     $toast.success('イベントの編集が完了しました！')
     await navigateTo(`/admin/event/${values.slug}`)
@@ -81,11 +85,7 @@ const onSubmit = handleSubmit(async (values) => {
           name="slug"
           placeholder="99th"
         />
-        <UIDatePicker
-          label="開催日"
-          helper-text="イベント開催日"
-          name="date"
-        />
+        <UIDatePicker label="開催日" helper-text="イベント開催日" name="date" />
         <UIDatePicker
           label="出展受付開始日時"
           helper-text="ゲーム登録期間開始日時"
@@ -119,6 +119,7 @@ const onSubmit = handleSubmit(async (values) => {
                 <div class="mb-8 space-y-2">
                   <div>イベント名：{{ values.title }}</div>
                   <div>イベントslug：{{ values.slug }}</div>
+                  <div>開催日{{ values.date?.toLocaleString("ja-JP") }}</div>
                   <div>
                     申し込み開始日時{{
                       values.gameSubmissionPeriodStart?.toLocaleString("ja-JP")
