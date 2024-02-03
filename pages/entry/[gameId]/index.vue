@@ -21,7 +21,7 @@ const seoDescription = computed(() => game.value ? `Game3展示作品 「${game.
 
 const ogImageUrl = computed(() => game.value ? useGameIconUrl(gameId, true) : undefined)
 
-useSeoMeta({
+useServerSeoMeta({
   title: () =>
     game.value
       ? `「${game.value.title}」 by ${game.value.creatorName}`
