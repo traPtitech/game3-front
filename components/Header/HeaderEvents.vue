@@ -10,7 +10,7 @@ import ListImage from '~/assets/list-marker.svg'
 const { data: events, suspense: suspenseEvents } = useEventsQuery()
 const top3Events = computed(() => {
   if (!events.value) { return [] }
-  return events.value.sort(
+  return events.value.toSorted(
     (a, b) => b.gameSubmissionPeriodEnd < a.gameSubmissionPeriodEnd ? -1 : 1
   ).slice(0, 3)
 })

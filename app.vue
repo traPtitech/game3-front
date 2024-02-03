@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { TooltipProvider } from 'radix-vue'
+
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
   useCurrentEventQuery()
 
@@ -45,8 +47,12 @@ useSeoMeta({
     <Meta name="twitter:image" :content="ogImageUrl" />
     <Meta property="og:image" :content="ogImageUrl" />
     <Meta property="og:url" :content="config.public.basePath" />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <TooltipProvider
+      :delay-duration="500"
+    >
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </TooltipProvider>
   </div>
 </template>

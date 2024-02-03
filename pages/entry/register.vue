@@ -83,7 +83,7 @@ useSeoMeta({
     </ProseH2>
     <div v-if="data" class="w-full flex flex-col gap-4">
       <div class="text-center text-brand-violet font-700">
-        <div>現在の出展対象イベント：{{ data.title }} Game<sup>3</sup></div>
+        <div>現在の出展対象イベント：{{ data.title }} Game³</div>
         <div>出展締め切り：{{ data.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}</div>
       </div>
       <form class="flex flex-col gap-4">

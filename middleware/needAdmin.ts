@@ -4,11 +4,11 @@ const isAdmin = () => {
   return me.value.user?.role === 'admin'
 }
 
-const loginPage = '/login'
-
-export default defineNuxtRouteMiddleware((to) => {
-  if (process.server) { return }
+export default defineNuxtRouteMiddleware(() => {
   if (!isAdmin()) {
-    return navigateTo(loginPage + '?redirect=' + encodeURIComponent(to.path))
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden'
+    })
   }
 })
