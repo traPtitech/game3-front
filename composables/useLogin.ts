@@ -1,4 +1,3 @@
-import { authApi } from './useQuery'
 import { useMe } from '~/store/me'
 
 export const useLogin = () => {
@@ -6,10 +5,13 @@ export const useLogin = () => {
   const { redirectPath } = useRedirectParam()
   const config = useRuntimeConfig()
 
-  const login = async () => {
-    await authApi.login({
-      redirect: encodeURI(config.public.basePath + (redirectPath.value ?? '/'))
-    })
+  const login = () => {
+    const authPath =
+      config.public.basePath +
+      '/api/auth/login?' +
+      encodeURIComponent(config.public.basePath + (redirectPath.value ?? '/'))
+
+    window.location.href = authPath
   }
 
   return {
