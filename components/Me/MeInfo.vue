@@ -15,6 +15,7 @@ const isAdmin = computed(() => props.user.role === 'admin')
   <div class="w-full flex items-center justify-around gap-4">
     <NuxtImg
       :src="props.user.profileImageUrl"
+      placeholder="/img/placeholder.png"
       class="h-24 w-24 rounded-full object-cover"
     />
     {{ props.user.username
