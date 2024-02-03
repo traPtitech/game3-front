@@ -5,7 +5,6 @@ import {
   PopoverRoot,
   PopoverTrigger
 } from 'radix-vue'
-import ListImage from '~/assets/list-marker.svg'
 
 const { data: events, suspense: suspenseEvents } = useEventsQuery()
 const top3Events = computed(() => {
@@ -22,14 +21,14 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-  <PopoverRoot v-if="top3Events.length > 0">
+  <PopoverRoot v-if="top3Events">
     <PopoverTrigger as-child class="group">
       <UIButton
         variant="secondary"
       >
         過去の開催
         <template #suffix>
-          <img :src="ListImage" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270">
+          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270" />
         </template>
       </UIButton>
     </PopoverTrigger>
@@ -47,7 +46,7 @@ onServerPrefetch(async () => {
                 class="w-full inline-flex items-center gap-2"
                 :to="`/event/${event.slug}`"
               >
-                <img :src="ListImage" aria-hidden>
+                <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
                 <StrokedText
                   class="text-stroke-white"
                   width="text-stroke-3"
@@ -61,7 +60,7 @@ onServerPrefetch(async () => {
                 class="w-full inline-flex items-center gap-2"
                 to="/event"
               >
-                <img :src="ListImage" aria-hidden>
+                <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
                 <StrokedText
                   class="text-stroke-white"
                   width="text-stroke-3"

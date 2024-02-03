@@ -1,12 +1,12 @@
 <!-- https://github.com/nuxt-modules/mdc/blob/820d5d7fe4e7bdc8b57070bd82de2929f75a485c/src/runtime/components/prose/ProseImg.vue -->
 <template>
-  <img
+  <NuxtImg
     :src="refinedSrc"
     :alt="alt"
     :width="width"
     :height="height"
     class="h-auto max-h-50vh w-full object-contain"
-  >
+  />
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PostGameRequest, PatchGameRequest } from '~/lib/api'
-import PlaceHolderImg from '~/assets/img/placeholder.png'
 
 type Props = {
   gameReq: Partial<PostGameRequest | PatchGameRequest>;
@@ -23,7 +22,7 @@ onUnmounted(() => {
 
 <template>
   <div class="block w-full flex gap-5">
-    <img :src="iconImgSrc ?? PlaceHolderImg" width="200px" height="200px" class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary">
+    <img :src="iconImgSrc ?? '/img/placeholder.png'" width="200px" height="200px" class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary">
     <div class="w-full flex flex-col gap2">
       <div class="text-8 font-700">
         {{ props.gameReq.title ?? "ゲームタイトルを入力してください" }}

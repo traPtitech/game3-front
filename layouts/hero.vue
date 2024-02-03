@@ -10,10 +10,10 @@ onServerPrefetch(async () => {
   <div>
     <div class="grid grid-cols-[1fr_auto] h-100vh w-full overflow-hidden">
       <!-- TODO: use event image from api -->
-      <!-- <img :src="`/api/events/${data?.slug}/image`" alt=""> -->
+      <!-- <NuxtImg :src="`/api/events/${data?.slug}/image`" alt=""> -->
       <div class="relative h-full w-full overflow-hidden">
-        <img src="/hero-resized.png" class="h-full w-full object-cover">
-        <img src="/img/logo/Gamecube_logo_full.svg" class="absolute bottom-0 right-0 w-[min(100%,max(60%,500px))] p-4">
+        <NuxtImg src="/hero-resized.png" class="h-full w-full object-cover" />
+        <NuxtImg src="/img/logo/Gamecube_logo_full.svg" class="absolute bottom-0 right-0 w-[min(100%,max(60%,500px))] p-4" />
       </div>
       <div class="h-full flex flex-col justify-center gap-12 bg-brand-violet p-6 text-text-white">
         <div>

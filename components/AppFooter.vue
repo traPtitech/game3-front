@@ -2,14 +2,11 @@
   <footer class="flex flex-col gap-4 bg-brand-violet px-12 py-8 text-body text-text-white font-700">
     <div class="flex items-end">
       <a href="https://trap.jp" class="mr-auto">
-        <img src="/img/logo/traP_logo_full_white.svg" alt="東京工業大学デジタル創作同好会traPロゴ" class="h-auto w-64 object-contain">
-      </a>
+        <NuxtImg src="/img/logo/traP_logo_full_white.svg" alt="東京工業大学デジタル創作同好会traPロゴ" class="h-auto w-64 object-contain" /></a>
       <a href="https://twitter.com/traPtitech" class="h-10 w-10 flex items-center justify-center p-2">
-        <img src="/img/logo/x_logo.svg" alt="X(Twitter)ロゴ">
-      </a>
+        <NuxtImg src="/img/logo/x_logo.svg" alt="X(Twitter)ロゴ" /></a>
       <a href="https://twitter.com/GAME3_Staff" class="h-10 w-10 flex items-center justify-center p-2">
-        <img src="/img/logo/x_logo.svg" alt="X(Twitter)ロゴ">
-      </a>
+        <NuxtImg src="/img/logo/x_logo.svg" alt="X(Twitter)ロゴ" /></a>
     </div>
     <hr
       class=""

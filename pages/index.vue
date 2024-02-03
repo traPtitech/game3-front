@@ -52,8 +52,7 @@ definePageMeta({
       東京工業大学デジタル創作同好会
     </ProseH3>
     <a href="https://trap.jp" target="_blank" rel="noopener" class="block">
-      <img src="/img/logo/traP_logo_full.svg" alt="東京工業大学デジタル創作同好会traPロゴ" class="h-auto w-full object-contain">
-    </a>
+      <NuxtImg src="/img/logo/traP_logo_full.svg" alt="東京工業大学デジタル創作同好会traPロゴ" class="h-auto w-full object-contain" /></a>
     <ProseP>
       東京工業大学デジタル創作同好会traPは、その名の通りデジタル創作を主な活動とするサークルです。
       部員の得意分野は多岐にわたり、ゲーム、Webサービス、DTM、デジタルイラスト、競技プログラミングなど、幅広い分野で活躍しています。
@@ -63,11 +62,11 @@ definePageMeta({
     </ProseH2>
     <div class="h-48 w-full overflow-hidden b-1 rounded-2 shadow">
       <a href="https://gamemakers.jp/article/2023_04_05_35343/" target="_blank" rel="noopener" class="block h-full w-full flex gap-4">
-        <img src="https://gamemakers.jp/cms/wp-content/uploads/2023/04/c88da4c9fba0062a87e81285f67f6e52.jpg" class="aspect-square h-full w-auto object-cover">
+        <NuxtImg src="https://gamemakers.jp/cms/wp-content/uploads/2023/04/c88da4c9fba0062a87e81285f67f6e52.jpg" class="aspect-square h-full w-auto object-cover" />
         <div class="w-full flex flex-col justify-between overflow-hidden break-normal p-4">
           <div class="line-clamp-2 text-body font-700">「第16回 ゲーム制作者交流イベント GAME³」レポート──可能性に満ちた学生たちのゲーム作品と尽きない創作意欲</div>
           <div class="line-clamp-3 text-ellipsis text-caption">2023年3月18日（土）、東京工業大学 大岡山キャンパスにて、東工大デジタル創作同好会「traP」主催の第16回 ゲーム制作者交流イベント『GAME³（ゲームキューブ）』が開催されました。traP所属の学生たち以外にも外部の開発者や協賛企業も出展した、濃密で熱気にあふれたイベントの模様をお伝えします。</div>
-          <div class="inline-flex items-center gap-2"><img class="h-6 w-6" src="https://gamemakers.jp/favicon.ico" alt="ゲームメーカーズロゴ画像">gamemakers.jp</div>
+          <div class="inline-flex items-center gap-2"><NuxtImg class="h-6 w-6" src="https://gamemakers.jp/favicon.ico" alt="ゲームメーカーズロゴ画像" />gamemakers.jp</div>
         </div>
       </a>
     </div>

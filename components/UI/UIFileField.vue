@@ -117,11 +117,11 @@ const onInputChange: HTMLInputElement['onchange'] = (e) => {
         image-restriction="stencil"
         @change="onCropChange"
       />
-      <img
+      <NuxtImg
         v-else
         :src="imgSrc"
         class="h-64 w-auto b-1 b-border-primary object-contain bg-check"
-      >
+      />
       <button
         class="absolute right-2 top-2 flex appearance-none items-center justify-center gap-2 b-2 b-border-semantic-error rounded-full bg-surface-primary p-2 p-2 text-text-semantic-error hover:bg-#FEE6E6"
         type="button"

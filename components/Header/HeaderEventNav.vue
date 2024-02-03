@@ -5,7 +5,6 @@ import {
   PopoverRoot,
   PopoverTrigger
 } from 'radix-vue'
-import ListImage from '~/assets/list-marker.svg'
 
 const { useMeStore } = useLogin()
 const me = useMeStore()
@@ -26,7 +25,7 @@ onServerPrefetch(async () => {
         >
           {{ currentEvent.title }}
           <template #suffix>
-            <img :src="ListImage" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270">
+            <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270" />
           </template>
         </UIButton>
       </PopoverTrigger>
@@ -41,7 +40,7 @@ onServerPrefetch(async () => {
                   class="w-full inline-flex items-center gap-2"
                   :to="`/event/${currentEvent.slug}#開催概要`"
                 >
-                  <img :src="ListImage" aria-hidden>
+                  <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
                   <StrokedText
                     class="text-stroke-white"
                     width="text-stroke-3"
@@ -55,7 +54,7 @@ onServerPrefetch(async () => {
                   class="w-full inline-flex items-center gap-2"
                   :to="`/event/${currentEvent.slug}/#出展情報`"
                 >
-                  <img :src="ListImage" aria-hidden>
+                  <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
                   <StrokedText
                     class="text-stroke-white"
                     width="text-stroke-3"
@@ -66,7 +65,7 @@ onServerPrefetch(async () => {
               </li>
               <li>
                 <NuxtLink class="w-full inline-flex items-center gap-2" to="/entry/register">
-                  <img :src="ListImage" aria-hidden>
+                  <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
                   <StrokedText
                     class="text-stroke-white"
                     width="text-stroke-3"
@@ -81,7 +80,7 @@ onServerPrefetch(async () => {
               </li>
               <li v-if="me.user">
                 <NuxtLink class="w-full inline-flex items-center gap-2" to="/me">
-                  <img :src="ListImage" aria-hidden>
+                  <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
                   <StrokedText
                     class="text-stroke-white"
                     width="text-stroke-3"

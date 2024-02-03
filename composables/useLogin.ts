@@ -3,9 +3,9 @@ import { useMe } from '~/store/me'
 export const useLogin = () => {
   const config = useRuntimeConfig()
   const params = new URLSearchParams({
-    client_id: config.discord.clientId,
+    client_id: config.public.discord.clientId,
     response_type: 'code',
-    redirect_uri: config.discord.redirectUri,
+    redirect_uri: config.public.discord.redirectUri,
     scope: 'identify'
   })
   const discordOauthUrl = 'https://discord.com/api/oauth2/authorize'

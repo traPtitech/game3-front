@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     '~/assets/css/toast.css',
     '~/assets/css/date-picker.css'
   ],
-  modules: ['@nuxt/content', '@unocss/nuxt', '@nuxtjs/google-fonts'],
+  modules: ['@nuxt/content', '@unocss/nuxt', '@nuxtjs/google-fonts', '@nuxt/image'],
   devtools: {
     enabled: true,
     timeline: {
@@ -45,11 +45,11 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    discord: {
-      clientId: process.env.NUXT_DISCORD_CLIENT_ID,
-      redirectUri: process.env.NUXT_DISCORD_REDIRECT_URI
-    },
     public: {
+      discord: {
+        clientId: process.env.NUXT_DISCORD_CLIENT_ID,
+        redirectUri: process.env.NUXT_DISCORD_REDIRECT_URI
+      },
       basePath: process.env.NUXT_BASE_PATH || 'https://game3.trap.games'
     }
   },

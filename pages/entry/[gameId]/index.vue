@@ -29,24 +29,12 @@ useSeoMeta({
   <div v-if="game">
     <ProseH1>{{ game.title }}</ProseH1>
     <div>
-      <img
+      <NuxtImg
         :src="useGameImageUrl(gameId)"
-        alt=""
+        :alt="`${game.title}紹介画像`"
         class="mx-auto h-120 w-auto object-contain"
-        @error="
-          (e) => {
-            if (
-              (e.currentTarget as HTMLImageElement).src !==
-              useGameIconUrl(gameId, true)
-            ) {
-              (e.currentTarget as HTMLImageElement).src = useGameIconUrl(
-                gameId,
-                true
-              );
-            }
-          }
-        "
-      >
+        :placeholder="useGameIconUrl(gameId)"
+      />
       <div class="flex gap-4 text-caption text-text-secondary!">
         <div class="flex items-center gap-1">
           <div class="i-tabler:user h-6 w-6" />
