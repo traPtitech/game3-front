@@ -13,10 +13,11 @@ onServerPrefetch(async () => {
   <div>
     <!-- TODO: add effect animation -->
     <div class="grid grid-cols-[1fr_auto] h-100vh w-full overflow-hidden">
-      <!-- TODO: use event image from api -->
-      <!-- <NuxtImg :src="`/api/events/${data?.slug}/image`" alt=""> -->
       <div class="relative h-full w-full overflow-hidden">
-        <NuxtImg src="/hero-resized.png" class="h-full w-full object-cover" />
+        <NuxtImg
+          :src="useEventImageUrl(currentEvent!.slug)"
+          class="h-full w-full object-cover"
+        />
         <NuxtImg
           src="/img/logo/Gamecube_logo_full.svg"
           class="absolute bottom-0 right-0 w-[min(100%,max(60%,500px))] p-4"
