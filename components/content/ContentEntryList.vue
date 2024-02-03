@@ -6,16 +6,19 @@ import {
   TabsRoot,
   TabsTrigger
 } from 'radix-vue'
+
 type Props = {
-  eventSlug: string;
+  eventSlug?: string;
 };
 const props = defineProps<Props>()
+const loadedSlug = usePathParams('slug')
+const eventSlug = computed(() => props.eventSlug || loadedSlug)
 
 const { data: eventGames, suspense: suspenseEventGames } = useGamesQuery({
-  eventSlug: props.eventSlug
+  eventSlug: eventSlug.value
 })
 const { data: eventTerms, suspense: suspenseEventTerms } = useEventTermsQuery({
-  eventSlug: props.eventSlug
+  eventSlug: eventSlug.value
 })
 
 // TODO: タームが作成されていない場合はすべてのゲームを表示する

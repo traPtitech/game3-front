@@ -5,17 +5,17 @@ type CanPost =
   | 'notLoggedIn' // ログインしていない
   | undefined;
 
-export const useCanPostGame = () => {
-  const { data: currentEvent } = useCurrentEventQuery()
+export const useCanPostGame = (eventSlug: string) => {
+  const { data: targetEvent } = useEventQuery({ eventSlug })
   const { useMeStore } = useLogin()
   const me = useMeStore()
   const today = new Date()
 
   return computed<CanPost>(() => {
-    if (currentEvent.value) {
-      if (today < currentEvent.value.gameSubmissionPeriodStart) {
+    if (targetEvent.value) {
+      if (today < targetEvent.value.gameSubmissionPeriodStart) {
         return 'prePeriod'
-      } else if (currentEvent.value.gameSubmissionPeriodEnd < today) {
+      } else if (targetEvent.value.gameSubmissionPeriodEnd < today) {
         return 'postPeriod'
       }
 

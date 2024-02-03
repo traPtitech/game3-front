@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const canPost = useCanPostGame()
+type Props = {
+  eventSlug?: string;
+};
+const props = defineProps<Props>()
+const loadedSlug = usePathParams('slug')
+const eventSlug = computed(() => props.eventSlug || loadedSlug)
+const canPost = useCanPostGame(eventSlug.value)
 </script>
 
 <template>
