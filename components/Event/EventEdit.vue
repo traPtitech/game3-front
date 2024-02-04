@@ -60,7 +60,7 @@ const onSubmit = handleSubmit(async (values) => {
       eventSlug: props.event.slug
     })
     $toast.success('イベントの編集が完了しました！')
-    await navigateTo(`/admin/event/${values.slug}`)
+    confirmModalOpen.value = false
   } catch (e) {
     $toast.error('イベントの編集に失敗しました')
     console.error(e)
