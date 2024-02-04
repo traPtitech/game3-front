@@ -61,7 +61,7 @@ export default defineNuxtConfig({
   image: {
     domains: ['game3.trap.games'],
     alias: {
-      game3: 'https://game3.trap.games'
+      api: 'https://game3.trap.games/api'
     }
   }
 })
