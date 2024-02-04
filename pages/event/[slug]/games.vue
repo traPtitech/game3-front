@@ -12,6 +12,8 @@ onServerPrefetch(async () => {
 
 useSeoMeta({
   title: () =>
+    event.value ? `${event.value.title} Game³ ゲーム一覧` : 'Game³ ゲーム一覧',
+  ogTitle: () =>
     event.value ? `${event.value.title} Game³ ゲーム一覧` : 'Game³ ゲーム一覧'
 })
 </script>

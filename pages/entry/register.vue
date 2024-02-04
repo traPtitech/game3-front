@@ -73,7 +73,8 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 useSeoMeta({
-  title: '作品登録ページ'
+  title: '作品登録ページ',
+  ogTitle: '作品登録ページ'
 })
 </script>
 

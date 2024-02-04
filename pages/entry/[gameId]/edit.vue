@@ -109,7 +109,8 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 useSeoMeta({
-  title: () => game.value ? `${game.value.title} by ${game.value.creatorName} | 編集ページ` : 'ゲーム編集'
+  title: () => game.value ? `${game.value.title} by ${game.value.creatorName} | 編集ページ` : 'ゲーム編集',
+  ogTitle: () => game.value ? `${game.value.title} by ${game.value.creatorName} | 編集ページ` : 'ゲーム編集'
 })
 </script>
 

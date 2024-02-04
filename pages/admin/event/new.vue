@@ -51,7 +51,8 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 useSeoMeta({
-  title: 'イベント新規作成'
+  title: 'イベント新規作成',
+  ogTitle: 'イベント新規作成'
 })
 </script>
 

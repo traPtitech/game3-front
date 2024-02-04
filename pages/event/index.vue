@@ -6,7 +6,8 @@ onServerPrefetch(async () => {
 })
 
 useSeoMeta({
-  title: '過去の開催'
+  title: '過去の開催',
+  ogTitle: '過去の開催'
 })
 </script>
 

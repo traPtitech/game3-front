@@ -66,9 +66,9 @@ export const handlers = [
   http.get(`${baseURL}/games/:gameId`, () => {
     const resultArray = [
       [getGetGame200Response(), { status: 200 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
-      [null, { status: 404 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);

@@ -15,3 +15,7 @@ export const getParamsArray = (params: string | string[] | undefined) => {
   }
   return params ? [params] : undefined
 }
+
+export const basePath = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3000'
+  : 'https://game3.trap.games'

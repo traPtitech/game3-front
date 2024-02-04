@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TooltipProvider } from 'radix-vue'
+import { basePath } from './lib/url'
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
   useCurrentEventQuery()
@@ -9,11 +10,9 @@ onServerPrefetch(async () => {
   await suspenseCurrentEvent().catch(() => {})
 })
 
-const config = useRuntimeConfig()
-
 const ogImageUrl = computed(() =>
   currentEvent.value
-    ? useEventImageUrl(currentEvent.value?.slug, true)
+    ? useEventImageUrl(currentEvent.value?.slug)
     : useDefaultOgpImageUrl()
 )
 
@@ -33,29 +32,37 @@ const route = useRoute()
 
 useSeoMeta({
   title: 'トップページ',
+  ogTitle: 'トップページ',
   titleTemplate: title => `${title} | ゲーム制作者交流イベントGame³`,
   description: () => description.value,
   ogDescription: () => description.value,
   twitterDescription: () => description.value,
-  // useSeoMeta内ではuseRuntimeConfigが使えないので<Meta />コンポーネントを使用してog imageを設定
-  // see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
-  // ogImage: () => ogImageUrl.value,
+  ogImage: () => ogImageUrl.value,
+  twitterImage: () => ogImageUrl.value,
   twitterCard: 'summary_large_image',
-  ogUrl: () => route.fullPath
+  ogUrl: () => basePath + route.fullPath
+})
+
+useHead({
+  htmlAttrs: {
+    lang: 'ja'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      href: '/favicon.svg'
+    }
+  ]
 })
 </script>
 
 <template>
-  <div>
-    <Meta name="twitter:image" :content="ogImageUrl" />
-    <Meta property="og:image" :content="ogImageUrl" />
-    <Meta property="og:url" :content="config.public.basePath + route.fullPath" />
-    <TooltipProvider
-      :delay-duration="500"
-    >
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </TooltipProvider>
-  </div>
+  <TooltipProvider
+    :delay-duration="500"
+  >
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </TooltipProvider>
 </template>

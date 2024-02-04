@@ -20,6 +20,7 @@ import {
   type PostTermOperationRequest,
   type PatchEventRequest
 } from '~/lib/api'
+import { basePath } from '~/lib/url'
 
 // 本来なら
 // const config = useRuntimeConfig()
@@ -28,10 +29,7 @@ import {
 // composableの外で`useRuntimeConfig()`が使用できないのでハードコードしています
 // see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
 const apiConfig = new Configuration({
-  basePath:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/api'
-      : '/api'
+  basePath: basePath + '/api'
 })
 
 const eventsApi = new EventsApi(apiConfig)

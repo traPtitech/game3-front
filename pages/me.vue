@@ -8,7 +8,8 @@ const { useMeStore } = useLogin()
 const me = useMeStore()
 
 useSeoMeta({
-  title: 'マイページ'
+  title: 'マイページ',
+  ogTitle: 'マイページ'
 })
 </script>
 

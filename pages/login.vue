@@ -22,7 +22,8 @@ callOnce(() => {
 })
 
 useSeoMeta({
-  title: 'ログイン'
+  title: 'ログイン',
+  ogTitle: 'ログイン'
 })
 </script>
 

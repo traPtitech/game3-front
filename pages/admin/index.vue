@@ -5,7 +5,8 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: '管理者ページ'
+  title: '管理者ページ',
+  ogTitle: '管理者ページ'
 })
 </script>
 
