@@ -31,20 +31,20 @@ onUnmounted(() => {
       class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary"
     >
     <div class="w-full flex flex-col gap2">
-      <div class="text-8 font-700">
+      <div class="h2-text font-700">
         {{ props.gameReq.title ?? "ゲームタイトルを入力してください" }}
       </div>
-      <div class="flex gap-4 text-caption text-text-secondary!">
+      <div class="body flex gap-4 text-text-secondary!">
         <div class="flex items-center gap-1">
-          <div class="i-tabler:user h-6 w-6" />
+          <div class="i-tabler:user h-1.5em w-1.5em" />
           {{ props.gameReq.creatorName ?? "出展者名を入力してください" }}
         </div>
         <div class="flex items-center gap-1">
-          <div class="i-tabler:map-pin h-6 w-6" />
+          <div class="i-tabler:map-pin h-1.5em w-1.5em" />
           {{ props.gameReq.place ?? "1-A" }}
         </div>
       </div>
-      <div class="line-clamp-3 text-ellipsis text-body">
+      <div class="body line-clamp-3 text-ellipsis">
         {{ props.gameReq.description ?? "ゲーム詳細を入力してください" }}
       </div>
     </div>

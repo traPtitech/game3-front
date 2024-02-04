@@ -28,10 +28,10 @@ onServerPrefetch(async () => {
         class="h-full flex flex-col justify-center gap-12 bg-brand-violet p-6 text-text-white"
       >
         <div>
-          <div class="mb-4 text-9 font-700">
+          <div class="mb-4 font-700 h2-text">
             ゲーム制作者交流イベント
           </div>
-          <div class="mb--4 text-5 font-700">
+          <div class="mb--4 font-700 h5-text">
             ゲームキューブ
           </div>
           <h1 class="text-24 font-700">

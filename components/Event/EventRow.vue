@@ -15,11 +15,11 @@ const props = defineProps<Props>()
       class="h-30 w-30 b-1 b-border-primary object-cover"
     />
     <div class="flex flex-col gap-2">
-      <h3 class="text-12 text-text-primary font-500">
+      <h3 class="text-text-primary font-500 h2-text">
         {{ props.event.title }}
       </h3>
-      <div class="flex items-center gap-1 text-caption">
-        <div class="i-tabler:clock h-6 w-6" />
+      <div class="flex items-center gap-1 body">
+        <div class="i-tabler:clock h-1.5em w-1.5em" />
         {{ props.event.date.toLocaleDateString("ja-JP") }}
       </div>
     </div>

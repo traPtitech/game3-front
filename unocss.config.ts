@@ -47,47 +47,144 @@ export default defineConfig({
       }
     },
     fontSize: {
-      h1: [
-        '2.5rem',
-        {
-          'font-weight': '700'
-        }
-      ],
-      h2: [
-        '2rem',
-        {
-          'font-weight': '700'
-        }
-      ],
-      h3: [
-        '1.5rem',
-        {
-          'font-weight': '700'
-        }
-      ],
-      body: ['1rem', 1.7],
-      caption: [
-        '0.875rem',
-        {
-          'line-height': '1.5',
-          'font-weight': '400'
-        }
-      ],
-      label: [
-        '1rem',
-        {
-          'line-height': '1.5',
-          'font-weight': '500'
-        }
-      ],
       button: [
         '1.25rem',
         {
           'line-height': '1.5',
           'font-weight': '700'
         }
+      ],
+      'h-xxl': [
+        '3.5rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.4'
+        }
+      ],
+      'h-xl': [
+        '3rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.4'
+        }
+      ],
+      'h-l': [
+        '2.25rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.4'
+        }
+      ],
+      'h-l-m': [
+        '2rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.5'
+        }
+      ],
+      'h-m': [
+        '2rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.5'
+        }
+      ],
+      'h-m-m': [
+        '1.75rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.5'
+        }
+      ],
+      'h-s': [
+        '1.75rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.5'
+        }
+      ],
+      'h-s-m': [
+        '1.5rem',
+        {
+          'font-weight': '700',
+          'line-height': '1.5'
+        }
+      ],
+      'h-xs': [
+        '1.5rem',
+        {
+          'line-height': '1.5'
+        }
+      ],
+      'h-xs-m': [
+        '1.25rem',
+        {
+          'font-weight': '500',
+          'line-height': '1.5'
+        }
+      ],
+      'h-xxs': [
+        '1.25rem',
+        {
+          'line-height': '1.5'
+        }
+      ],
+      'h-xxs-m': [
+        '1rem',
+        {
+          'font-weight': '500',
+          'line-height': '1.7'
+        }
+      ],
+      'body-l': [
+        '1rem',
+        {
+          'line-height': '1.7'
+        }
+      ],
+      'body-m': [
+        '0.875rem',
+        {
+          'line-height': '1.7'
+        }
+      ],
+      'label-l': [
+        '1.125rem',
+        {
+          'font-weight': '500',
+          'line-height': '1.5'
+        }
+      ],
+      'label-m': [
+        '1rem',
+        {
+          'font-weight': '500',
+          'line-height': '1.5'
+        }
+      ],
+      'caption-l': [
+        '0.875rem',
+        {
+          'line-height': '1.7'
+        }
+      ],
+      'caption-m': [
+        '0.75rem',
+        {
+          'line-height': '1.7'
+        }
       ]
     }
+  },
+  shortcuts: {
+    'h1-text': 'text-h-l-m lg:text-h-l',
+    'h2-text': 'text-h-m-m lg:text-h-m',
+    'h3-text': 'text-h-s-m lg:text-h-s',
+    'h4-text': 'text-h-xs-m lg:text-h-xs',
+    'h5-text': 'text-h-xxs-m lg:text-h-xxs',
+    body: 'text-body-m lg:text-body-l',
+    label: 'text-label-m lg:text-label-l',
+    caption: 'text-caption-l lg:text-caption-m'
   },
   rules: [
     [

@@ -66,10 +66,10 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
         :value="term.term.id"
         class="data-[state=inactive]:text-text-secondary!"
       >
-        <div class="text-8 font-500">
+        <div class="font-500 h3-text">
           {{ term.term.name }}
         </div>
-        <div class="text-6 font-500">
+        <div class="font-500 h4-text">
           {{
             term.term.startAt?.toLocaleTimeString(
               "ja-JP",

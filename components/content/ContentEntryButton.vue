@@ -24,10 +24,10 @@ const canPost = useCanPostGame(eventSlug.value)
         ログインして作品を登録する
       </UIButton>
     </div>
-    <div v-else-if="canPost === 'prePeriod'" class="text-center text-h3 text-brand-violet">
+    <div v-else-if="canPost === 'prePeriod'" class="text-center text-brand-violet h3-text">
       応募はまだ開始されていません
     </div>
-    <div v-else-if="canPost === 'postPeriod'" class="text-center text-h3 text-brand-violet">
+    <div v-else-if="canPost === 'postPeriod'" class="text-center text-brand-violet h3-text">
       応募は締め切りました！
     </div>
   </div>

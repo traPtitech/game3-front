@@ -5,7 +5,7 @@ const me = useMeStore()
 
 <template>
   <footer
-    class="flex flex-col gap-4 bg-brand-violet px-12 py-8 text-body text-text-white font-700"
+    class="flex flex-col gap-4 bg-brand-violet px-12 py-8 text-text-white font-700 body"
   >
     <div class="flex items-end">
       <a href="https://trap.jp" class="mr-auto">

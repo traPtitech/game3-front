@@ -48,16 +48,16 @@ useSeoMeta({
 <template>
   <div v-if="game">
     <ProseH1>{{ game.title }}</ProseH1>
-    <div>
+    <div class="space-y-4">
       <NuxtImg
         :src="useGameImageUrl(gameId)"
         :alt="`${game.title}紹介画像`"
         class="mx-auto h-120 w-auto object-contain"
         :placeholder="useGameIconUrl(gameId)"
       />
-      <div class="flex gap-4 text-caption text-text-secondary!">
+      <div class="flex gap-4 text-text-secondary!">
         <div class="flex items-center gap-1">
-          <div class="i-tabler:user h-6 w-6" />
+          <div class="i-tabler:user h-1.5em w-1.5em" />
           <ProseA
             :href="game.creatorPageUrl"
             target="_blank"
@@ -67,7 +67,7 @@ useSeoMeta({
           </ProseA>
         </div>
         <div class="flex items-center gap-1">
-          <div class="i-tabler:link h-6 w-6" />
+          <div class="i-tabler:link h-1.5em w-1.5em" />
           <ProseA
             :href="game.gamePageUrl"
             target="_blank"

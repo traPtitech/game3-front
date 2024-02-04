@@ -19,9 +19,9 @@ const onInput = () => {
 
 <template>
   <label class="flex flex-col gap-2">
-    <div class="flex items-end gap-2 text-label text-brand-violet">
+    <div class="flex items-end gap-2 text-brand-violet label">
       {{ props.label }}
-      <div v-if="meta.required" class="text-caption text-text-semantic-error">
+      <div v-if="meta.required" class="text-text-semantic-error caption">
         必須
       </div>
     </div>
@@ -41,7 +41,7 @@ const onInput = () => {
     />
     <div
       v-if="errorMessage"
-      class="text-caption text-text-semantic-error"
+      class="text-text-semantic-error caption"
     >
       {{ errorMessage }}
     </div>

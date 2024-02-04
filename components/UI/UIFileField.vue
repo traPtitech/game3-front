@@ -90,9 +90,9 @@ const onCropChange = (
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex items-end gap-2 text-label text-brand-violet">
+    <div class="flex items-end gap-2 text-brand-violet label">
       {{ props.label }}
-      <div v-if="meta.required" class="text-caption text-text-semantic-error">
+      <div v-if="meta.required" class="text-text-semantic-error caption">
         必須
       </div>
     </div>
@@ -126,7 +126,7 @@ const onCropChange = (
         type="button"
         @click="removeImage"
       >
-        <div class="i-tabler:trash h-6 w-6" />
+        <div class="i-tabler:trash h-1.5em w-1.5em" />
         別の画像を使用する
       </button>
     </div>
@@ -136,7 +136,7 @@ const onCropChange = (
       class="w-full flex cursor-pointer items-center gap-2 border b-border-primary rounded-2 px-4 py-3 text-text-secondary data-[invalid=true]:b-border-semantic-error focus-visible:(outline-2 outline-brand-violet outline)"
       @click="handleInputButtonClick"
     >
-      <div class="i-tabler:plus h-6 w-6 text-caption color-text-secondary" />
+      <div class="i-tabler:plus h-1.5em w-1.5em color-text-secondary" />
       画像を選択
     </button>
     <input
@@ -150,7 +150,7 @@ const onCropChange = (
       @input="handleChange"
       @blur="handleBlur"
     >
-    <div v-if="errorMessage" class="text-caption text-text-semantic-error">
+    <div v-if="errorMessage" class="text-text-semantic-error caption">
       {{ errorMessage }}
     </div>
   </div>

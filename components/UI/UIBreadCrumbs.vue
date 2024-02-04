@@ -11,7 +11,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <div class="flex gap-2 text-5">
+  <div class="flex gap-2 text-shadow-3 h5-text">
     <div v-for="(item, index) in props.items" :key="index">
       <NuxtLink :to="item.to">
         <StrokedText>

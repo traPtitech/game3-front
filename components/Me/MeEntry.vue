@@ -9,7 +9,7 @@ onServerPrefetch(async () => {
   <div v-if="currentEvent">
     <ProseH2> 作品登録 </ProseH2>
     <div class="w-full flex flex-col items-center gap-4">
-      <div class="text-center text-brand-violet font-700">
+      <div class="text-center text-brand-violet font-500">
         <div>現在の出展対象イベント：{{ currentEvent.title }} Game³</div>
         <div>
           出展締め切り：{{

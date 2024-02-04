@@ -58,11 +58,13 @@ useHead({
 </script>
 
 <template>
-  <TooltipProvider
-    :delay-duration="500"
-  >
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </TooltipProvider>
+  <div class="body">
+    <TooltipProvider
+      :delay-duration="500"
+    >
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </TooltipProvider>
+  </div>
 </template>

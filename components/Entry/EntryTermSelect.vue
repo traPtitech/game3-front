@@ -56,9 +56,9 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
 
 <template>
   <label class="flex flex-col gap-2">
-    <div class="flex items-end gap-2 text-label text-brand-violet">
+    <div class="label flex items-end gap-2 text-brand-violet">
       {{ props.label }}
-      <div v-if="meta.required" class="text-caption text-text-semantic-error">
+      <div v-if="meta.required" class="label text-text-semantic-error">
         必須
       </div>
     </div>
@@ -78,7 +78,7 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
           class="w-full py-3 outline-none"
         />
         <ComboboxTrigger>
-          <div class="i-tabler:chevron-down h-6 w-6" />
+          <div class="i-tabler:chevron-down h-1.5em w-1.5em" />
         </ComboboxTrigger>
         <ComboboxCancel />
       </ComboboxAnchor>
@@ -94,7 +94,7 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
               :key="eventSlug"
             >
               <ComboboxLabel
-                class="text-caption text-text-secondary"
+                class="caption text-text-secondary"
               >
                 {{ eventSlug }}
               </ComboboxLabel>
@@ -102,10 +102,10 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
                 v-for="term in terms"
                 :key="term.id"
                 :value="term.id"
-                class="relative flex cursor-pointer select-none items-center rounded-1 py-2 pl-6 text-body leading-none data-[highlighted]:(bg-brand-violet text-text-white outline-none)"
+                class="body relative flex cursor-pointer select-none items-center rounded-1 py-2 pl-6 leading-none data-[highlighted]:(bg-brand-violet text-text-white outline-none)"
               >
                 <ComboboxItemIndicator
-                  class="i-tabler:check absolute left-0 h-6 w-6 color-brand-violet"
+                  class="i-tabler:check absolute left-0 h-1.5em w-1.5em color-brand-violet"
                 />
                 {{ term.name }}
               </ComboboxItem>
@@ -116,7 +116,7 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
     </ComboboxRoot>
     <div
       v-if="errorMessage"
-      class="text-caption text-text-semantic-error"
+      class="caption text-text-semantic-error"
     >
       {{ errorMessage }}
     </div>

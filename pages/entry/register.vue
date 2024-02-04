@@ -126,11 +126,11 @@ useSeoMeta({
               登録確認
             </UIButton>
             <UIDialog>
-              <div class="text-body">
-                <div class="text-5 font-500">
+              <div class="space-y-6 body">
+                <div class="h3-text">
                   以下の内容で登録します。よろしいですか？
                 </div>
-                <div class="mb-8 space-y-2">
+                <div class="space-y-2">
                   <div>ゲーム名：{{ values.title }}</div>
                   <div>
                     ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}

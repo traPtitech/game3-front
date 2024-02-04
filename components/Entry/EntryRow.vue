@@ -40,10 +40,10 @@ const event = computed(
       class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary"
     />
     <div class="w-full flex flex-col gap2">
-      <div class="text-8 font-700">
+      <div class="h2-text font-700">
         {{ props.game.title }}
       </div>
-      <div class="flex gap-4 text-caption text-text-secondary!">
+      <div class="body flex gap-4 text-text-secondary!">
         <div v-if="props.variant === 'myPage'">
           <div v-if="props.game.isPublished">
             公開中
@@ -57,7 +57,7 @@ const event = computed(
             <TooltipPortal>
               <TooltipContent
                 :side-offset="4"
-                class="select-none rounded bg-surface-primary p-2 text-caption shadow data-[state=delayed-open]:animate-fade-in animate-duration-100!"
+                class="caption select-none rounded bg-surface-primary p-2 shadow data-[state=delayed-open]:animate-fade-in animate-duration-100!"
               >
                 運営によるチェックの終了後に全体公開されます
               </TooltipContent>
@@ -65,25 +65,25 @@ const event = computed(
           </TooltipRoot>
         </div>
         <div class="flex items-center gap-1">
-          <div class="i-tabler:user h-6 w-6" />
+          <div class="i-tabler:user h-1.5em w-1.5em" />
           {{ props.game.creatorName }}
         </div>
         <div
           v-if="props.variant === 'eventPage'"
           class="flex items-center gap-1"
         >
-          <div class="i-tabler:map-pin h-6 w-6" />
+          <div class="i-tabler:map-pin h-1.5em w-1.5em" />
           {{ props.game.place }}
         </div>
         <div
           v-if="props.variant === 'myPage' && event"
           class="flex items-center gap-1"
         >
-          <div class="i-tabler:clock h-6 w-6" />
+          <div class="i-tabler:clock h-1.5em w-1.5em" />
           {{ event?.title }} {{ event?.date.toLocaleDateString("ja-JP") }}
         </div>
       </div>
-      <div class="line-clamp-3 text-ellipsis text-body">
+      <div class="body line-clamp-3 text-ellipsis">
         {{ props.game.description }}
       </div>
     </div>

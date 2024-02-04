@@ -112,11 +112,11 @@ const onSubmit = handleSubmit(async (values) => {
               更新確認
             </UIButton>
             <UIDialog>
-              <div class="text-body">
-                <div class="text-5 font-500">
+              <div class="body space-y-6">
+                <h3 class="h3-text">
                   以下の内容で更新します。よろしいですか？
-                </div>
-                <div class="mb-8 space-y-2">
+                </h3>
+                <div class="space-y-2">
                   <div>イベント名：{{ values.title }}</div>
                   <div>イベントslug：{{ values.slug }}</div>
                   <div>開催日{{ values.date?.toLocaleString("ja-JP") }}</div>

@@ -6,8 +6,8 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="break-keep break-anywhere text-body">
-    <h2 class="mb-6 mt-16 text-12 text-brand-violet font-700">
+  <div class="break-keep break-anywhere body">
+    <h2 class="mb-6 mt-16 text-brand-violet h1-text">
       「すべてのゲームクリエイターへ。」
     </h2>
     <ProseP>
@@ -19,7 +19,7 @@ definePageMeta({
     <ProseH2>
       特徴
     </ProseH2>
-    <h3 class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-8 text-text-white font-700 line-height-normal">
+    <h3 class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-text-white line-height-normal h3-text">
       1. 入場料・出展料が無料
     </h3>
     <ProseP>
@@ -29,7 +29,7 @@ definePageMeta({
     <ProseP>
       また、来場者の方は事前にチケットや予約などは必要ありません。ぜひお気軽にご参加ください。
     </ProseP>
-    <h3 class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-8 text-text-white font-700 line-height-normal">
+    <h3 class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-text-white line-height-normal h3-text">
       2. 展示時間にターム制を採用
     </h3>
     <ProseP>
@@ -38,7 +38,7 @@ definePageMeta({
     <ProseP>
       イベントに出展者として参加なさる場合であっても、ほかの展示作品を充分に楽しんでいただくことがことが可能です。
     </ProseP>
-    <h3 class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-8 text-text-white font-700 line-height-normal">
+    <h3 class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-text-white line-height-normal h3-text">
       3. プログラムの最後に懇親会をご用意
     </h3>
     <ProseP>
@@ -64,9 +64,9 @@ definePageMeta({
       <a href="https://gamemakers.jp/article/2023_04_05_35343/" target="_blank" rel="noopener" class="block h-full w-full flex gap-4">
         <NuxtImg src="https://gamemakers.jp/cms/wp-content/uploads/2023/04/c88da4c9fba0062a87e81285f67f6e52.jpg" class="aspect-square h-full w-auto object-cover" />
         <div class="w-full flex flex-col justify-between overflow-hidden break-normal p-4">
-          <div class="line-clamp-2 text-body font-700">「第16回 ゲーム制作者交流イベント GAME³」レポート──可能性に満ちた学生たちのゲーム作品と尽きない創作意欲</div>
-          <div class="line-clamp-3 text-ellipsis text-caption">2023年3月18日（土）、東京工業大学 大岡山キャンパスにて、東工大デジタル創作同好会「traP」主催の第16回 ゲーム制作者交流イベント『GAME³（ゲームキューブ）』が開催されました。traP所属の学生たち以外にも外部の開発者や協賛企業も出展した、濃密で熱気にあふれたイベントの模様をお伝えします。</div>
-          <div class="inline-flex items-center gap-2"><NuxtImg class="h-6 w-6" src="https://gamemakers.jp/favicon.ico" alt="ゲームメーカーズロゴ画像" />gamemakers.jp</div>
+          <div class="line-clamp-2 font-700">「第16回 ゲーム制作者交流イベント GAME³」レポート──可能性に満ちた学生たちのゲーム作品と尽きない創作意欲</div>
+          <div class="line-clamp-3 text-ellipsis">2023年3月18日（土）、東京工業大学 大岡山キャンパスにて、東工大デジタル創作同好会「traP」主催の第16回 ゲーム制作者交流イベント『GAME³（ゲームキューブ）』が開催されました。traP所属の学生たち以外にも外部の開発者や協賛企業も出展した、濃密で熱気にあふれたイベントの模様をお伝えします。</div>
+          <div class="inline-flex items-center gap-2"><NuxtImg class="h-1.5em w-1.5em" src="https://gamemakers.jp/favicon.ico" alt="ゲームメーカーズロゴ画像" />gamemakers.jp</div>
         </div>
       </a>
     </div>
