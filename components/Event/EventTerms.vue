@@ -9,6 +9,7 @@ import {
 } from '@tanstack/vue-table'
 import { h } from 'vue'
 import EventTermEditButton from './EventTermEditButton.vue'
+import { termsWithName } from '~/lib/term'
 
 type Props = {
   eventSlug: string;
@@ -22,24 +23,12 @@ onServerPrefetch(async () => {
   await suspenseTerms().catch(() => {})
 })
 
-const termsWithName = computed(
-  () =>
-    terms.value
-      ?.sort((a, b) =>
-        a.startAt && b.startAt && a.startAt > b.startAt ? 1 : -1
-      )
-      .map((term, i) =>
-        ({
-          ...term,
-          termName: term.isDefault ? '未割当用ターム' : `ターム${i}`
-        })
-      ) ?? []
-)
+const namedTerms = computed(() => termsWithName(terms.value ?? []))
 
 const termColumnHelper =
-  createColumnHelper<(typeof termsWithName)['value'][number]>()
+  createColumnHelper<(typeof namedTerms)['value'][number]>()
 const columns = [
-  termColumnHelper.accessor('termName', {
+  termColumnHelper.accessor('name', {
     cell: info => info.getValue(),
     header: 'ターム'
   }),
@@ -53,9 +42,10 @@ const columns = [
   }),
   termColumnHelper.display({
     id: 'edit',
-    cell: term => h(EventTermEditButton, {
-      term: term.row.original
-    })
+    cell: term =>
+      h(EventTermEditButton, {
+        term: term.row.original
+      })
   })
 ]
 
@@ -63,7 +53,7 @@ const sorting = ref<SortingState>([])
 
 const table = useVueTable({
   get data () {
-    return termsWithName.value
+    return namedTerms.value
   },
   columns,
   state: {
@@ -107,8 +97,14 @@ const table = useVueTable({
                 :props="header.getContext()"
               />
               <div v-if="header.column.getCanSort()">
-                <div v-if="header.column.getIsSorted() === 'asc'" class="i-tabler:arrow-narrow-up" />
-                <div v-else-if="header.column.getIsSorted() === 'desc'" class="i-tabler:arrow-narrow-down" />
+                <div
+                  v-if="header.column.getIsSorted() === 'asc'"
+                  class="i-tabler:arrow-narrow-up"
+                />
+                <div
+                  v-else-if="header.column.getIsSorted() === 'desc'"
+                  class="i-tabler:arrow-narrow-down"
+                />
                 <div v-else class="i-tabler:arrows-sort" />
               </div>
             </div>
@@ -116,10 +112,7 @@ const table = useVueTable({
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="row in table.getRowModel().rows"
-          :key="row.id"
-        >
+        <tr v-for="row in table.getRowModel().rows" :key="row.id">
           <td v-for="cell in row.getVisibleCells()" :key="cell.id">
             <FlexRender
               :render="cell.column.columnDef.cell"
@@ -130,9 +123,7 @@ const table = useVueTable({
       </tbody>
     </ProseTable>
     <div class="mt-4 w-full flex justify-center">
-      <EventTermCreateButton
-        :event-slug="props.eventSlug"
-      />
+      <EventTermCreateButton :event-slug="props.eventSlug" />
     </div>
   </div>
 </template>

@@ -14,6 +14,7 @@ import {
   ComboboxViewport
 } from 'radix-vue'
 import { useField } from 'vee-validate'
+import { termsWithName } from '~/lib/term'
 
 type Props = {
   label: string;
@@ -35,18 +36,7 @@ const termGroups = computed(() => {
   return Object.fromEntries(
     Object.entries(grouped).map(([eventSlug, terms]) => [
       eventSlug,
-      terms
-        ?.sort((a, b) =>
-          a.startAt && b.startAt && a.startAt > b.startAt ? 1 : -1
-        )
-        .map((term, i) => ({
-          ...term,
-          name: term.isDefault
-            ? 'ターム未割当'
-            : `ターム${i + 1} (${term.startAt.toLocaleTimeString(
-                'ja-JP'
-              )}-${term.endAt.toLocaleTimeString('ja-JP')})`
-        })) ?? []
+      termsWithName(terms ?? [])
     ])
   )
 })
