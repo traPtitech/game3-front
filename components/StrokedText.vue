@@ -9,8 +9,11 @@ const props = withDefaults(defineProps<StrokedTextProps>(), {
 </script>
 
 <template>
-  <span :class="`relative ${props.width} text-stroke-black text-nowrap`">
-    <span class="absolute text-center text-nowrap text-stroke-0">
+  <span :class="`relative ${props.width} text-stroke-black text-nowrap select-none`">
+    <span
+      class="absolute select-auto text-center text-nowrap text-stroke-0"
+      aria-hidden
+    >
       <slot />
     </span>
     <slot />
