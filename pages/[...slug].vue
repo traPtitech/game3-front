@@ -9,6 +9,8 @@ const { data, error } = await useAsyncData(`content-${path}`, () => {
 if (error.value) {
   showError(error.value)
 }
+
+useContentHead(data)
 </script>
 
 <template>

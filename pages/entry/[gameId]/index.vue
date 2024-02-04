@@ -24,7 +24,7 @@ const seoDescription = computed(() =>
 )
 
 const ogImageUrl = computed(() =>
-  game.value ? useGameIconUrl(gameId) : undefined
+  game.value ? useGameIconUrl(gameId, true) : undefined
 )
 
 useSeoMeta({
