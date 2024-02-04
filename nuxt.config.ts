@@ -8,7 +8,12 @@ export default defineNuxtConfig({
     '~/assets/css/toast.css',
     '~/assets/css/date-picker.css'
   ],
-  modules: ['@nuxt/content', '@unocss/nuxt', '@nuxtjs/google-fonts', '@nuxt/image'],
+  modules: [
+    '@nuxt/content',
+    '@unocss/nuxt',
+    '@nuxtjs/google-fonts',
+    '@nuxt/image'
+  ],
   devtools: {
     enabled: true,
     timeline: {
@@ -67,5 +72,8 @@ export default defineNuxtConfig({
         lang: 'ja'
       }
     }
+  },
+  image: {
+    domains: ['game3.trap.games']
   }
 })
