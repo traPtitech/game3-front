@@ -11,7 +11,8 @@
 
 <script setup lang="ts">
 import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
-import { useRuntimeConfig, computed } from '#imports'
+import { computed } from '#imports'
+import { basePath } from '~/lib/url'
 
 const props = defineProps({
   src: {
@@ -34,7 +35,7 @@ const props = defineProps({
 
 const refinedSrc = computed(() => {
   if (props.src?.startsWith('/') && !props.src.startsWith('//')) {
-    const _base = withLeadingSlash(withTrailingSlash(useRuntimeConfig().app.baseURL))
+    const _base = withLeadingSlash(withTrailingSlash(basePath))
     if (_base !== '/' && !props.src.startsWith(_base)) {
       return joinURL(_base, props.src)
     }

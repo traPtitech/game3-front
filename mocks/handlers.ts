@@ -6,7 +6,6 @@
 /* tslint:disable */
 import { HttpResponse, http } from "msw";
 import { faker } from "@faker-js/faker";
-import { setupWorker } from "msw/browser";
 
 faker.seed(1);
 
@@ -35,9 +34,9 @@ export const handlers = [
   http.get(`${baseURL}/games`, () => {
     const resultArray = [
       [getGetGames200Response(), { status: 200 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
-      [null, { status: 404 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -45,9 +44,9 @@ export const handlers = [
   http.post(`${baseURL}/games`, () => {
     const resultArray = [
       [getPostGame201Response(), { status: 201 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -55,10 +54,10 @@ export const handlers = [
   http.patch(`${baseURL}/games/:gameId`, () => {
     const resultArray = [
       [null, { status: 204 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
-      [null, { status: 404 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -76,7 +75,7 @@ export const handlers = [
   http.get(`${baseURL}/games/:gameId/icon`, () => {
     const resultArray = [
       [getGetGameIcon200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -84,7 +83,7 @@ export const handlers = [
   http.get(`${baseURL}/games/:gameId/image`, () => {
     const resultArray = [
       [getGetGameImage200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -92,7 +91,7 @@ export const handlers = [
   http.get(`${baseURL}/terms`, () => {
     const resultArray = [
       [getGetTerms200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -100,9 +99,9 @@ export const handlers = [
   http.post(`${baseURL}/terms`, () => {
     const resultArray = [
       [getPostTerm201Response(), { status: 201 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -110,7 +109,7 @@ export const handlers = [
   http.get(`${baseURL}/terms/:termId`, () => {
     const resultArray = [
       [getGetTerm200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -118,10 +117,10 @@ export const handlers = [
   http.patch(`${baseURL}/terms/:termId`, () => {
     const resultArray = [
       [null, { status: 204 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
-      [null, { status: 404 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -129,7 +128,7 @@ export const handlers = [
   http.get(`${baseURL}/terms/:termId/games`, () => {
     const resultArray = [
       [getGetTermGames200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -137,9 +136,9 @@ export const handlers = [
   http.post(`${baseURL}/events`, () => {
     const resultArray = [
       [getPostEvent201Response(), { status: 201 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -147,7 +146,7 @@ export const handlers = [
   http.get(`${baseURL}/events`, () => {
     const resultArray = [
       [getGetEvents200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -155,7 +154,7 @@ export const handlers = [
   http.get(`${baseURL}/events/now`, () => {
     const resultArray = [
       [getGetCurrentEvent200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -163,10 +162,10 @@ export const handlers = [
   http.patch(`${baseURL}/events/:eventSlug`, () => {
     const resultArray = [
       [null, { status: 204 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
-      [null, { status: 403 }],
-      [null, { status: 404 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
+      // [null, { status: 403 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -174,7 +173,7 @@ export const handlers = [
   http.get(`${baseURL}/events/:eventSlug`, () => {
     const resultArray = [
       [getGetEvent200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -182,7 +181,7 @@ export const handlers = [
   http.get(`${baseURL}/events/:eventSlug/image`, () => {
     const resultArray = [
       [getGetEventImage200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -190,7 +189,7 @@ export const handlers = [
   http.get(`${baseURL}/events/:eventSlug/terms`, () => {
     const resultArray = [
       [getGetEventTerms200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -198,7 +197,7 @@ export const handlers = [
   http.get(`${baseURL}/events/:eventSlug/games`, () => {
     const resultArray = [
       [getGetEventGames200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -206,7 +205,7 @@ export const handlers = [
   http.get(`${baseURL}/events/:eventSlug/csv`, () => {
     const resultArray = [
       [getGetEventCsv200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -214,7 +213,7 @@ export const handlers = [
   http.get(`${baseURL}/auth/login`, () => {
     const resultArray = [
       [null, { status: 302 }],
-      [null, { status: 400 }],
+      // [null, { status: 400 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -222,8 +221,8 @@ export const handlers = [
   http.get(`${baseURL}/auth/callback`, () => {
     const resultArray = [
       [null, { status: 302 }],
-      [null, { status: 400 }],
-      [null, { status: 401 }],
+      // [null, { status: 400 }],
+      // [null, { status: 401 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -236,7 +235,7 @@ export const handlers = [
   http.get(`${baseURL}/users/me`, () => {
     const resultArray = [
       [getGetMe200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -244,7 +243,7 @@ export const handlers = [
   http.get(`${baseURL}/users/me/games`, () => {
     const resultArray = [
       [getGetMeGames200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -252,7 +251,7 @@ export const handlers = [
   http.get(`${baseURL}/users/:userId`, () => {
     const resultArray = [
       [getGetUser200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -260,7 +259,7 @@ export const handlers = [
   http.get(`${baseURL}/users/:userId/games`, () => {
     const resultArray = [
       [getGetUserGames200Response(), { status: 200 }],
-      [null, { status: 404 }],
+      // [null, { status: 404 }],
     ];
 
     return HttpResponse.json(...resultArray[next() % resultArray.length]);
@@ -430,8 +429,8 @@ export function getGetEventTerms200Response() {
       id: "0",
       eventSlug: "17th",
       isDefault: true,
-      startAt: undefined,
-      endAt: undefined,
+      startAt: faker.date.past(),
+      endAt: faker.date.past(),
     },
     {
     id: "1",

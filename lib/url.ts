@@ -16,6 +16,12 @@ export const getParamsArray = (params: string | string[] | undefined) => {
   return params ? [params] : undefined
 }
 
+// 本来なら
+// const config = useRuntimeConfig()
+// basePath = config.public.basePath
+// のように書くべきだが
+// composableの外で`useRuntimeConfig()`が使用できず不便なのでハードコードしています
+// see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
 export const basePath = process.env.NODE_ENV === 'development'
   ? 'http://localhost:3000'
   : 'https://game3.trap.games'
