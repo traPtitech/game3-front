@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<StrokedTextProps>(), {
 
 <template>
   <span :class="`relative ${props.width} text-stroke-black text-nowrap`">
-    <span class="absolute w-full text-nowrap text-stroke-0">
+    <span class="absolute text-center text-nowrap text-stroke-0">
       <slot />
     </span>
     <slot />
