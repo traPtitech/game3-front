@@ -2,11 +2,11 @@
 
 ## 出展情報
 
-<ContentEntryList></ContentEntryList>
+<ContentEntryList slug="18th"></ContentEntryList>
 
 ## 開催概要
 
-![第18回Game³イメージイラスト](/api/events/18th/image)
+![第18回Game³イメージイラスト](https//trap.game/api/events/18th/image)
 
 ### 第18回 ゲーム制作者交流イベント Game³
 
@@ -26,12 +26,12 @@ Game³とは、ゲーム制作者同士の交流を目的とした東京工業�
 
 ## 出展者向け情報
 
-<ContentEntryButton></ContentEntryButton>
+<ContentEntryButton slug="18th"></ContentEntryButton>
 
 展示する内容に縛りはなく、作成途中の作品はもちろん、個人制作やチーム制作などの制作形態でも制限はございません。お気軽にご出展ください！
 学生大歓迎のイベントではございますが、どなたでも出展可能です。
 
-| 応募締め切り     | <ContentSubmitEnd></ContentSubmitEnd>                                                                                                         |
+| 応募締め切り     | <ContentSubmitEnd slug="18th"></ContentSubmitEnd>                                                                                                         |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | 出展スペース     | 100×100 cmの長机2台                                                                                                                           |
 | 出展料           | 無料                                                                                                                                          |

@@ -8,11 +8,11 @@ import {
 } from 'radix-vue'
 
 type Props = {
-  eventSlug?: string;
+  slug?: string;
 };
 const props = defineProps<Props>()
 const loadedSlug = usePathParams('slug')
-const eventSlug = computed(() => props.eventSlug || loadedSlug)
+const eventSlug = computed(() => props.slug || loadedSlug)
 
 const { data: eventGames, suspense: suspenseEventGames } = useGamesQuery({
   eventSlug: eventSlug.value
