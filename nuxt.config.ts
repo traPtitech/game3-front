@@ -63,5 +63,11 @@ export default defineNuxtConfig({
     alias: {
       api: 'https://game3.trap.games/api'
     }
+  },
+  content: {
+    api: {
+      // デフォルトでは`/api/_content`になっておりバックエンドと競合してしまうため変更
+      baseURL: '/content-api/_content'
+    }
   }
 })

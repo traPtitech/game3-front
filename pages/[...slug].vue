@@ -12,7 +12,5 @@ if (error.value) {
 </script>
 
 <template>
-  <main>
-    <ContentRenderer :value="data" />
-  </main>
+  <ContentRenderer :value="data" />
 </template>

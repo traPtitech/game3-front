@@ -5,11 +5,11 @@
     class="grid-rows-[auto_1fr_auto] overflow-x-hidden"
   >
     <AppHeader />
-    <div class="h-full w-full flex flex-col items-center px-8 pb-16 pt-0">
+    <main class="h-full w-full flex flex-col items-center px-8 pb-16 pt-0">
       <div class="max-w-240 w-full">
         <slot />
       </div>
-    </div>
+    </main>
     <AppFooter />
   </div>
 </template>
