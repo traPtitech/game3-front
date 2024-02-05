@@ -16,7 +16,7 @@ const props = defineProps<Props>()
       <UIBreadCrumbs :items="props.breadcrumbs" />
     </div>
     <h1>
-      <StrokedText>
+      <StrokedText :width="4">
         <slot />
       </StrokedText>
     </h1>

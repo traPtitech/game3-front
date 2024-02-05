@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
           <div />
         </slot>
       </div>
-      <StrokedText class="text-stroke-white" width="text-stroke-4">
+      <StrokedText class="text-stroke-white!" :width="4">
         <slot />
       </StrokedText>
       <div class="absolute right-4">

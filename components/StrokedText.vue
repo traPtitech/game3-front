@@ -1,21 +1,25 @@
 <script setup lang="ts">
 interface StrokedTextProps {
-  width?: `text-stroke-${number}`;
+  width?: number;
 }
 const props = withDefaults(defineProps<StrokedTextProps>(), {
-  width: 'text-stroke-2'
+  width: 2
 })
-
 </script>
 
 <template>
-  <span :class="`relative ${props.width} text-stroke-black text-nowrap select-none`">
+  <div class="relative text-stroke-black">
     <span
-      class="absolute select-auto text-center text-nowrap text-stroke-0"
+      class="select-none"
+      :style="{
+        '-webkit-text-stroke-width': `${props.width}px`,
+      }"
       aria-hidden
     >
       <slot />
     </span>
-    <slot />
-  </span>
+    <span class="absolute left-0 top-0 w-full">
+      <slot />
+    </span>
+  </div>
 </template>
