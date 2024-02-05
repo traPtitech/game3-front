@@ -7,14 +7,12 @@ type Props = {
   name: string;
   placeholder?: string;
   helperText?: string;
-}
+};
 const props = defineProps<Props>()
-const { textarea, input } = useTextareaAutosize()
-const { errorMessage, meta, setValue } = useField<string>(() => props.name)
-
-const onInput = () => {
-  setValue(input.value)
-}
+const { errorMessage, meta, value } = useField<string>(
+  () => props.name
+)
+const { textarea, input } = useTextareaAutosize({ input: value })
 </script>
 
 <template>
@@ -37,12 +35,8 @@ const onInput = () => {
       :placeholder="props.placeholder"
       rows="1"
       class="w-full resize-none overflow-hidden border b-border-primary rounded-2 px-4 py-3 data-[invalid=true]:b-border-semantic-error focus-visible:(outline-2 outline-brand-violet outline)"
-      @input="onInput"
     />
-    <div
-      v-if="errorMessage"
-      class="text-text-semantic-error caption"
-    >
+    <div v-if="errorMessage" class="text-text-semantic-error caption">
       {{ errorMessage }}
     </div>
   </label>
