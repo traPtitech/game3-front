@@ -65,6 +65,10 @@ const columns = [
     cell: info => info.getValue(),
     header: '出展者名'
   }),
+  termColumnHelper.accessor('isPublished', {
+    cell: info => (info.getValue() ? '全体公開中' : '非公開'),
+    header: '公開状態'
+  }),
   termColumnHelper.display({
     id: 'links',
     cell: info =>
@@ -90,7 +94,7 @@ const columns = [
           )
         ]
       ),
-    header: '編集ページ'
+    header: 'リンク'
   })
 ]
 

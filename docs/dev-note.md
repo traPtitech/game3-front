@@ -42,7 +42,7 @@ see:
 
 > [!TIP]
 > Markdownファイルの表示に使用される`<h1>`や`<p>`をカスタマイズしたい場合、`/components/content/XXX.vue`を作成してください。どのようなコンポーネントが使えるかは<https://github.com/nuxt-modules/mdc/tree/main/src/runtime/components/prose>を参照してください。
-> see: <https://content.nuxt.com/usage/markdown#prose-components>
+> see: <https://content.nuxt.com/usage/markdown#prose-components>, <https://content.nuxt.com/components/prose>
 
 <details>
 <summary><code>/content</code>以下のMarkdownファイルの表示の仕組み</summary>

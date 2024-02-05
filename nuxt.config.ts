@@ -40,7 +40,8 @@ export default defineNuxtConfig({
     }
   },
   build: {
-    transpile: ['@vuepic/vue-datepicker']
+    transpile: ['@vuepic/vue-datepicker'],
+    analyze: true
   },
   googleFonts: {
     families: {
