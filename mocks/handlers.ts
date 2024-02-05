@@ -272,20 +272,32 @@ export function getPingServer200Response() {
 
 export function getGetGames200Response() {
   return [
-    "0","1","2","3",
-    "0","1","2","3",
-    "0","1","2","3",
-    "0","1","2","3",
+    "0",
+    "1",
+    "2",
+    "3",
+    "0",
+    "1",
+    "2",
+    "3",
+    "0",
+    "1",
+    "2",
+    "3",
+    "0",
+    "1",
+    "2",
+    "3",
   ].map((term) => ({
     id: faker.datatype.uuid(),
     termId: term,
     discordUserId: faker.lorem.slug(1),
     isPublished: faker.datatype.boolean(),
-    title: faker.lorem.slug(1),
+    title: faker.lorem.words({min:1, max:10}),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.slug(1),
+    description: faker.lorem.sentence({ max: 200, min: 5 }),
     place: faker.lorem.slug(1),
   }));
 }
@@ -296,11 +308,11 @@ export function getPostGame201Response() {
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
     isPublished: faker.datatype.boolean(),
-    title: faker.lorem.slug(1),
+    title: faker.lorem.words({min:1, max:10}),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.slug(1),
+    description: faker.lorem.sentence({ max: 200, min: 5 }),
     place: faker.lorem.slug(1),
   };
 }
@@ -311,11 +323,11 @@ export function getGetGame200Response() {
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
     isPublished: faker.datatype.boolean(),
-    title: faker.lorem.slug(1),
+    title: faker.lorem.words({min:1, max:10}),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.slug(1),
+    description: faker.lorem.sentence({ max: 200, min: 5 }),
     place: faker.lorem.slug(1),
   };
 }
@@ -368,11 +380,11 @@ export function getGetTermGames200Response() {
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
     isPublished: faker.datatype.boolean(),
-    title: faker.lorem.slug(1),
+    title: faker.lorem.words({min:1, max:10}),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.slug(1),
+    description: faker.lorem.sentence({ max: 200, min: 5 }),
     place: faker.lorem.slug(1),
   }));
 }
@@ -433,12 +445,12 @@ export function getGetEventTerms200Response() {
       endAt: faker.date.past(),
     },
     {
-    id: "1",
-    eventSlug: "17th",
-    isDefault: false,
-    startAt: faker.date.past(),
-    endAt: faker.date.past(),
-  },
+      id: "1",
+      eventSlug: "17th",
+      isDefault: false,
+      startAt: faker.date.past(),
+      endAt: faker.date.past(),
+    },
     {
       id: "2",
       eventSlug: "17th",
@@ -453,7 +465,7 @@ export function getGetEventTerms200Response() {
       startAt: faker.date.past(),
       endAt: faker.date.past(),
     },
-  ]
+  ];
   // return [
   //   ...new Array(faker.number.int({ min: 1, max: MAX_ARRAY_LENGTH })).keys(),
   // ].map((_) => ({
@@ -473,11 +485,11 @@ export function getGetEventGames200Response() {
     termId: faker.datatype.uuid(),
     discordUserId: faker.lorem.slug(1),
     isPublished: faker.datatype.boolean(),
-    title: faker.lorem.slug(1),
+    title: faker.lorem.words({min:1, max:10}),
     creatorName: faker.person.fullName(),
     creatorPageUrl: faker.internet.url(),
     gamePageUrl: faker.internet.url(),
-    description: faker.lorem.slug(1),
+    description: faker.lorem.sentence({ max: 200, min: 5 }),
     place: faker.lorem.slug(1),
   }));
 }
@@ -490,8 +502,8 @@ export function getGetMe200Response() {
   return {
     userId: faker.lorem.slug(1),
     username: faker.person.fullName(),
-        profileImageUrl: faker.image.url(),
-// role: faker.helpers.arrayElement(["user"]),
+    profileImageUrl: faker.image.url(),
+    // role: faker.helpers.arrayElement(["user"]),
     role: faker.helpers.arrayElement(["admin"]),
   };
 }
@@ -505,11 +517,11 @@ export function getGetMeGames200Response() {
       termId: faker.datatype.uuid(),
       discordUserId: faker.lorem.slug(1),
       isPublished: faker.datatype.boolean(),
-      title: faker.lorem.slug(1),
+      title: faker.lorem.words({min:1, max:10}),
       creatorName: faker.person.fullName(),
       creatorPageUrl: faker.internet.url(),
       gamePageUrl: faker.internet.url(),
-      description: faker.lorem.slug(1),
+      description: faker.lorem.sentence({ max: 200, min: 5 }),
       place: faker.lorem.slug(1),
     })),
   };
@@ -519,8 +531,8 @@ export function getGetUser200Response() {
   return {
     userId: faker.lorem.slug(1),
     username: faker.person.fullName(),
-        profileImageUrl: faker.image.url(),
-role: faker.helpers.arrayElement(["admin", "user"]),
+    profileImageUrl: faker.image.url(),
+    role: faker.helpers.arrayElement(["admin", "user"]),
   };
 }
 
@@ -533,11 +545,11 @@ export function getGetUserGames200Response() {
       termId: faker.datatype.uuid(),
       discordUserId: faker.lorem.slug(1),
       isPublished: faker.datatype.boolean(),
-      title: faker.lorem.slug(1),
+      title: faker.lorem.words({min:1, max:10}),
       creatorName: faker.person.fullName(),
       creatorPageUrl: faker.internet.url(),
       gamePageUrl: faker.internet.url(),
-      description: faker.lorem.slug(1),
+      description: faker.lorem.sentence({ max: 200, min: 5 }),
       place: faker.lorem.slug(1),
     })),
   };
