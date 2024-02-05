@@ -106,13 +106,19 @@ useSeoMeta({
           placeholder="https://example.com"
         />
         <UITextAreaField label="ゲーム詳細" name="description" />
-        <UIFileField label="ゲーム画像" accept="image/*" name="image" />
+        <UIFileField
+          label="ゲーム画像"
+          accept="image/*"
+          name="image"
+          helper-text="作品詳細ページに表示されます。"
+        />
         <UIFileField
           label="アイコン画像"
           accept="image/*"
           name="icon"
           use-crop
           :aspect-ratio="1"
+          helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
         />
         <ProseH3> 登録内容プレビュー </ProseH3>
         <div class="b-1 b-border-secondary rounded p-4">

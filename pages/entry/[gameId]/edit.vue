@@ -136,24 +136,32 @@ useSeoMeta({
           placeholder="https://example.com"
         />
         <UITextAreaField label="ゲーム詳細" name="description" />
-        <UIFileField label="ゲーム画像" accept="image/*" name="image" />
+        <UIFileField
+          label="ゲーム画像"
+          accept="image/*"
+          name="image"
+          helper-text="作品詳細ページに表示されます。"
+        />
         <UIFileField
           label="アイコン画像"
           accept="image/*"
           name="icon"
           use-crop
           :aspect-ratio="1"
+          helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
         />
         <UITextField
           v-if="me.user?.role === 'admin'"
           label="展示場所 (admin only)"
           name="place"
           placeholder="1-A"
+          helper-text="イベント内での展示場所の表示に使用されます。"
         />
         <EntryTermSelect
           v-if="me.user?.role === 'admin'"
           label="ターム (admin only)"
           name="termId"
+          helper-text="出展対象のイベントタームを選択してください。対象イベントに注意。"
         />
         <UISwitch
           v-if="me.user?.role === 'admin'"
