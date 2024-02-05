@@ -52,10 +52,10 @@ useSeoMeta({
       <NuxtImg
         :src="useGameImageUrl(gameId)"
         :alt="`${game.title}紹介画像`"
-        class="mx-auto h-120 w-auto object-contain"
+        class="mx-auto h-auto max-h-120 w-full object-contain"
         :placeholder="useGameIconUrl(gameId)"
       />
-      <div class="flex gap-4 text-text-secondary!">
+      <div class="flex flex-col gap-2 md:(flex-row gap-4) text-text-secondary!">
         <div class="flex items-center gap-1">
           <div class="i-tabler:user h-1.5em w-1.5em" />
           <ProseA
