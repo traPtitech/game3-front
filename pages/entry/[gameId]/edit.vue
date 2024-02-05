@@ -36,6 +36,7 @@ const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>(
   validationSchema: toTypedSchema(
     object({
       gameId: string(),
+      termId: string(),
       title: string([
         minLength(1, '作品タイトルは1文字以上で入力してください')
       ]),
@@ -75,6 +76,7 @@ const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>(
 suspenseGame().then((res) => {
   if (res) {
     setFieldValue('title', res.data?.title)
+    setFieldValue('termId', res.data?.termId)
     setFieldValue('gamePageUrl', res.data?.gamePageUrl)
     setFieldValue('creatorName', res.data?.creatorName)
     setFieldValue('creatorPageUrl', res.data?.creatorPageUrl)
