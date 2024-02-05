@@ -17,6 +17,8 @@ const isAdmin = computed(() => props.user.role === 'admin')
       :src="props.user.profileImageUrl"
       placeholder="/img/placeholder.png"
       class="h-24 w-24 rounded-full object-cover"
+      format="webp"
+      width="72px"
     />
     {{ props.user.username
     }}{{ isAdmin ? " (admin) " : "" }}としてログインしています

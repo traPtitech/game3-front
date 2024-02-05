@@ -37,6 +37,7 @@ const event = computed(
       placeholder="/img/placeholder.png"
       width="200px"
       height="200px"
+      format="webp"
       class="aspect-ratio-square aspect-square h-auto max-w-280px w-full shrink-0 b-1 b-border-primary md:max-w-200px"
     />
     <div class="w-full flex flex-col gap2">

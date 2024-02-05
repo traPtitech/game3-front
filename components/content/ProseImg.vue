@@ -5,6 +5,7 @@
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
+    format="webp"
     class="h-auto max-h-50vh w-full object-contain"
   />
 </template>

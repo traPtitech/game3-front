@@ -54,6 +54,8 @@ useSeoMeta({
         :alt="`${game.title}紹介画像`"
         class="mx-auto h-auto max-h-120 w-full object-contain"
         :placeholder="useGameIconUrl(gameId)"
+        format="webp"
+        height="480px"
       />
       <div class="flex flex-col gap-2 md:(flex-row gap-4) text-text-secondary!">
         <div class="flex items-center gap-1">

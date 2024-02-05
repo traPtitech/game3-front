@@ -10,7 +10,12 @@ const props = defineProps<Props>()
 <template>
   <div>
     <ProseH2> イベント情報 </ProseH2>
-    <ProseImg :src="useEventImageUrl(props.event.slug)" />
+    <ProseImg
+      :src="useEventImageUrl(props.event.slug)"
+      format="webp"
+      height="500px"
+      class="mb-4"
+    />
     <ProseTable>
       <tbody>
         <tr>

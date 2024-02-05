@@ -15,6 +15,7 @@ const props = defineProps<Props>()
       class="b-1 b-border-primary object-cover"
       width="180px"
       height="180px"
+      format="webp"
     />
     <div class="flex flex-col gap-2">
       <h3 class="text-text-primary font-500 h2-text">

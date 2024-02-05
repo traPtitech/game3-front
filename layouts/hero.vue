@@ -18,8 +18,11 @@ onServerPrefetch(async () => {
           v-if="currentEvent"
           :src="useEventImageUrl(currentEvent.slug)"
           class="h-full w-full object-cover"
+          sizes="768px lg:1280px"
+          format="webp"
         />
         <NuxtImg
+          width="500px"
           src="/img/logo/Gamecube_logo_full.svg"
           class="absolute bottom-0 right-0 w-[min(100%,max(60%,500px))] p-4"
         />
