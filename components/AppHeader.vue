@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="bg-surface-primary">
     <nav class="flex items-center gap-4 px-4 py-2">
       <NuxtLink to="/" class="mr-auto">
         <picture>
