@@ -13,6 +13,7 @@ import {
 } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
+import type { PostGameRequest } from '~/lib/api'
 
 definePageMeta({
   middleware: ['need-login']
@@ -23,7 +24,7 @@ onServerPrefetch(async () => {
   await suspense().catch(() => {})
 })
 
-const { handleSubmit, meta, values } = useForm({
+const { handleSubmit, meta, values } = useForm<PostGameRequest>({
   validationSchema: toTypedSchema(
     object({
       title: string([
@@ -114,7 +115,9 @@ useSeoMeta({
           :aspect-ratio="1"
         />
         <ProseH3> 登録内容プレビュー </ProseH3>
-        <EntryPreview :game-req="values" />
+        <div class="b-1 b-border-secondary rounded p-4">
+          <EntryPreview :game-req="values" />
+        </div>
         <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
         <div class="flex justify-center">
           <DialogRoot v-model:open="confirmModalOpen">

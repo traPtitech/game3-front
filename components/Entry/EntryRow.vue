@@ -31,19 +31,19 @@ const event = computed(
 </script>
 
 <template>
-  <NuxtLink :to="`/entry/${props.game.id}`" class="block w-full flex gap-5">
+  <NuxtLink :to="`/entry/${props.game.id}`" class="block h-fit w-full flex flex-col items-center gap-5 md:(flex-row items-start)">
     <NuxtImg
       :src="useGameIconUrl(props.game.id)"
       placeholder="/img/placeholder.png"
       width="200px"
       height="200px"
-      class="aspect-ratio-square h-50 w-50 shrink-0 b-1 b-border-primary"
+      class="aspect-ratio-square aspect-square h-auto max-w-280px w-full shrink-0 b-1 b-border-primary md:max-w-200px"
     />
     <div class="w-full flex flex-col gap2">
-      <div class="h2-text font-700">
+      <div class="break-anywhere text-wrap font-700 h2-text">
         {{ props.game.title }}
       </div>
-      <div class="body flex gap-4 text-text-secondary!">
+      <div class="flex flex-col gap-1 lg:(flex-row gap-4) body text-text-secondary!">
         <div v-if="props.variant === 'myPage'">
           <div v-if="props.game.isPublished">
             公開中
@@ -57,7 +57,7 @@ const event = computed(
             <TooltipPortal>
               <TooltipContent
                 :side-offset="4"
-                class="caption select-none rounded bg-surface-primary p-2 shadow data-[state=delayed-open]:animate-fade-in animate-duration-100!"
+                class="select-none rounded bg-surface-primary p-2 shadow data-[state=delayed-open]:animate-fade-in animate-duration-100! caption"
               >
                 運営によるチェックの終了後に全体公開されます
               </TooltipContent>
@@ -83,7 +83,7 @@ const event = computed(
           {{ event?.title }} {{ event?.date.toLocaleDateString("ja-JP") }}
         </div>
       </div>
-      <div class="body line-clamp-3 text-ellipsis">
+      <div class="line-clamp-3 text-ellipsis break-anywhere text-wrap body">
         {{ props.game.description }}
       </div>
     </div>

@@ -12,7 +12,9 @@ const props = defineProps<Props>()
     <NuxtImg
       :src="useEventImageUrl(props.event.slug)"
       placeholder="/img/placeholder.png"
-      class="h-30 w-30 b-1 b-border-primary object-cover"
+      class="b-1 b-border-primary object-cover"
+      width="180px"
+      height="180px"
     />
     <div class="flex flex-col gap-2">
       <h3 class="text-text-primary font-500 h2-text">

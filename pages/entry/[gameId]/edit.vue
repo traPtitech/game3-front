@@ -14,6 +14,7 @@ import {
   boolean
 } from 'valibot'
 import { useForm } from 'vee-validate'
+import type { PatchGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
 definePageMeta({
@@ -31,7 +32,7 @@ const { suspense: suspenseImage } = useGameImageQuery({
   gameId
 })
 
-const { handleSubmit, meta, values, setFieldValue } = useForm({
+const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>({
   validationSchema: toTypedSchema(
     object({
       gameId: string(),
@@ -160,7 +161,9 @@ useSeoMeta({
           false-state="非公開 (管理者/登録申請したユーザーのみがページ上で閲覧可能)"
         />
         <ProseH3> 登録内容プレビュー </ProseH3>
-        <EntryPreview :game-req="values" />
+        <div class="b-1 b-border-secondary rounded p-4">
+          <EntryPreview :game-req="values" />
+        </div>
         <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
         <div class="flex justify-center">
           <DialogRoot v-model:open="confirmModalOpen">
