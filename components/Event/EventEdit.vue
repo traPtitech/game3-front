@@ -6,7 +6,6 @@ import {
   minLength,
   blob,
   optional,
-  regex,
   date
 } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
@@ -27,10 +26,6 @@ const { handleSubmit, meta, values, setValues } = useForm({
     object({
       title: string([
         minLength(1, 'イベントタイトルは1文字以上で入力してください')
-      ]),
-      slug: string([
-        minLength(1, 'slugは1文字以上で入力してください'),
-        regex(/^[a-z0-9]+$/, 'slugは半角英数字のみで入力してください')
       ]),
       date: date(),
       gameSubmissionPeriodStart: date(),
@@ -78,12 +73,6 @@ const onSubmit = handleSubmit(async (values) => {
           helper-text="'第n回'のフォーマットでの入力を推奨。画面右上の開催回数名表示などで使用します。"
           name="title"
           placeholder="第99回"
-        />
-        <UITextField
-          label="イベントslug"
-          helper-text="半角英数字で入力。'/event/99th/...'などのURL内やトップページでの表示に使用します。"
-          name="slug"
-          placeholder="99th"
         />
         <UIDatePicker label="開催日" helper-text="イベント開催日" name="date" />
         <UIDatePicker
