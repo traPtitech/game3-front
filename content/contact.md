@@ -17,4 +17,4 @@
 
 運営やイベント開催についてのお問い合わせはDiscordサーバーでも受け付けております。
 
-サーバーへの参加リンク: <https://discord.gg/xxxxx>
+サーバーへの参加リンク: <https://discord.gg/nJCpsttgUU>
