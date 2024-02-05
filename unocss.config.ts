@@ -177,14 +177,14 @@ export default defineConfig({
     }
   },
   shortcuts: {
-    'h1-text': 'text-h-l-m lg:text-h-l',
-    'h2-text': 'text-h-m-m lg:text-h-m',
-    'h3-text': 'text-h-s-m lg:text-h-s',
-    'h4-text': 'text-h-xs-m lg:text-h-xs',
-    'h5-text': 'text-h-xxs-m lg:text-h-xxs',
-    body: 'text-body-m lg:text-body-l',
-    label: 'text-label-m lg:text-label-l',
-    caption: 'text-caption-l lg:text-caption-m'
+    'h1-text': 'text-h-l-m md:text-h-l',
+    'h2-text': 'text-h-m-m md:text-h-m',
+    'h3-text': 'text-h-s-m md:text-h-s',
+    'h4-text': 'text-h-xs-m md:text-h-xs',
+    'h5-text': 'text-h-xxs-m md:text-h-xxs',
+    body: 'text-body-m md:text-body-l',
+    label: 'text-label-m md:text-label-l',
+    caption: 'text-caption-l md:text-caption-m'
   },
   rules: [
     [

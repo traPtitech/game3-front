@@ -60,16 +60,14 @@ definePageMeta({
     <ProseH2>
       取材実績
     </ProseH2>
-    <div class="h-48 w-full overflow-hidden b-1 rounded-2 shadow">
-      <a href="https://gamemakers.jp/article/2023_04_05_35343/" target="_blank" rel="noopener" class="block h-full w-full flex gap-4">
-        <NuxtImg src="https://gamemakers.jp/cms/wp-content/uploads/2023/04/c88da4c9fba0062a87e81285f67f6e52.jpg" class="aspect-square h-full w-auto object-cover" />
-        <div class="w-full flex flex-col justify-between overflow-hidden break-normal p-4">
-          <div class="line-clamp-2 font-700">「第16回 ゲーム制作者交流イベント GAME³」レポート──可能性に満ちた学生たちのゲーム作品と尽きない創作意欲</div>
-          <div class="line-clamp-3 text-ellipsis">2023年3月18日（土）、東京工業大学 大岡山キャンパスにて、東工大デジタル創作同好会「traP」主催の第16回 ゲーム制作者交流イベント『GAME³（ゲームキューブ）』が開催されました。traP所属の学生たち以外にも外部の開発者や協賛企業も出展した、濃密で熱気にあふれたイベントの模様をお伝えします。</div>
-          <div class="inline-flex items-center gap-2"><NuxtImg class="h-1.5em w-1.5em" src="https://gamemakers.jp/favicon.ico" alt="ゲームメーカーズロゴ画像" />gamemakers.jp</div>
-        </div>
-      </a>
-    </div>
+    <a href="https://gamemakers.jp/article/2023_04_05_35343/" target="_blank" rel="noopener" class="block h-auto w-full flex flex-col overflow-hidden b-1 rounded-2 shadow sm:(h-48 flex-row)">
+      <NuxtImg src="https://gamemakers.jp/cms/wp-content/uploads/2023/04/c88da4c9fba0062a87e81285f67f6e52.jpg" class="aspect-square h-48 w-auto object-cover sm:h-full" />
+      <div class="w-full flex flex-col justify-between overflow-hidden break-normal p-4">
+        <div class="line-clamp-2 font-700">「第16回 ゲーム制作者交流イベント GAME³」レポート──可能性に満ちた学生たちのゲーム作品と尽きない創作意欲</div>
+        <div class="line-clamp-3 text-ellipsis">2023年3月18日（土）、東京工業大学 大岡山キャンパスにて、東工大デジタル創作同好会「traP」主催の第16回 ゲーム制作者交流イベント『GAME³（ゲームキューブ）』が開催されました。traP所属の学生たち以外にも外部の開発者や協賛企業も出展した、濃密で熱気にあふれたイベントの模様をお伝えします。</div>
+        <div class="inline-flex items-center gap-2"><NuxtImg class="h-1.5em w-1.5em" src="https://gamemakers.jp/favicon.ico" alt="ゲームメーカーズロゴ画像" />gamemakers.jp</div>
+      </div>
+    </a>
     <ProseP>
       イベントの様子を外部メディアの方に取材いただいた事例です。<wbr>
       本イベントへの取材申込みは下部メニュー「お問い合わせ」より受け付けております。
