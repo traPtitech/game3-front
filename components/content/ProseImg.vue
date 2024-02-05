@@ -1,19 +1,15 @@
 <!-- https://github.com/nuxt-modules/mdc/blob/820d5d7fe4e7bdc8b57070bd82de2929f75a485c/src/runtime/components/prose/ProseImg.vue -->
 <template>
   <NuxtImg
-    :src="refinedSrc"
-    :alt="alt"
-    :width="width"
-    :height="height"
+    :src="props.src"
+    :alt="props.alt"
+    :width="props.width"
+    :height="props.height"
     class="h-auto max-h-50vh w-full object-contain"
   />
 </template>
 
 <script setup lang="ts">
-import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
-import { computed } from '#imports'
-import { basePath } from '~/lib/url'
-
 const props = defineProps({
   src: {
     type: String,
@@ -31,15 +27,5 @@ const props = defineProps({
     type: [String, Number],
     default: undefined
   }
-})
-
-const refinedSrc = computed(() => {
-  if (props.src?.startsWith('/') && !props.src.startsWith('//')) {
-    const _base = withLeadingSlash(withTrailingSlash(basePath))
-    if (_base !== '/' && !props.src.startsWith(_base)) {
-      return joinURL(_base, props.src)
-    }
-  }
-  return props.src
 })
 </script>

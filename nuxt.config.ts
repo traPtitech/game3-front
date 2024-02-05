@@ -52,7 +52,7 @@ export default defineNuxtConfig({
   image: {
     domains: ['game3.trap.games'],
     alias: {
-      api: 'https://game3.trap.games/api'
+      api: process.env.NODE_ENV === 'production' ? 'https://game3.trap.games/api' : 'http://localhost:3000/api'
     }
   },
   content: {

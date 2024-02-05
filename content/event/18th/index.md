@@ -6,7 +6,7 @@
 
 ## 開催概要
 
-![第18回Game³イメージイラスト](https//trap.game/api/events/18th/image)
+![第18回Game³イメージイラスト](/api/events/18th/image)
 
 ### 第18回 ゲーム制作者交流イベント Game³
 
