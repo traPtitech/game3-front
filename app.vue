@@ -43,9 +43,9 @@ useSeoMeta({
   ogUrl: () => basePath + route.fullPath
 })
 
-defineOgImageComponent('DefaultPage', {
-  currentEvent: currentEvent.value
-})
+// defineOgImageComponent('DefaultPage', {
+//   currentEvent: currentEvent.value
+// })
 
 useHead({
   htmlAttrs: {

@@ -3,9 +3,8 @@
 const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
-const { data: gameImg, suspense: suspenseGameImg } = useGameIconQuery({ gameId })
 onServerPrefetch(async () => {
-  await Promise.all([suspenseGame(), suspenseGameImg()]).catch(() => {})
+  await suspenseGame().catch(() => {})
 })
 
 const { useMeStore } = useLogin()
@@ -45,10 +44,14 @@ useSeoMeta({
   twitterCard: 'summary'
 })
 
-defineOgImageComponent('EntryPage', {
-  game: game.value,
-  imgSrc: gameImg.value ? URL.createObjectURL(gameImg.value) : undefined
-})
+// const { data: gameImg, suspense: suspenseGameImg } = useGameIconQuery({ gameId })
+// onServerPrefetch(async () => {
+//   await Promise.all([suspenseGame(), suspenseGameImg()]).catch(() => {})
+// })
+// defineOgImageComponent('EntryPage', {
+//   game: game.value,
+//   imgSrc: gameImg.value ? URL.createObjectURL(gameImg.value) : undefined
+// })
 </script>
 
 <template>
