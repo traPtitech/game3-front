@@ -6,7 +6,6 @@ import {
   TabsRoot,
   TabsTrigger
 } from 'radix-vue'
-import { termsWithName } from '~/lib/term'
 
 type Props = {
   slug?: string;
@@ -27,7 +26,7 @@ const termGamesMap = computed(() => {
     return []
   }
   const gameMap = Object.groupBy(eventGames.value, game => game.termId)
-  return termsWithName(eventTerms.value)
+  return eventTerms.value
     .filter(term => !term.isDefault)
     .map(term => ({
       term,

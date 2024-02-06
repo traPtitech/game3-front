@@ -20,6 +20,7 @@ import {
   type PostTermOperationRequest,
   type PatchEventRequest
 } from '~/lib/api'
+import { addTermName, termsWithName } from '~/lib/term'
 import { basePath } from '~/lib/url'
 import { queryClient } from '~/plugins/01.vue-query'
 
@@ -73,7 +74,8 @@ export const useEventImageQuery = (req: GetEventImageRequest) => {
 export const useEventTermsQuery = (req: GetEventTermsRequest) => {
   return useQuery({
     queryKey: ['events', req, 'terms'],
-    queryFn: () => eventsApi.getEventTerms(req)
+    queryFn: () => eventsApi.getEventTerms(req),
+    select: data => addTermName(data)
   })
 }
 
@@ -160,7 +162,8 @@ const termsApi = new TermsApi(apiConfig)
 export const useTermsQuery = () =>
   useQuery({
     queryKey: ['terms'],
-    queryFn: () => termsApi.getTerms()
+    queryFn: () => termsApi.getTerms(),
+    select: data => termsWithName(data)
   })
 
 export const useMutatePostTerm = () =>

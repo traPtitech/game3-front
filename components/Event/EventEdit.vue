@@ -107,7 +107,6 @@ const onSubmit = handleSubmit(async (values) => {
                 </h3>
                 <div class="space-y-2">
                   <div>イベント名：{{ values.title }}</div>
-                  <div>イベントslug：{{ values.slug }}</div>
                   <div>開催日{{ values.date?.toLocaleString("ja-JP") }}</div>
                   <div>
                     申し込み開始日時{{

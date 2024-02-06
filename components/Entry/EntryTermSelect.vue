@@ -14,16 +14,19 @@ import {
   ComboboxViewport
 } from 'radix-vue'
 import { useField } from 'vee-validate'
-import { termsWithName } from '~/lib/term'
 
 type Props = {
   label: string;
   name: string;
   helperText?: string;
+  eventSlug?: string;
 };
 const props = defineProps<Props>()
 
-const { data: termsData, suspense: suspenseTerms } = useTermsQuery()
+const { data: termsData, suspense: suspenseTerms } = props.eventSlug
+  ? useEventTermsQuery({ eventSlug: props.eventSlug })
+  : useTermsQuery()
+
 onServerPrefetch(async () => {
   await suspenseTerms().catch(() => {})
 })
@@ -32,13 +35,7 @@ const termGroups = computed(() => {
   if (termsData.value === undefined) {
     return {}
   }
-  const grouped = Object.groupBy(termsData.value, term => term.eventSlug)
-  return Object.fromEntries(
-    Object.entries(grouped).map(([eventSlug, terms]) => [
-      eventSlug,
-      termsWithName(terms ?? [])
-    ])
-  )
+  return Object.groupBy(termsData.value, term => term.eventSlug)
 })
 const displayValue = (value: string | null) => {
   if (value === null) {
@@ -48,7 +45,11 @@ const displayValue = (value: string | null) => {
   if (term === undefined) {
     return ''
   }
-  return `${term.eventSlug} ${termGroups.value[term.eventSlug].find(t => t.id === value)?.name} - ${term.id}` ?? ''
+  return (
+    `${term.eventSlug} ${termGroups.value[term.eventSlug]?.find(
+      t => t.id === value
+    )?.name} - ${term.id}` ?? ''
+  )
 }
 
 const { value, errorMessage, meta } = useField<string>(() => props.name)
@@ -66,10 +67,7 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
       {{ props.helperText }}
     </div>
 
-    <ComboboxRoot
-      v-model="value"
-      :display-value="displayValue"
-    >
+    <ComboboxRoot v-model="value" :display-value="displayValue">
       <ComboboxAnchor
         class="w-full flex border b-border-primary rounded-2 px-4 data-[invalid=true]:b-border-semantic-error focus-within:(outline-2 outline-brand-violet outline)"
       >
@@ -90,13 +88,11 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
         >
           <ComboboxViewport>
             <ComboboxGroup
-              v-for="[eventSlug, terms] in Object.entries(termGroups)"
-              :key="eventSlug"
+              v-for="[event, terms] in Object.entries(termGroups)"
+              :key="event"
             >
-              <ComboboxLabel
-                class="text-text-secondary caption"
-              >
-                {{ eventSlug }}
+              <ComboboxLabel class="text-text-secondary caption">
+                {{ event }}
               </ComboboxLabel>
               <ComboboxItem
                 v-for="term in terms"
@@ -114,10 +110,7 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
         </ComboboxContent>
       </ComboboxPortal>
     </ComboboxRoot>
-    <div
-      v-if="errorMessage"
-      class="text-text-semantic-error caption"
-    >
+    <div v-if="errorMessage" class="text-text-semantic-error caption">
       {{ errorMessage }}
     </div>
   </label>

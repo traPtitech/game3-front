@@ -9,7 +9,7 @@ import {
 } from '@tanstack/vue-table'
 import { h } from 'vue'
 import EventTermEditButton from './EventTermEditButton.vue'
-import { termsWithName } from '~/lib/term'
+import type { TermWithName } from '~/lib/term'
 
 type Props = {
   eventSlug: string;
@@ -23,10 +23,8 @@ onServerPrefetch(async () => {
   await suspenseTerms().catch(() => {})
 })
 
-const namedTerms = computed(() => termsWithName(terms.value ?? []))
-
 const termColumnHelper =
-  createColumnHelper<(typeof namedTerms)['value'][number]>()
+  createColumnHelper<TermWithName>()
 const columns = [
   termColumnHelper.accessor('name', {
     cell: info => info.getValue(),
@@ -53,7 +51,7 @@ const sorting = ref<SortingState>([])
 
 const table = useVueTable({
   get data () {
-    return namedTerms.value
+    return terms.value ?? []
   },
   columns,
   state: {

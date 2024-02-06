@@ -61,14 +61,18 @@ useSeoMeta({
         <div class="flex items-center gap-1">
           <div class="i-tabler:user h-1.5em w-1.5em" />
           <ProseA
+            v-if="game.creatorPageUrl"
             :href="game.creatorPageUrl"
             target="_blank"
             rel="noopener noreferrer"
           >
             {{ game.creatorName }}
           </ProseA>
+          <ProseP v-else>
+            {{ game.creatorName }}
+          </ProseP>
         </div>
-        <div class="flex items-center gap-1">
+        <div v-if="game.creatorPageUrl" class="flex items-center gap-1">
           <div class="i-tabler:link h-1.5em w-1.5em" />
           <ProseA
             :href="game.gamePageUrl"
@@ -77,6 +81,10 @@ useSeoMeta({
           >
             {{ game.gamePageUrl }}
           </ProseA>
+        </div>
+        <div v-if="game.place" class="flex items-center gap-1">
+          <div class="i-tabler:map-pin h-1.5em w-1.5em" />
+          {{ game.place }}
         </div>
       </div>
       <ProseP>{{ game.description }}</ProseP>
