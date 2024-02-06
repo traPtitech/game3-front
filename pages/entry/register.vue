@@ -84,14 +84,16 @@ useSeoMeta({
     <ProseH1> 作品登録ページ </ProseH1>
     <ProseH2> 作品情報入力フォーム </ProseH2>
     <div v-if="data" class="w-full flex flex-col gap-4">
-      <div class="body text-center text-brand-violet font-700">
+      <div class="text-center text-brand-violet font-700 body">
         <div>現在の出展対象イベント：{{ data.title }} Game³</div>
         <div>
           出展締め切り：{{
             data.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
           }}
         </div>
-        <div class="text-text-semantic-error">出展に関するご案内はDiscordサーバーで行います</div>
+        <div class="text-text-semantic-error">
+          出展に関するご案内はDiscordサーバーで行います
+        </div>
       </div>
       <form class="flex flex-col gap-4">
         <UITextField label="ゲーム名" name="title" />
@@ -151,7 +153,7 @@ useSeoMeta({
                   </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
-                <div class="flex gap-4">
+                <div class="flex flex-col items-center gap-2 md:flex-row">
                   <UIButton
                     type="button"
                     variant="secondary"

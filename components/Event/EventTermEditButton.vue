@@ -69,7 +69,7 @@ const onSubmit = handleSubmit(async (values) => {
           helper-text="日付に注意"
           name="endAt"
         />
-        <div class="flex gap-4">
+        <div class="flex flex-col items-center gap-2 md:flex-row">
           <UIButton
             variant="secondary"
             type="button"

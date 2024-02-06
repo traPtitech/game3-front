@@ -199,8 +199,15 @@ useSeoMeta({
                     出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
                   </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
+                  <div
+                    v-if="me.user?.role === 'admin'"
+                  >
+                    タームID：{{ values.termId ?? "未指定" }}
+                  </div>
+                  <div>公開状態：{{ values.isPublished ? "全体に公開" : "非公開" }}</div>
+                  <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
-                <div class="flex gap-4">
+                <div class="flex flex-col items-center gap-2 md:flex-row">
                   <UIButton
                     type="button"
                     variant="secondary"
