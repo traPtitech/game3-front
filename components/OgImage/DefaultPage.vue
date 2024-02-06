@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import { format } from 'date-fns'
-import { enUS } from 'date-fns/locale'
-import type { Event } from '~/lib/api'
-
-const props = defineProps<{
-  currentEvent?: Event;
+defineProps<{
+  title?: string
+  displayDate?: string,
+  imgSrc: string
 }>()
-
-const topImageUrl = computed(() =>
-  props.currentEvent
-    ? useEventImageUrl(props.currentEvent.slug, true)
-    : useDefaultOgpImageUrl()
-)
 </script>
 
 <template>
   <div class="h-full w-full flex bg-white font-700">
-    <img :src="topImageUrl" width="600" height="600" class="object-cover">
+    <img :src="imgSrc" width="600" height="600" class="object-cover">
     <div
       class="flex flex-col justify-center bg-[#3d1192] pl-4 pr-16 text-white"
     >
@@ -25,12 +17,12 @@ const topImageUrl = computed(() =>
       <h1 class="text-36">
         Game³
       </h1>
-      <div v-if="currentEvent">
+      <div v-if="title && displayDate">
         <div class="text-16">
-          {{ currentEvent.slug }} Game³
+          {{ title }} Game³
         </div>
         <div class="text-20">
-          {{ format(currentEvent.date, "M/d (E)", { locale: enUS }) }}
+          {{ displayDate }}
         </div>
       </div>
     </div>

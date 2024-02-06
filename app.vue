@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { TooltipProvider } from 'radix-vue'
+import { format } from 'date-fns'
+import { enUS } from 'date-fns/locale'
 import { basePath } from './lib/url'
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
@@ -10,10 +12,12 @@ onServerPrefetch(async () => {
   await suspenseCurrentEvent().catch(() => {})
 })
 
+const img = useImage()
+
 const ogImageUrl = computed(() =>
-  currentEvent.value
+  img(currentEvent.value
     ? useEventImageUrl(currentEvent.value?.slug, true)
-    : useDefaultOgpImageUrl()
+    : useDefaultOgpImageUrl(), { width: 600 })
 )
 
 const description = computed(
@@ -21,7 +25,7 @@ const description = computed(
     (currentEvent.value
       ? `${
           currentEvent.value.title
-        }Game³は${currentEvent.value.gameSubmissionPeriodStart.toLocaleDateString(
+        }Game³は${currentEvent.value.date.toLocaleDateString(
           'ja-JP'
         )}に開催予定です。`
       : '') +
@@ -43,9 +47,13 @@ useSeoMeta({
   ogUrl: () => basePath + route.fullPath
 })
 
-// defineOgImageComponent('DefaultPage', {
-//   currentEvent: currentEvent.value
-// })
+defineOgImageComponent('DefaultPage', {
+  title: currentEvent.value?.title,
+  displayDate: currentEvent.value?.date
+    ? format(currentEvent.value.date, 'M/d (E)', { locale: enUS })
+    : undefined,
+  imgSrc: ogImageUrl.value
+})
 
 useHead({
   htmlAttrs: {
@@ -63,9 +71,7 @@ useHead({
 
 <template>
   <div class="body">
-    <TooltipProvider
-      :delay-duration="500"
-    >
+    <TooltipProvider :delay-duration="500">
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
