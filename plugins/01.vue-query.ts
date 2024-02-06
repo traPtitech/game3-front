@@ -1,21 +1,31 @@
 // see: https://tanstack.com/query/latest/docs/vue/guides/ssr
-import type { DehydratedState, VueQueryPluginOptions } from '@tanstack/vue-query'
-import { VueQueryPlugin, QueryClient, hydrate, dehydrate } from '@tanstack/vue-query'
+import type {
+  DehydratedState,
+  VueQueryPluginOptions
+} from '@tanstack/vue-query'
+import {
+  VueQueryPlugin,
+  QueryClient,
+  hydrate,
+  dehydrate
+} from '@tanstack/vue-query'
 // Nuxt 3 app aliases
 import { defineNuxtPlugin, useState } from '#imports'
+
+// Modify your Vue Query global settings here
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: process.client ? 1000 * 60 * 60 * 2 : Infinity, // 2 hours on client, never on server
+      throwOnError: false
+    }
+  }
+})
 
 export default defineNuxtPlugin((nuxt) => {
   const vueQueryState = useState<DehydratedState | null>('vue-query')
 
-  // Modify your Vue Query global settings here
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 5000,
-        throwOnError: false
-      }
-    }
-  })
   const options: VueQueryPluginOptions = { queryClient }
 
   nuxt.vueApp.use(VueQueryPlugin, options)

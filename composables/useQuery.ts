@@ -21,6 +21,7 @@ import {
   type PatchEventRequest
 } from '~/lib/api'
 import { basePath } from '~/lib/url'
+import { queryClient } from '~/plugins/01.vue-query'
 
 // 本来なら
 // const config = useRuntimeConfig()
@@ -86,21 +87,31 @@ export const useMutatePostEvent = () =>
   useMutation({
     mutationFn: (req: PostEventRequest) =>
       eventsApi.postEvent(dateToString(req) as any as PostEventRequest),
-    mutationKey: ['events']
+    mutationKey: ['events'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['events']
+      })
+    }
   })
 
 export const useMutatePatchEvent = () =>
   useMutation({
     mutationFn: (req: PatchEventRequest) =>
       eventsApi.patchEvent(dateToString(req) as any as PatchEventRequest),
-    mutationKey: ['events']
+    mutationKey: ['events'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['events']
+      })
+    }
   })
 
 const gamesApi = new GamesApi(apiConfig)
 
 export const useGamesQuery = (req: GetGamesRequest) =>
   useQuery({
-    queryKey: ['games'],
+    queryKey: ['games', req],
     queryFn: () => gamesApi.getGames(req)
   })
 
@@ -125,13 +136,23 @@ export const useGameImageQuery = (req: GetGameImageRequest) =>
 export const useMutatePostGame = () =>
   useMutation({
     mutationFn: (req: PostGameRequest) => gamesApi.postGame(req),
-    mutationKey: ['games']
+    mutationKey: ['games'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['games']
+      })
+    }
   })
 
 export const useMutatePatchGame = () =>
   useMutation({
     mutationFn: (req: PatchGameRequest) => gamesApi.patchGame(req),
-    mutationKey: ['games']
+    mutationKey: ['games'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['games']
+      })
+    }
   })
 
 const termsApi = new TermsApi(apiConfig)
@@ -146,14 +167,24 @@ export const useMutatePostTerm = () =>
   useMutation({
     mutationFn: (req: PostTermOperationRequest) =>
       termsApi.postTerm(dateToString(req) as any as PostTermOperationRequest),
-    mutationKey: ['terms']
+    mutationKey: ['terms'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['terms']
+      })
+    }
   })
 
 export const useMutatePatchTerm = () =>
   useMutation({
     mutationFn: (req: PatchTermOperationRequest) =>
       termsApi.patchTerm(dateToString(req) as any as PatchTermOperationRequest),
-    mutationKey: ['terms']
+    mutationKey: ['terms'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['terms']
+      })
+    }
   })
 
 export const authApi = new AuthApi(apiConfig)
