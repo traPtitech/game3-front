@@ -3,8 +3,9 @@
 const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
+const { data: gameImg, suspense: suspenseGameImg } = useGameIconQuery({ gameId })
 onServerPrefetch(async () => {
-  await suspenseGame().catch(() => {})
+  await Promise.all([suspenseGame(), suspenseGameImg()]).catch(() => {})
 })
 
 const { useMeStore } = useLogin()
@@ -45,7 +46,8 @@ useSeoMeta({
 })
 
 defineOgImageComponent('EntryPage', {
-  game: game.value
+  game: game.value,
+  imgSrc: gameImg.value ? URL.createObjectURL(gameImg.value) : undefined
 })
 </script>
 

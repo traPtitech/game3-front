@@ -5,6 +5,7 @@ import type { Game } from '~/lib/api'
 
 const props = defineProps<{
   game?: Game
+  imgSrc?: string
 }>()
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
@@ -13,17 +14,11 @@ const { data: currentEvent, suspense: suspenseCurrentEvent } =
 onServerPrefetch(async () => {
   await suspenseCurrentEvent().catch(() => {})
 })
-
-const imageUrl = computed(() =>
-  props.game
-    ? useGameIconUrl(props.game.id, true)
-    : useDefaultOgpImageUrl()
-)
 </script>
 
 <template>
   <div class="h-full w-full flex bg-white font-700">
-    <img :src="imageUrl" width="600" height="600" class="object-cover">
+    <img :src="props.imgSrc ?? useDefaultOgpImageUrl()" width="600" height="600" class="object-cover">
     <div class="w-600px justify-center bg-[#3d1192] pl-4 pr-16 text-white">
       <div v-if="props.game">
         <div

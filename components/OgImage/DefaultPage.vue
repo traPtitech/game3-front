@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
 import { enUS } from 'date-fns/locale'
+import type { Event } from '~/lib/api'
 
-const { data: currentEvent, suspense: suspenseCurrentEvent } =
-  useCurrentEventQuery()
-
-onServerPrefetch(async () => {
-  await suspenseCurrentEvent().catch(() => {})
-})
+const props = defineProps<{
+  currentEvent?: Event;
+}>()
 
 const topImageUrl = computed(() =>
-  currentEvent.value
-    ? useEventImageUrl(currentEvent.value?.slug, true)
+  props.currentEvent
+    ? useEventImageUrl(props.currentEvent.slug, true)
     : useDefaultOgpImageUrl()
 )
 </script>
@@ -19,13 +17,11 @@ const topImageUrl = computed(() =>
 <template>
   <div class="h-full w-full flex bg-white font-700">
     <img :src="topImageUrl" width="600" height="600" class="object-cover">
-    <div class="flex flex-col justify-center bg-[#3d1192] pl-4 pr-16 text-white">
-      <span class="text-12">
-        ゲーム制作者交流イベント
-      </span>
-      <span class="mb--16 text-8">
-        ゲームキューブ
-      </span>
+    <div
+      class="flex flex-col justify-center bg-[#3d1192] pl-4 pr-16 text-white"
+    >
+      <span class="text-12"> ゲーム制作者交流イベント </span>
+      <span class="mb--16 text-8"> ゲームキューブ </span>
       <h1 class="text-36">
         Game³
       </h1>
