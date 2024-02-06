@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
+import { formatISO } from 'date-fns'
 import {
   AuthApi,
   Configuration,
@@ -44,7 +45,8 @@ type DateToString<T> = {
 const dateToString = <T extends object>(obj: T): DateToString<T> => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
     if (value instanceof Date) {
-      return { ...acc, [key]: value.toISOString() }
+      // Date.toISOString()を使うとタイムゾーンがUTCになってしまうのでformatISOを使う
+      return { ...acc, [key]: formatISO(value) }
     } else {
       return { ...acc, [key]: value }
     }
