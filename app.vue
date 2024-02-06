@@ -43,6 +43,8 @@ useSeoMeta({
   ogUrl: () => basePath + route.fullPath
 })
 
+defineOgImageComponent('DefaultPage')
+
 useHead({
   htmlAttrs: {
     lang: 'ja'

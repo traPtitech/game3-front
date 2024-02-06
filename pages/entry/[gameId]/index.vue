@@ -19,7 +19,7 @@ const canEdit = computed(() => {
 
 const seoDescription = computed(() =>
   game.value
-    ? `Game3展示作品 「${game.value.title}」 by ${game.value.creatorName} ${game.value.description}`
+    ? `Game3展示作品 「${game.value.title}」 by ${game.value.creatorName} - ${game.value.description}`
     : undefined
 )
 
@@ -42,6 +42,10 @@ useSeoMeta({
   twitterImage: () => ogImageUrl.value,
   twitterDescription: () => seoDescription.value,
   twitterCard: 'summary'
+})
+
+defineOgImageComponent('EntryPage', {
+  game: game.value
 })
 </script>
 

@@ -12,7 +12,8 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@unocss/nuxt',
     '@nuxtjs/google-fonts',
-    '@nuxt/image'
+    '@nuxt/image',
+    'nuxt-og-image'
   ],
   devtools: {
     enabled: true,
@@ -50,6 +51,12 @@ export default defineNuxtConfig({
       }
     }
   },
+  ogImage: {
+    fonts: [
+      'Noto+Sans+JP:500',
+      'Noto+Sans+JP:700'
+    ]
+  },
   image: {
     domains: ['game3.trap.games'],
     alias: {
@@ -61,5 +68,8 @@ export default defineNuxtConfig({
       // デフォルトでは`/api/_content`になっておりバックエンドと競合してしまうため変更
       baseURL: '/content-api/_content'
     }
+  },
+  site: {
+    url: 'https://game3.trap.games'
   }
 })
