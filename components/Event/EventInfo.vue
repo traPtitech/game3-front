@@ -2,8 +2,8 @@
 import type { Event } from '~/lib/api'
 
 type Props = {
-  event: Event
-}
+  event: Event;
+};
 const props = defineProps<Props>()
 </script>
 
@@ -19,43 +19,45 @@ const props = defineProps<Props>()
     <ProseTable>
       <tbody>
         <tr>
-          <td>
-            タイトル
-          </td>
+          <td>タイトル</td>
           <td>
             {{ props.event.title }}
           </td>
         </tr>
         <tr>
-          <td>
-            slug
-          </td>
+          <td>slug</td>
           <td>
             {{ props.event.slug }}
           </td>
         </tr>
         <tr>
+          <td>開催日</td>
           <td>
-            開催日
-          </td>
-          <td>
-            {{ props.event.date.toLocaleString("ja-JP") }}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            出展受付開始日時
-          </td>
-          <td>
-            {{ props.event.gameSubmissionPeriodStart.toLocaleString("ja-JP") }}
+            {{
+              props.event.date.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
+            }}
           </td>
         </tr>
         <tr>
+          <td>出展受付開始日時</td>
           <td>
-            出展受付終了日時
+            {{
+              props.event.gameSubmissionPeriodStart.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
+            }}
           </td>
+        </tr>
+        <tr>
+          <td>出展受付終了日時</td>
           <td>
-            {{ props.event.gameSubmissionPeriodEnd.toLocaleString("ja-JP") }}
+            {{
+              props.event.gameSubmissionPeriodEnd.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
+            }}
           </td>
         </tr>
       </tbody>

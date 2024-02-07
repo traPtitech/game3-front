@@ -23,19 +23,24 @@ onServerPrefetch(async () => {
   await suspenseTerms().catch(() => {})
 })
 
-const termColumnHelper =
-  createColumnHelper<TermWithName>()
+const termColumnHelper = createColumnHelper<TermWithName>()
 const columns = [
   termColumnHelper.accessor('name', {
     cell: info => info.getValue(),
     header: 'ターム'
   }),
   termColumnHelper.accessor('startAt', {
-    cell: info => info.getValue().toLocaleTimeString('ja-JP'),
+    cell: info =>
+      info.getValue().toLocaleTimeString('ja-JP', {
+        timeZone: 'Asia/Tokyo'
+      }),
     header: '開始時刻'
   }),
   termColumnHelper.accessor('endAt', {
-    cell: info => info.getValue().toLocaleTimeString('ja-JP'),
+    cell: info =>
+      info.getValue().toLocaleTimeString('ja-JP', {
+        timeZone: 'Asia/Tokyo'
+      }),
     header: '終了時刻'
   }),
   termColumnHelper.display({

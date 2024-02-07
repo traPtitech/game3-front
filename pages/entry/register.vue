@@ -21,9 +21,14 @@ definePageMeta({
 
 const { data: currentEvent, isLoading } = useCurrentEventQuery()
 const canSubmit = computed(() => {
-  if (!currentEvent.value) { return false }
+  if (!currentEvent.value) {
+    return false
+  }
   const today = new Date()
-  return currentEvent.value.gameSubmissionPeriodStart <= today && today <= currentEvent.value.gameSubmissionPeriodEnd
+  return (
+    currentEvent.value.gameSubmissionPeriodStart <= today &&
+    today <= currentEvent.value.gameSubmissionPeriodEnd
+  )
 })
 
 const { handleSubmit, meta, values } = useForm<PostGameRequest>({
@@ -94,7 +99,9 @@ useSeoMeta({
           <div>現在の出展対象イベント：{{ currentEvent.title }} Game³</div>
           <div>
             出展締め切り：{{
-              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
+              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
             }}
           </div>
           <div class="text-text-semantic-error">
@@ -155,7 +162,9 @@ useSeoMeta({
                     </div>
                     <div>出展者名：{{ values.creatorName }}</div>
                     <div>
-                      出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
+                      出展者ホームページ：{{
+                        values.creatorPageUrl ?? "未指定"
+                      }}
                     </div>
                     <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                   </div>
@@ -186,12 +195,16 @@ useSeoMeta({
           <div>イベント：{{ currentEvent.title }} Game³</div>
           <div>
             登録開始日時：{{
-              currentEvent.gameSubmissionPeriodStart.toLocaleString("ja-JP")
+              currentEvent.gameSubmissionPeriodStart.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
             }}
           </div>
           <div>
             登録締切日時：{{
-              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
+              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
             }}
           </div>
           <div class="text-text-semantic-error">

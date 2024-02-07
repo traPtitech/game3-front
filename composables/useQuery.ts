@@ -43,8 +43,8 @@ type DateToString<T> = {
 const dateToString = <T extends object>(obj: T): DateToString<T> => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
     if (value instanceof Date) {
-      // Date.toISOString()を使うとタイムゾーンがUTCになってしまうのでformatISOを使う
-      return { ...acc, [key]: formatISO(value) }
+      // UTCに変換される (Date 2024-01-02T00:00Z -> '2024-01-01T15:00:00Z')
+      return { ...acc, [key]: value.toISOString() }
     } else {
       return { ...acc, [key]: value }
     }

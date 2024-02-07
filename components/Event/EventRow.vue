@@ -2,13 +2,16 @@
 import type { Event } from '~/lib/api'
 
 type Props = {
-  event: Event
-}
+  event: Event;
+};
 const props = defineProps<Props>()
 </script>
 
 <template>
-  <NuxtLink :to="`/event/${event.slug}`" class="block flex items-center gap-8 text-text-secondary">
+  <NuxtLink
+    :to="`/event/${event.slug}`"
+    class="block flex items-center gap-8 text-text-secondary"
+  >
     <img
       :src="useEventImageUrl(props.event.slug)"
       class="b-1 b-border-primary object-cover"
@@ -22,7 +25,11 @@ const props = defineProps<Props>()
       </h3>
       <div class="flex items-center gap-1 body">
         <div class="i-tabler:clock h-1.5em w-1.5em" />
-        {{ props.event.date.toLocaleDateString("ja-JP") }}
+        {{
+          props.event.date.toLocaleDateString("ja-JP", {
+            timeZone: "Asia/Tokyo",
+          })
+        }}
       </div>
     </div>
     <div class="i-tabler:circle-chevron-right ml-auto mr-3 h-12 w-12" />

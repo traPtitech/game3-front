@@ -25,6 +25,7 @@ onServerPrefetch(async () => {
         hour: "numeric",
         minute: "2-digit",
         weekday: "short",
+        timeZone: "Asia/Tokyo",
       })
     }}
   </div>

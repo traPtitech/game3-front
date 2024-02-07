@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
 import { enUS } from 'date-fns/locale'
+import { utcToJst } from '~/lib/date'
 
 const { data: currentEvent, suspense } = useCurrentEventQuery()
 onServerPrefetch(async () => {
@@ -136,7 +137,11 @@ onMounted(() => {
                   {{ currentEvent.slug }} Game³
                 </div>
                 <div class="w-fit bg-surface-primary px-5">
-                  {{ format(currentEvent.date, "M/d (E)", { locale: enUS }) }}
+                  {{
+                    format(utcToJst(currentEvent.date), "M/d (E)", {
+                      locale: enUS,
+                    })
+                  }}
                 </div>
               </div>
               <div

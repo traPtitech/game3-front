@@ -74,11 +74,7 @@ useSeoMeta({
           name="slug"
           placeholder="99th"
         />
-        <UIDatePicker
-          label="開催日"
-          helper-text="イベント開催日"
-          name="date"
-        />
+        <UIDatePicker label="開催日" helper-text="イベント開催日" name="date" />
         <UIDatePicker
           label="出展受付開始日時"
           helper-text="ゲーム登録期間開始日時"
@@ -114,15 +110,28 @@ useSeoMeta({
                 <div class="space-y-2">
                   <div>イベント名：{{ values.title }}</div>
                   <div>イベントslug：{{ values.slug }}</div>
-                  <div>開催日{{ values.date?.toLocaleString("ja-JP") }}</div>
+                  <div>
+                    開催日{{
+                      values.date?.toLocaleString("ja-JP", {
+                        timeZone: "Asia/Tokyo",
+                      })
+                    }}
+                  </div>
                   <div>
                     申し込み開始日時{{
-                      values.gameSubmissionPeriodStart?.toLocaleString("ja-JP")
+                      values.gameSubmissionPeriodStart?.toLocaleString(
+                        "ja-JP",
+                        {
+                          timeZone: "Asia/Tokyo",
+                        }
+                      )
                     }}
                   </div>
                   <div>
                     申し込み終了日時{{
-                      values.gameSubmissionPeriodEnd?.toLocaleString("ja-JP")
+                      values.gameSubmissionPeriodEnd?.toLocaleString("ja-JP", {
+                        timeZone: "Asia/Tokyo",
+                      })
                     }}
                   </div>
                 </div>

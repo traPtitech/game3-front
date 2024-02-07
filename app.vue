@@ -17,9 +17,9 @@ const description = computed(
     (currentEvent.value
       ? `${
           currentEvent.value.title
-        }Game³は${currentEvent.value.date.toLocaleDateString(
-          'ja-JP'
-        )}に開催予定です。`
+        }Game³は${currentEvent.value.date.toLocaleDateString('ja-JP', {
+          timeZone: 'Asia/Tokyo'
+        })}に開催予定です。`
       : '') +
     'Game³（ゲームキューブ）とは、クリエイター同士の交流を目的としたゲーム展示イベントです。ターム制の採用や懇親会など、ほか展示イベントよりも交流を重視したプログラムが特徴です。主に関東圏の同人ゲーム制作者・サークル様に数多くご参加頂いています。本イベントは「すべてのゲームクリエイターへ。」をコンセプトに、学生などの「はじめての出展」を応援しています。「ゲームを作ったけど人に見せる機会がない」「プレイヤーから直接フィードバックを受けたい」などでお困りの方が、まず作品を公開してみようと思える場を目指しています。'
 )
@@ -40,9 +40,9 @@ useSeoMeta({
 if (process.server) {
   const imgSrc =
     basePath +
-      (currentEvent.value
-        ? useEventImageUrl(currentEvent.value?.slug)
-        : useDefaultOgpImageUrl(false))
+    (currentEvent.value
+      ? useEventImageUrl(currentEvent.value?.slug)
+      : useDefaultOgpImageUrl(false))
   defineOgImageComponent('DefaultPage', {
     title: currentEvent.value?.title,
     displayDate: currentEvent.value?.date

@@ -1,65 +1,60 @@
 <script setup lang="ts">
-import { useForm } from 'vee-validate'
-import {
-  object,
-  string,
-  minLength,
-  blob,
-  optional,
-  date
-} from 'valibot'
-import { toTypedSchema } from '@vee-validate/valibot'
-import { DialogRoot } from 'radix-vue'
-import type { Event } from '~/lib/api'
+import { useForm } from "vee-validate";
+import { object, string, minLength, blob, optional, date } from "valibot";
+import { toTypedSchema } from "@vee-validate/valibot";
+import { DialogRoot } from "radix-vue";
+import type { Event } from "~/lib/api";
 
 type Props = {
   event: Event;
 };
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const { handleSubmit, meta, values, setValues } = useForm({
   validationSchema: toTypedSchema(
     object({
       title: string([
-        minLength(1, 'イベントタイトルは1文字以上で入力してください')
+        minLength(1, "イベントタイトルは1文字以上で入力してください"),
       ]),
       date: date(),
       gameSubmissionPeriodStart: date(),
       gameSubmissionPeriodEnd: date(),
-      image: optional(blob())
+      image: optional(blob()),
     })
   ),
   initialValues: {
-    ...props.event
-  }
-})
+    ...props.event,
+  },
+});
 
 // useQueryを使うと`Cannot stringify arbitrary non-POJOs`エラーで落ちるので直接呼ぶ
-const imageDataPromise = eventsApi.getEventImage({ eventSlug: props.event.slug })
+const imageDataPromise = eventsApi.getEventImage({
+  eventSlug: props.event.slug,
+});
 const setImageData = imageDataPromise.then((data) => {
   setValues({
-    image: data
-  })
-})
-const { pending } = useLazyAsyncData(() => setImageData)
+    image: data,
+  });
+});
+const { pending } = useLazyAsyncData(() => setImageData);
 
-const confirmModalOpen = ref(false)
-const { $toast } = useNuxtApp()
+const confirmModalOpen = ref(false);
+const { $toast } = useNuxtApp();
 
-const { mutateAsync } = useMutatePatchEvent()
+const { mutateAsync } = useMutatePatchEvent();
 const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync({
       ...values,
-      eventSlug: props.event.slug
-    })
-    $toast.success('イベントの編集が完了しました！')
-    confirmModalOpen.value = false
+      eventSlug: props.event.slug,
+    });
+    $toast.success("イベントの編集が完了しました！");
+    confirmModalOpen.value = false;
   } catch (e) {
-    $toast.error('イベントの編集に失敗しました')
-    console.error(e)
+    $toast.error("イベントの編集に失敗しました");
+    console.error(e);
   }
-})
+});
 </script>
 
 <template>
@@ -106,15 +101,28 @@ const onSubmit = handleSubmit(async (values) => {
                 </h3>
                 <div class="space-y-2">
                   <div>イベント名：{{ values.title }}</div>
-                  <div>開催日{{ values.date?.toLocaleString("ja-JP") }}</div>
+                  <div>
+                    開催日{{
+                      values.date?.toLocaleString("ja-JP", {
+                        timeZone: "Asia/Tokyo",
+                      })
+                    }}
+                  </div>
                   <div>
                     申し込み開始日時{{
-                      values.gameSubmissionPeriodStart?.toLocaleString("ja-JP")
+                      values.gameSubmissionPeriodStart?.toLocaleString(
+                        "ja-JP",
+                        {
+                          timeZone: "Asia/Tokyo",
+                        }
+                      )
                     }}
                   </div>
                   <div>
                     申し込み終了日時{{
-                      values.gameSubmissionPeriodEnd?.toLocaleString("ja-JP")
+                      values.gameSubmissionPeriodEnd?.toLocaleString("ja-JP", {
+                        timeZone: "Asia/Tokyo",
+                      })
                     }}
                   </div>
                 </div>

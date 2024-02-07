@@ -1,10 +1,15 @@
 <script setup lang="ts">
-const { data: currentEvent, isLoading } = useCurrentEventQuery()
+const { data: currentEvent, isLoading } = useCurrentEventQuery();
 const canSubmit = computed(() => {
-  if (!currentEvent.value) { return false }
-  const today = new Date()
-  return currentEvent.value.gameSubmissionPeriodStart <= today && today <= currentEvent.value.gameSubmissionPeriodEnd
-})
+  if (!currentEvent.value) {
+    return false;
+  }
+  const today = new Date();
+  return (
+    currentEvent.value.gameSubmissionPeriodStart <= today &&
+    today <= currentEvent.value.gameSubmissionPeriodEnd
+  );
+});
 </script>
 
 <template>
@@ -19,7 +24,9 @@ const canSubmit = computed(() => {
           <div>現在の出展対象イベント：{{ currentEvent.title }} Game³</div>
           <div>
             出展締め切り：{{
-              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
+              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
             }}
           </div>
           <div class="text-text-semantic-error">
@@ -35,12 +42,16 @@ const canSubmit = computed(() => {
           <div>イベント：{{ currentEvent.title }} Game³</div>
           <div>
             登録開始日時：{{
-              currentEvent.gameSubmissionPeriodStart.toLocaleString("ja-JP")
+              currentEvent.gameSubmissionPeriodStart.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
             }}
           </div>
           <div>
             登録締切日時：{{
-              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP")
+              currentEvent.gameSubmissionPeriodEnd.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo",
+              })
             }}
           </div>
           <div class="text-text-semantic-error">

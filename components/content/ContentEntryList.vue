@@ -47,7 +47,8 @@ onServerPrefetch(async () => {
 
 const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
   hour: 'numeric',
-  minute: 'numeric'
+  minute: 'numeric',
+  timeZone: 'Asia/Tokyo'
 }
 </script>
 

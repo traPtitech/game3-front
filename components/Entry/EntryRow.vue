@@ -31,7 +31,10 @@ const event = computed(
 </script>
 
 <template>
-  <NuxtLink :to="`/entry/${props.game.id}`" class="block h-fit w-full flex flex-col items-center gap-5 md:(flex-row items-start)">
+  <NuxtLink
+    :to="`/entry/${props.game.id}`"
+    class="block h-fit w-full flex flex-col items-center gap-5 md:(flex-row items-start)"
+  >
     <img
       :src="useGameIconUrl(props.game.id)"
       width="200px"
@@ -43,7 +46,9 @@ const event = computed(
       <div class="break-anywhere text-wrap font-700 h2-text">
         {{ props.game.title }}
       </div>
-      <div class="flex flex-col gap-1 lg:(flex-row gap-4) body text-text-secondary!">
+      <div
+        class="flex flex-col gap-1 lg:(flex-row gap-4) body text-text-secondary!"
+      >
         <div v-if="props.variant === 'myPage'">
           <div v-if="props.game.isPublished">
             公開中
@@ -80,7 +85,10 @@ const event = computed(
           class="flex items-center gap-1"
         >
           <div class="i-tabler:clock h-1.5em w-1.5em" />
-          {{ event?.title }} {{ event?.date.toLocaleDateString("ja-JP") }}
+          {{ event?.title }}
+          {{
+            event?.date.toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" })
+          }}
         </div>
       </div>
       <div class="line-clamp-3 text-ellipsis break-anywhere text-wrap body">
