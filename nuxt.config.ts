@@ -55,21 +55,28 @@ export default defineNuxtConfig({
     }
   },
   ogImage: {
-    fonts: [
-      'Noto+Sans+JP:500',
-      'Noto+Sans+JP:700'
-    ]
+    fonts: ['Noto+Sans+JP:500', 'Noto+Sans+JP:700']
   },
   image: {
-    domains: ['game3.trap.games'],
+    domains: ['game3.trap.games', 'localhost:3000'],
     alias: {
-      api: process.env.NODE_ENV === 'production' ? 'https://game3.trap.games/api' : 'http://localhost:3000/api'
+      api:
+        process.env.NODE_ENV === 'production'
+          ? 'https://game3.trap.games/api'
+          : 'http://localhost:3000/api'
     }
   },
   content: {
     api: {
       // デフォルトでは`/api/_content`になっておりバックエンドと競合してしまうため変更
       baseURL: '/content-api/_content'
+    }
+  },
+  vite: {
+    server: {
+      proxy: {
+        '/api': 'http://localhost:8080'
+      }
     }
   },
   site: {

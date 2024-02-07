@@ -2,6 +2,6 @@ import { startWorker } from '~/mocks/handlers.client'
 
 export default defineNuxtPlugin(async () => {
   if (process.env.NODE_ENV === 'development') {
-    await startWorker()
+    // await startWorker()
   }
 })
