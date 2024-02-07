@@ -13,7 +13,9 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxtjs/google-fonts',
     '@nuxt/image',
-    'nuxt-og-image'
+    'nuxt-og-image',
+    'nuxt-simple-robots',
+    '@nuxtjs/sitemap'
   ],
   devtools: {
     enabled: true,
@@ -79,7 +81,12 @@ export default defineNuxtConfig({
       }
     }
   },
-  site: {
-    url: 'https://game3.trap.games'
+  robots: {
+    disallow: ['/admin', '/entry/register', '/entry/*/edit']
+  },
+  sitemap: {
+    sources: [
+      '/__sitemap__/urls'
+    ]
   }
 })
