@@ -15,8 +15,6 @@ import {
   type PostEventRequest,
   type GetEventImageRequest,
   type PatchGameRequest,
-  type GetGameIconRequest,
-  type GetGameImageRequest,
   type PatchTermOperationRequest,
   type PostTermOperationRequest,
   type PatchEventRequest
@@ -35,7 +33,7 @@ const apiConfig = new Configuration({
   basePath: basePath + '/api'
 })
 
-const eventsApi = new EventsApi(apiConfig)
+export const eventsApi = new EventsApi(apiConfig)
 
 // form-dataで送信するときにDate型を文字列に変換する必要がある
 // see: https://github.com/OpenAPITools/openapi-generator/issues/7584
@@ -111,7 +109,7 @@ export const useMutatePatchEvent = () =>
     }
   })
 
-const gamesApi = new GamesApi(apiConfig)
+export const gamesApi = new GamesApi(apiConfig)
 
 export const useGamesQuery = (req: GetGamesRequest) =>
   useQuery({
@@ -123,18 +121,6 @@ export const useGameQuery = (req: GetGameRequest) =>
   useQuery({
     queryKey: ['games', req],
     queryFn: () => gamesApi.getGame(req)
-  })
-
-export const useGameIconQuery = (req: GetGameIconRequest) =>
-  useQuery({
-    queryKey: ['games', req, 'icon'],
-    queryFn: () => gamesApi.getGameIcon(req)
-  })
-
-export const useGameImageQuery = (req: GetGameImageRequest) =>
-  useQuery({
-    queryKey: ['games', req, 'image'],
-    queryFn: () => gamesApi.getGameImage(req)
   })
 
 export const useMutatePostGame = () =>

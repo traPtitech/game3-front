@@ -14,6 +14,7 @@ import {
   boolean
 } from 'valibot'
 import { useForm } from 'vee-validate'
+import { gamesApi } from '~/composables/useQuery'
 import type { PatchGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
@@ -27,74 +28,80 @@ const { useMeStore } = useMe()
 const me = useMeStore()
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
-const { suspense: suspenseIcon } = useGameIconQuery({ gameId })
-const { suspense: suspenseImage } = useGameImageQuery({
-  gameId
+
+// useQueryを使うと`Cannot stringify arbitrary non-POJOs`エラーで落ちるので直接呼ぶ
+const iconDataPromise = gamesApi.getGameIcon({ gameId })
+const imageDataPromise = gamesApi.getGameImage({ gameId })
+
+const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>(
+  {
+    validationSchema: toTypedSchema(
+      object({
+        gameId: string(),
+        termId: string(),
+        title: string([
+          minLength(1, '作品タイトルは1文字以上で入力してください')
+        ]),
+        gamePageUrl: optional(
+          union(
+            [
+              literal(''),
+              string([url('ゲームページURLは正しいURL形式で入力してください')])
+            ],
+            'ゲームページURLは正しいURL形式で入力してください'
+          )
+        ),
+        creatorName: string([
+          minLength(1, '出展者名は1文字以上で入力してください')
+        ]),
+        creatorPageUrl: optional(
+          union(
+            [
+              string([url('出展者ページURLは正しいURL形式で入力してください')]),
+              literal('')
+            ],
+            'ゲームページURLは正しいURL形式で入力してください'
+          )
+        ),
+        icon: blob(),
+        description: optional(string(), ''),
+        place: optional(string(), ''),
+        image: optional(blob()),
+        isPublished: optional(boolean())
+      })
+    ),
+    initialValues: {
+      gameId
+    }
+  }
+)
+
+const setGameData = suspenseGame().then((gameData) => {
+  setFieldValue('title', gameData.data?.title)
+  setFieldValue('termId', gameData.data?.termId)
+  setFieldValue('gamePageUrl', gameData.data?.gamePageUrl)
+  setFieldValue('creatorName', gameData.data?.creatorName)
+  setFieldValue('creatorPageUrl', gameData.data?.creatorPageUrl)
+  setFieldValue('description', gameData.data?.description)
+  setFieldValue('place', gameData.data?.place)
+  setFieldValue('isPublished', gameData.data?.isPublished)
 })
 
-const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>({
-  validationSchema: toTypedSchema(
-    object({
-      gameId: string(),
-      termId: string(),
-      title: string([
-        minLength(1, '作品タイトルは1文字以上で入力してください')
-      ]),
-      gamePageUrl: optional(
-        union(
-          [
-            literal(''),
-            string([url('ゲームページURLは正しいURL形式で入力してください')])
-          ],
-          'ゲームページURLは正しいURL形式で入力してください'
-        )
-      ),
-      creatorName: string([
-        minLength(1, '出展者名は1文字以上で入力してください')
-      ]),
-      creatorPageUrl: optional(
-        union(
-          [
-            string([url('出展者ページURLは正しいURL形式で入力してください')]),
-            literal('')
-          ],
-          'ゲームページURLは正しいURL形式で入力してください'
-        )
-      ),
-      icon: blob(),
-      description: optional(string(), ''),
-      place: optional(string(), ''),
-      image: optional(blob()),
-      isPublished: optional(boolean())
-    })
-  ),
-  initialValues: {
-    gameId
-  }
+const setIconData = iconDataPromise.then((icon) => {
+  setFieldValue('icon', icon)
 })
 
-suspenseGame().then((res) => {
-  if (res) {
-    setFieldValue('title', res.data?.title)
-    setFieldValue('termId', res.data?.termId)
-    setFieldValue('gamePageUrl', res.data?.gamePageUrl)
-    setFieldValue('creatorName', res.data?.creatorName)
-    setFieldValue('creatorPageUrl', res.data?.creatorPageUrl)
-    setFieldValue('description', res.data?.description)
-    setFieldValue('place', res.data?.place)
-    setFieldValue('isPublished', res.data?.isPublished)
+const setImageData = imageDataPromise.then((image) => {
+  // 画像が存在しない場合も200が返るので、サイズで判定
+  if (image.size === 0) {
+    return
   }
+  setFieldValue('image', image)
 })
-suspenseIcon().then((res) => {
-  if (res) {
-    setFieldValue('icon', res.data)
-  }
-}).catch(() => {})
-suspenseImage().then((res) => {
-  if (res) {
-    setFieldValue('image', res.data)
-  }
-}).catch(() => {})
+
+const { pending } = useLazyAsyncData(() =>
+  Promise.all([setGameData, setIconData, setImageData])
+)
 
 const confirmModalOpen = ref(false)
 const { $toast } = useNuxtApp()
@@ -112,8 +119,14 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 useSeoMeta({
-  title: () => game.value ? `${game.value.title} by ${game.value.creatorName} | 編集ページ` : 'ゲーム編集',
-  ogTitle: () => game.value ? `${game.value.title} by ${game.value.creatorName} | 編集ページ` : 'ゲーム編集'
+  title: () =>
+    game.value
+      ? `${game.value.title} by ${game.value.creatorName} | 編集ページ`
+      : 'ゲーム編集',
+  ogTitle: () =>
+    game.value
+      ? `${game.value.title} by ${game.value.creatorName} | 編集ページ`
+      : 'ゲーム編集'
 })
 </script>
 
@@ -121,7 +134,7 @@ useSeoMeta({
   <div>
     <ProseH1> 作品編集ページ </ProseH1>
     <ProseH2> 作品情報入力フォーム </ProseH2>
-    <div class="w-full flex flex-col gap-4">
+    <div v-if="!pending" class="w-full flex flex-col gap-4">
       <form class="flex flex-col gap-4">
         <UITextField label="ゲーム名" name="title" />
         <UITextField
@@ -199,12 +212,12 @@ useSeoMeta({
                     出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
                   </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
-                  <div
-                    v-if="me.user?.role === 'admin'"
-                  >
+                  <div v-if="me.user?.role === 'admin'">
                     タームID：{{ values.termId ?? "未指定" }}
                   </div>
-                  <div>公開状態：{{ values.isPublished ? "全体に公開" : "非公開" }}</div>
+                  <div>
+                    公開状態：{{ values.isPublished ? "全体に公開" : "非公開" }}
+                  </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
                 <div class="flex flex-col items-center gap-2 md:flex-row">
@@ -228,6 +241,9 @@ useSeoMeta({
           </DialogRoot>
         </div>
       </form>
+    </div>
+    <div v-else>
+      <LoadingIndicator />
     </div>
   </div>
 </template>

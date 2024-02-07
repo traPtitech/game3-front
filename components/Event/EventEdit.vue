@@ -17,10 +17,6 @@ type Props = {
 };
 const props = defineProps<Props>()
 
-const { suspense: suspenseEventImage } = useEventImageQuery({
-  eventSlug: props.event.slug
-})
-
 const { handleSubmit, meta, values, setValues } = useForm({
   validationSchema: toTypedSchema(
     object({
@@ -38,11 +34,14 @@ const { handleSubmit, meta, values, setValues } = useForm({
   }
 })
 
-suspenseEventImage().then((res) => {
+// useQueryを使うと`Cannot stringify arbitrary non-POJOs`エラーで落ちるので直接呼ぶ
+const imageDataPromise = eventsApi.getEventImage({ eventSlug: props.event.slug })
+const setImageData = imageDataPromise.then((data) => {
   setValues({
-    image: res.data
+    image: data
   })
 })
+const { pending } = useLazyAsyncData(() => setImageData)
 
 const confirmModalOpen = ref(false)
 const { $toast } = useNuxtApp()
@@ -66,7 +65,7 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <div>
     <ProseH2>イベント編集フォーム</ProseH2>
-    <div class="w-full flex flex-col gap-4">
+    <div v-if="!pending" class="w-full flex flex-col gap-4">
       <form class="flex flex-col gap-4">
         <UITextField
           label="イベントタイトル"
@@ -101,7 +100,7 @@ const onSubmit = handleSubmit(async (values) => {
               更新確認
             </UIButton>
             <UIDialog>
-              <div class="body space-y-6">
+              <div class="space-y-6 body">
                 <h3 class="h3-text">
                   以下の内容で更新します。よろしいですか？
                 </h3>
@@ -140,6 +139,9 @@ const onSubmit = handleSubmit(async (values) => {
           </DialogRoot>
         </div>
       </form>
+    </div>
+    <div v-else>
+      <LoadingIndicator />
     </div>
   </div>
 </template>
