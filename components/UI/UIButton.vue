@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     />
     <div
       :class="[
-        'h-12 inline-flex items-center justify-center b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:translate-y--0.5 outline-4 outline outline-white outline-offset--8 relative px-4',
+        'h-12 inline-flex items-center justify-center b-4 b-brand-violet text-brand-violet text-button transition-all duration-200 ease-in-out translate-y--1 group-enabled-active:translate-y-1 group-enabled-hover:not-active:translate-y--0.5 outline-4 outline outline-white outline-offset--8 relative px-4',
         {
           'min-w-64': !props.ignoreMinWidth,
           'w-full': props.full,
