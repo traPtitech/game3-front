@@ -30,8 +30,8 @@ dependencies:
     specifier: ^1.70.0
     version: 1.70.0
   valibot:
-    specifier: ^0.28.0
-    version: 0.28.0
+    specifier: ^0.24.1
+    version: 0.24.1
   vee-validate:
     specifier: ^4.12.4
     version: 4.12.5(vue@3.4.15)
@@ -11458,10 +11458,6 @@ packages:
 
   /valibot@0.24.1:
     resolution: {integrity: sha512-Toclbuy20XsECZiueh2dkQ63he2AGaBIj/FJRDAFti2kueFldm9bjJzSYvPaL5CE1HXDMRhq7olak8at7xCz5A==}
-    dev: false
-
-  /valibot@0.28.0:
-    resolution: {integrity: sha512-+ADabFSOGEffVmMYltPVK3K1GpbzXGoNSoP9ZbjTVz7wkjVIj6L2NvOu4TaeU2R9s7tyNKihcAeddmrpT6LDzQ==}
     dev: false
 
   /validate-npm-package-license@3.0.4:

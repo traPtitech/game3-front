@@ -52,7 +52,7 @@
     "date-fns": "^3.3.1",
     "radix-vue": "^1.2.2",
     "sass": "^1.70.0",
-    "valibot": "^0.28.0",
+    "valibot": "^0.24.1",
     "vee-validate": "^4.12.4",
     "vue-advanced-cropper": "^2.8.8",
     "vue-toast-notification": "^3"
