@@ -22,4 +22,7 @@ useSeoMeta({
     <MeEntry />
     <MeEntries :user="me.user" />
   </div>
+  <div v-else>
+    <LoadingIndicator />
+  </div>
 </template>

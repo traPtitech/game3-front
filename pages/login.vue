@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { getFirstQuery } from "~/lib/url";
+import { getFirstQuery } from '~/lib/url'
 
-const { useMeStore, login } = useLogin();
-const me = useMeStore();
+const { useMeStore, login } = useLogin()
+const me = useMeStore()
 
-const route = useRoute();
-const query = computed(() => getFirstQuery(route.query.redirect));
-const { $toast } = useNuxtApp();
+const route = useRoute()
+const query = computed(() => getFirstQuery(route.query.redirect))
+const { $toast } = useNuxtApp()
 
 watchEffect(() => {
   if (me.value.user !== undefined) {
-    $toast.info("ログイン済みのためマイページにリダイレクトします");
-    navigateTo("/me");
+    $toast.info('ログイン済みのためマイページにリダイレクトします')
+    navigateTo('/me')
   }
-});
+})
 
 callOnce(() => {
   if (query.value !== undefined) {
-    $toast.info(`${query.value}からリダイレクトしました`);
+    $toast.info(`${query.value}からリダイレクトしました`)
   }
-});
+})
 
 useSeoMeta({
-  title: "ログイン",
-  ogTitle: "ログイン",
-});
+  title: 'ログイン',
+  ogTitle: 'ログイン'
+})
 </script>
 
 <template>
@@ -47,7 +47,7 @@ useSeoMeta({
     <div class="w-full flex justify-center">
       <UIButton @click="login">
         <div class="flex gap-2">
-          <div class="i-logos:discord-icon w-1.5em h-1.5em" />
+          <div class="i-logos:discord-icon h-1.5em w-1.5em" />
           ログイン
         </div>
       </UIButton>

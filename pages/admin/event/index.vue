@@ -7,10 +7,7 @@ definePageMeta({
   middleware: ['need-admin']
 })
 
-const { data: events, suspense } = useEventsQuery()
-onServerPrefetch(async () => {
-  await suspense().catch(() => {})
-})
+const { data: events, isLoading } = useEventsQuery()
 
 const columnHelper = createColumnHelper<Event>()
 const columns = [
@@ -57,7 +54,7 @@ const table = useVueTable({
     <ProseH2>
       イベント一覧
     </ProseH2>
-    <ProseTable>
+    <ProseTable v-if="!isLoading">
       <thead>
         <tr
           v-for="headerGroup in table.getHeaderGroups()"
@@ -99,6 +96,7 @@ const table = useVueTable({
         </tr>
       </tbody>
     </ProseTable>
+    <LoadingIndicator v-else />
     <div class="mt-4 w-full flex justify-center">
       <UIButton
         @click="navigateTo('/admin/event/new')"
