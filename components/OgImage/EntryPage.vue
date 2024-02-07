@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
 import { enUS } from 'date-fns/locale'
-import type { Game } from '~/lib/api'
 
-const props = defineProps<{
-  game?: Game
-  imgSrc?: string
+defineProps<{
+  title: string
+  creatorName: string
+  imgSrc: string
 }>()
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
@@ -18,19 +18,17 @@ onServerPrefetch(async () => {
 
 <template>
   <div class="h-full w-full flex bg-white font-700">
-    <img :src="props.imgSrc ?? useDefaultOgpImageUrl()" width="600" height="600" class="object-cover">
+    <img :src="imgSrc ?? useDefaultOgpImageUrl()" width="600" height="600" class="object-cover">
     <div class="w-600px justify-center bg-[#3d1192] pl-4 pr-16 text-white">
-      <div v-if="props.game">
-        <div
-          class="text-wrap text-16"
-          v-text="props.game.title"
-        />
-        <div
-          class="mb-8 text-wrap text-8"
-          v-text="`by ${props.game.title}`"
-        />
-        <div class="text-20" />
-      </div>
+      <div
+        class="text-wrap text-16"
+        v-text="title"
+      />
+      <div
+        class="mb-8 text-wrap text-8"
+        v-text="`by ${creatorName}`"
+      />
+      <div class="text-20" />
       <span class="text-8">
         ゲーム制作者交流イベント
       </span>

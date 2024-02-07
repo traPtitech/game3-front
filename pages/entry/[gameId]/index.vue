@@ -23,10 +23,6 @@ const seoDescription = computed(() =>
     : undefined
 )
 
-const ogImageUrl = computed(() =>
-  game.value ? useGameIconUrl(gameId, true) : undefined
-)
-
 useSeoMeta({
   title: () =>
     game.value
@@ -44,14 +40,19 @@ useSeoMeta({
   twitterCard: 'summary'
 })
 
-// const { data: gameImg, suspense: suspenseGameImg } = useGameIconQuery({ gameId })
-// onServerPrefetch(async () => {
-//   await Promise.all([suspenseGame(), suspenseGameImg()]).catch(() => {})
-// })
-// defineOgImageComponent('EntryPage', {
-//   game: game.value,
-//   imgSrc: gameImg.value ? URL.createObjectURL(gameImg.value) : undefined
-// })
+const img = useImage()
+
+const ogImageUrl = computed(() =>
+  img(useGameIconUrl(gameId, true))
+)
+
+if (game.value) {
+  defineOgImageComponent('EntryPage', {
+    title: game.value.title,
+    creatorName: game.value.creatorName,
+    imgSrc: ogImageUrl.value
+  })
+}
 </script>
 
 <template>
