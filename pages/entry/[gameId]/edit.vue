@@ -218,7 +218,6 @@ useSeoMeta({
                   <div>
                     公開状態：{{ values.isPublished ? "全体に公開" : "非公開" }}
                   </div>
-                  <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                 </div>
                 <div class="flex flex-col items-center gap-2 md:flex-row">
                   <UIButton
