@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-og-image',
     'nuxt-simple-robots',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    'nuxt-gtag'
   ],
   devtools: {
     enabled: true,
