@@ -108,7 +108,7 @@ onMounted(() => {
               Game³
             </h1>
           </div>
-          <a v-if="currentEvent" :href="`/event/${currentEvent?.slug}`">
+          <NuxtLink v-if="currentEvent" :to="`/event/${currentEvent?.slug}`">
             <div class="flex items-center gap-4">
               <div
                 class="text-brand-violet font-700 space-y-2 h3-text lg:(text-12 space-y-6) md:text-8 xl:text-16"
@@ -124,7 +124,7 @@ onMounted(() => {
                 class="i-tabler:chevron-right h-12 w-12 color-text-white lg:(h-20 w-20)"
               />
             </div>
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </div>
