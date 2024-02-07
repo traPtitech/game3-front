@@ -38,6 +38,9 @@ export default defineNuxtConfig({
     },
     '/login': {
       ssr: false
+    },
+    '/me': {
+      ssr: false
     }
   },
   build: {
