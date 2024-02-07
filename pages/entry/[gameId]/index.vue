@@ -25,9 +25,7 @@ const seoDescription = computed(() =>
 
 const img = useImage()
 
-const ogImageUrl = computed(() =>
-  img(useGameIconUrl(gameId, true))
-)
+const ogImageUrl = computed(() => img(useGameIconUrl(gameId)))
 
 useSeoMeta({
   title: () =>

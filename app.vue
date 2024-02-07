@@ -15,9 +15,12 @@ onServerPrefetch(async () => {
 const img = useImage()
 
 const ogImageUrl = computed(() =>
-  img(currentEvent.value
-    ? useEventImageUrl(currentEvent.value?.slug, true)
-    : useDefaultOgpImageUrl(), { width: 600 })
+  img(
+    currentEvent.value
+      ? useEventImageUrl(currentEvent.value?.slug)
+      : useDefaultOgpImageUrl(false),
+    { width: 600 }
+  )
 )
 
 const description = computed(

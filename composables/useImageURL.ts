@@ -9,6 +9,6 @@ export const useGameIconUrl = (gameId: string, absolute?: boolean) => {
 export const useEventImageUrl = (eventSlug: string, absolute?: boolean) => {
   return (absolute ? basePath : '') + `/api/events/${eventSlug}/image`
 }
-export const useDefaultOgpImageUrl = () => {
-  return basePath + '/ogp-default.png'
+export const useDefaultOgpImageUrl = (absolute?: boolean) => {
+  return (absolute ? basePath : '') + '/ogp-default.png'
 }
