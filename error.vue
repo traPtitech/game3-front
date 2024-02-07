@@ -18,17 +18,17 @@ const props = defineProps<{
         <nav class="flex items-center gap-4 px-4 py-2">
           <NuxtLink to="/" class="mr-auto">
             <picture>
-              <NuxtSource
+              <source
                 src="/img/logo/Gamecube_symbol.svg"
-                media="(max-width: 320px)"
+                media="(max-width: 360px)"
                 alt="Game³ロゴ"
                 class="h-16"
-              />
-              <NuxtImg
+              >
+              <img
                 src="/img/logo/Gamecube_logo_full.svg"
                 alt="Game³ロゴ"
                 class="h-16"
-              />
+              >
             </picture>
           </NuxtLink>
         </nav>
@@ -71,19 +71,19 @@ const props = defineProps<{
     >
       <div class="flex items-center gap-2">
         <a href="https://trap.jp" class="w-full">
-          <NuxtImg
+          <img
             src="/img/logo/traP_logo_full_white.svg"
             alt="東京工業大学デジタル創作同好会traPロゴ"
             class="h-auto max-w-full w-64 object-contain"
-          /></a>
+          ></a>
         <a
           href="https://twitter.com/traPtitech"
           class="ml-auto h-10 w-10 flex shrink-0 items-center justify-center p-2"
         >
-          <NuxtImg
+          <img
             src="/img/logo/x_logo.svg"
             alt="X(Twitter)ロゴ"
-          /></a>
+          ></a>
       </div>
       <hr class="bg-surface-primary">
       <div class="flex flex-col gap-2 lg:(flex-row gap-6)">

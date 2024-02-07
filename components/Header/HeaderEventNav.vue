@@ -17,7 +17,7 @@ onServerPrefetch(async () => {
           class="w-full inline-flex items-center gap-2"
           :to="`/event/${currentEvent.slug}#開催概要`"
         >
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
           <StrokedText
             class="text-stroke-white"
             :width="3"
@@ -31,7 +31,7 @@ onServerPrefetch(async () => {
           class="w-full inline-flex items-center gap-2"
           :to="`/event/${currentEvent.slug}#出展情報`"
         >
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
           <StrokedText
             class="text-stroke-white"
             :width="3"
@@ -42,7 +42,7 @@ onServerPrefetch(async () => {
       </li>
       <li>
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/entry/register">
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
           <StrokedText
             class="text-stroke-white"
             :width="3"
@@ -57,7 +57,7 @@ onServerPrefetch(async () => {
       </li>
       <li v-if="me.user">
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/me">
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
           <StrokedText
             class="text-stroke-white"
             :width="3"
@@ -70,7 +70,7 @@ onServerPrefetch(async () => {
     <ul v-else class="space-y-4">
       <li v-if="me.user">
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/me">
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
           <StrokedText
             class="text-stroke-white"
             :width="3"
@@ -81,7 +81,7 @@ onServerPrefetch(async () => {
       </li>
       <li v-else>
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/login">
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
           <StrokedText
             class="text-stroke-white"
             :width="3"

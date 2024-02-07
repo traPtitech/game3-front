@@ -9,14 +9,13 @@ const props = defineProps<Props>()
 
 <template>
   <NuxtLink :to="`/event/${event.slug}`" class="block flex items-center gap-8 text-text-secondary">
-    <NuxtImg
+    <img
       :src="useEventImageUrl(props.event.slug)"
-      placeholder="/img/placeholder.png"
       class="b-1 b-border-primary object-cover"
       width="180px"
       height="180px"
-      format="webp"
-    />
+      loading="lazy"
+    >
     <div class="flex flex-col gap-2">
       <h3 class="text-text-primary font-500 h2-text">
         {{ props.event.title }}

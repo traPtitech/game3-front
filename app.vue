@@ -3,7 +3,6 @@ import { TooltipProvider } from 'radix-vue'
 import { format } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 import { basePath } from './lib/url'
-import { imgToBase64 } from './lib/imgToBase64'
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
   useCurrentEventQuery()
@@ -12,17 +11,6 @@ onServerPrefetch(async () => {
   // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
   await suspenseCurrentEvent().catch(() => {})
 })
-
-const img = useImage()
-const imgSrc = await imgToBase64(
-  basePath +
-    img(
-      currentEvent.value
-        ? useEventImageUrl(currentEvent.value?.slug)
-        : useDefaultOgpImageUrl(false),
-      { width: 600 }
-    )
-)
 
 const description = computed(
   () =>
@@ -49,13 +37,20 @@ useSeoMeta({
   ogUrl: () => basePath + route.fullPath
 })
 
-defineOgImageComponent('DefaultPage', {
-  title: currentEvent.value?.title,
-  displayDate: currentEvent.value?.date
-    ? format(currentEvent.value.date, 'M/d (E)', { locale: enUS })
-    : undefined,
-  imgSrc
-})
+if (process.server) {
+  const imgSrc =
+    basePath +
+      (currentEvent.value
+        ? useEventImageUrl(currentEvent.value?.slug)
+        : useDefaultOgpImageUrl(false))
+  defineOgImageComponent('DefaultPage', {
+    title: currentEvent.value?.title,
+    displayDate: currentEvent.value?.date
+      ? format(currentEvent.value.date, 'M/d (E)', { locale: enUS })
+      : undefined,
+    imgSrc
+  })
+}
 
 useHead({
   htmlAttrs: {

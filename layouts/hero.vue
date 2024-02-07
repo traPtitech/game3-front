@@ -22,18 +22,16 @@ onMounted(() => {
       class="grid grid-cols-[auto] grid-rows-[1fr_auto] h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden lg:(grid-cols-[1fr_auto] grid-rows-[auto])"
     >
       <div class="relative h-full w-full overflow-hidden">
-        <NuxtImg
+        <img
           v-if="currentEvent"
           :src="useEventImageUrl(currentEvent.slug)"
           class="h-full w-full object-cover"
-          sizes="768px lg:1280px"
-          format="webp"
-        />
-        <NuxtImg
+        >
+        <img
           width="500px"
           src="/img/logo/Gamecube_logo_full.svg"
           class="absolute bottom-0 right-0 max-w-500px w-full p-4 lg:w-500px"
-        />
+        >
         <div
           :class="[
             'absolute bottom-0 right-0 w-full h-full bg-brand-orange',

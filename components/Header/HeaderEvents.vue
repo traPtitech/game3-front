@@ -25,12 +25,12 @@ onServerPrefetch(async () => {
           class="w-full inline-flex items-center gap-2"
           :to="`/event/${event.slug}`"
         >
-          <NuxtImg
+          <img
             width="24"
             height="24"
             src="/img/list-marker.svg"
             aria-hidden
-          />
+          >
           <StrokedText class="text-stroke-white" :width="3">
             {{ event.title }}
           </StrokedText>
@@ -38,12 +38,12 @@ onServerPrefetch(async () => {
       </li>
       <li>
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/event">
-          <NuxtImg
+          <img
             width="24"
             height="24"
             src="/img/list-marker.svg"
             aria-hidden
-          />
+          >
           <StrokedText class="text-stroke-white" :width="3">
             開催一覧
           </StrokedText>

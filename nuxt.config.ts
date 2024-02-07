@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@unocss/nuxt',
     '@nuxtjs/google-fonts',
-    '@nuxt/image',
     'nuxt-og-image',
     'nuxt-simple-robots',
     '@nuxtjs/sitemap',
@@ -59,15 +58,6 @@ export default defineNuxtConfig({
   },
   ogImage: {
     fonts: ['Noto+Sans+JP:500', 'Noto+Sans+JP:700']
-  },
-  image: {
-    domains: ['game3.trap.games', 'localhost:3000'],
-    alias: {
-      api:
-        process.env.NODE_ENV === 'production'
-          ? 'https://game3.trap.games/api'
-          : 'http://localhost:3000/api'
-    }
   },
   content: {
     api: {

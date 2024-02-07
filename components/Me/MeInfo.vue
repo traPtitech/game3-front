@@ -13,13 +13,10 @@ const isAdmin = computed(() => props.user.role === 'admin')
 
 <template>
   <div class="w-full flex items-center justify-around gap-4">
-    <NuxtImg
+    <img
       :src="props.user.profileImageUrl"
-      placeholder="/img/placeholder.png"
       class="h-24 w-24 rounded-full object-cover"
-      format="webp"
-      width="72px"
-    />
+    >
     {{ props.user.username
     }}{{ isAdmin ? " (admin) " : "" }}としてログインしています
     <UIButton

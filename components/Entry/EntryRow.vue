@@ -32,14 +32,13 @@ const event = computed(
 
 <template>
   <NuxtLink :to="`/entry/${props.game.id}`" class="block h-fit w-full flex flex-col items-center gap-5 md:(flex-row items-start)">
-    <NuxtImg
+    <img
       :src="useGameIconUrl(props.game.id)"
-      placeholder="/img/placeholder.png"
       width="200px"
       height="200px"
-      format="webp"
+      loading="lazy"
       class="aspect-ratio-square aspect-square h-auto max-w-280px w-full shrink-0 b-1 b-border-primary md:max-w-200px"
-    />
+    >
     <div class="w-full flex flex-col gap2">
       <div class="break-anywhere text-wrap font-700 h2-text">
         {{ props.game.title }}

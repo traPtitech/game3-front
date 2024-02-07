@@ -9,19 +9,19 @@ const me = useMeStore()
   >
     <div class="flex items-center gap-2">
       <a href="https://trap.jp" class="w-full">
-        <NuxtImg
+        <img
           src="/img/logo/traP_logo_full_white.svg"
           alt="東京工業大学デジタル創作同好会traPロゴ"
           class="h-auto max-w-full w-64 object-contain"
-        /></a>
+        ></a>
       <a
         href="https://twitter.com/traPtitech"
         class="ml-auto h-10 w-10 flex shrink-0 items-center justify-center p-2"
       >
-        <NuxtImg
+        <img
           src="/img/logo/x_logo.svg"
           alt="X(Twitter)ロゴ"
-        /></a>
+        ></a>
     </div>
     <hr class="bg-surface-primary">
     <div class="flex flex-col gap-2 lg:(flex-row gap-6)">

@@ -1,6 +1,5 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
-import { imgToBase64 } from '~/lib/imgToBase64'
 import { basePath } from '~/lib/url'
 
 const gameId = usePathParams('gameId')
@@ -26,12 +25,6 @@ const seoDescription = computed(() =>
     : undefined
 )
 
-const img = useImage()
-
-const imgSrc = await imgToBase64(
-  basePath + img(useGameIconUrl(gameId), { width: 600 })
-)
-
 useSeoMeta({
   title: () =>
     game.value
@@ -47,7 +40,14 @@ useSeoMeta({
   twitterCard: 'summary'
 })
 
-if (game.value) {
+const loadFallbackImage = (e: Event) => {
+  if (e.target instanceof HTMLImageElement) {
+    e.target.src = useGameIconUrl(gameId)
+  }
+}
+
+if (process.server && game.value) {
+  const imgSrc = basePath + useGameIconUrl(gameId)
   defineOgImageComponent('EntryPage', {
     title: game.value.title,
     creatorName: game.value.creatorName,
@@ -60,14 +60,12 @@ if (game.value) {
   <div v-if="game">
     <ProseH1>{{ game.title }}</ProseH1>
     <div class="space-y-4">
-      <NuxtImg
+      <img
         :src="useGameImageUrl(gameId)"
         :alt="`${game.title}紹介画像`"
         class="mx-auto h-auto max-h-120 w-full object-contain"
-        :placeholder="useGameIconUrl(gameId)"
-        format="webp"
-        height="480px"
-      />
+        @error="loadFallbackImage"
+      >
       <div class="flex flex-col gap-2 md:(flex-row gap-4) text-text-secondary!">
         <div class="flex items-center gap-1">
           <div class="i-tabler:user h-1.5em w-1.5em" />

@@ -28,7 +28,7 @@ onServerPrefetch(async () => {
       >
         過去の開催
         <template #suffix>
-          <NuxtImg width="24" height="24" src="/img/list-marker.svg" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270" />
+          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270">
         </template>
       </UIButton>
     </PopoverTrigger>

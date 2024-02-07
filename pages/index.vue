@@ -52,11 +52,11 @@ definePageMeta({
     <ProseH2> 主催 </ProseH2>
     <ProseH3> 東京工業大学デジタル創作同好会 </ProseH3>
     <a href="https://trap.jp" target="_blank" rel="noopener" class="block">
-      <NuxtImg
+      <img
         src="/img/logo/traP_logo_full.svg"
         alt="東京工業大学デジタル創作同好会traPロゴ"
         class="h-auto w-full object-contain"
-      /></a>
+      ></a>
     <ProseP>
       東京工業大学デジタル創作同好会traPは、その名の通りデジタル創作を主な活動とするサークルです。
       部員の得意分野は多岐にわたり、ゲーム、Webサービス、DTM、デジタルイラスト、競技プログラミングなど、幅広い分野で活躍しています。
@@ -68,12 +68,11 @@ definePageMeta({
       rel="noopener"
       class="block h-auto w-full flex flex-col overflow-hidden b-1 rounded-2 shadow sm:(h-48 flex-row)"
     >
-      <NuxtImg
+      <img
         src="https://gamemakers.jp/cms/wp-content/uploads/2023/04/c88da4c9fba0062a87e81285f67f6e52.jpg"
         class="aspect-square h-48 w-auto object-cover sm:h-full"
-        height="200px"
-        format="webp"
-      />
+        loading="lazy"
+      >
       <div
         class="w-full flex flex-col justify-between overflow-hidden break-normal p-4"
       >
@@ -87,11 +86,11 @@ definePageMeta({
           ゲーム制作者交流イベント『GAME³（ゲームキューブ）』が開催されました。traP所属の学生たち以外にも外部の開発者や協賛企業も出展した、濃密で熱気にあふれたイベントの模様をお伝えします。
         </div>
         <div class="inline-flex items-center gap-2">
-          <NuxtImg
+          <img
             class="h-1.5em w-1.5em"
             src="https://gamemakers.jp/favicon.ico"
             alt="ゲームメーカーズロゴ画像"
-          />gamemakers.jp
+          >gamemakers.jp
         </div>
       </div>
     </a>
