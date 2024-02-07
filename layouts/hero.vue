@@ -9,15 +9,39 @@ onServerPrefetch(async () => {
 })
 
 const pageLoaded = useState('loaded', () => false)
+const handlePageLoaded = () => {
+  pageLoaded.value = true
+}
+
+const isPageTop = useState('isPageTop', () => true)
+const handleScroll = () => {
+  isPageTop.value = window.scrollY === 0
+}
 
 onMounted(() => {
-  pageLoaded.value = true
+  window.addEventListener('scroll', handleScroll)
+  handlePageLoaded()
+
+  return () => {
+    window.removeEventListener('scroll', handleScroll)
+  }
 })
 </script>
 
 <template>
   <div>
     <!-- TODO: add effect animation -->
+    <div
+      :class="[
+        'fixed z-1 w-full shadow transition-property-[top] transition-200',
+        {
+          'top--100px': isPageTop,
+          'top-0': !isPageTop,
+        },
+      ]"
+    >
+      <AppHeader />
+    </div>
     <div
       class="grid grid-cols-[auto] grid-rows-[1fr_auto] h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden lg:(grid-cols-[1fr_auto] grid-rows-[auto])"
     >
@@ -50,10 +74,7 @@ onMounted(() => {
             },
           ]"
         />
-        <div
-          v-if="!pageLoaded"
-          class="absolute inset-0"
-        >
+        <div v-if="!pageLoaded" class="absolute inset-0">
           <LoadingIndicator class="color-white" />
         </div>
         <div
@@ -126,10 +147,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div grid min-h-screen class="grid-rows-[auto_1fr_auto]">
-      <div class="sticky top-0 z-1 shadow">
-        <AppHeader />
-      </div>
+    <div grid min-h-screen class="grid-rows-[1fr_auto]">
       <main class="h-full w-full flex flex-col items-center px-4 pb-16 pt-0">
         <div class="max-w-240 w-full">
           <slot />
