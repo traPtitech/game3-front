@@ -23,6 +23,12 @@ const seoDescription = computed(() =>
     : undefined
 )
 
+const img = useImage()
+
+const ogImageUrl = computed(() =>
+  img(useGameIconUrl(gameId, true))
+)
+
 useSeoMeta({
   title: () =>
     game.value
@@ -39,12 +45,6 @@ useSeoMeta({
   twitterDescription: () => seoDescription.value,
   twitterCard: 'summary'
 })
-
-const img = useImage()
-
-const ogImageUrl = computed(() =>
-  img(useGameIconUrl(gameId, true))
-)
 
 if (game.value) {
   defineOgImageComponent('EntryPage', {
