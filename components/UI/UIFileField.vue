@@ -33,7 +33,6 @@ const handleInputButtonClick = () => {
 
 const {
   value: blobValue,
-  resetField,
   setValue,
   errorMessage,
   meta,
@@ -43,9 +42,21 @@ const {
 
 // トリミングする場合はinput要素から読み込んだ画像をここに入れる
 const inputImgSrc = ref<string | undefined>(undefined)
-watch(blobValue, (newVal, oldVal) => {
-  if (newVal && oldVal === undefined) {
+// トリミング元画像が一度でも更新されたかどうか
+const inputImgSrcUpdated = ref<boolean>(false)
+
+onMounted(() => {
+  if (props.useCrop && blobValue.value) {
+    console.log('blob mounted', blobValue.value)
+    inputImgSrc.value = URL.createObjectURL(blobValue.value)
+    inputImgSrcUpdated.value = true
+  }
+})
+
+watch(blobValue, (newVal) => {
+  if (newVal && !inputImgSrcUpdated.value) {
     inputImgSrc.value = URL.createObjectURL(newVal)
+    inputImgSrcUpdated.value = true
   }
 })
 
@@ -69,10 +80,11 @@ const removeImage = () => {
   inputImgSrc.value = undefined
 
   URL.revokeObjectURL(imgSrc.value)
-  resetField()
+  setValue(undefined)
   if (inputRef.value) {
     inputRef.value.value = ''
   }
+  inputImgSrcUpdated.value = false
 }
 
 const onCropChange = (
@@ -104,7 +116,7 @@ const onCropChange = (
       class="relative w-full flex justify-center border b-border-primary rounded-2 bg-#ffffff p-1"
     >
       <Cropper
-        v-if="props.useCrop"
+        v-if="props.useCrop && inputImgSrc"
         class="cropper h-128 w-full"
         background-class="bg-check!"
         :src="inputImgSrc"
@@ -117,10 +129,11 @@ const onCropChange = (
         @change="onCropChange"
       />
       <img
-        v-else
+        v-else-if="!props.useCrop && imgSrc"
         :src="imgSrc"
         class="h-64 w-auto b-1 b-border-primary object-contain bg-check"
       >
+      <LoadingIndicator v-else />
       <button
         class="absolute right-2 top-2 flex appearance-none items-center justify-center gap-2 b-2 b-border-semantic-error rounded-full bg-surface-primary p-2 p-2 text-text-semantic-error hover:bg-#FEE6E6"
         type="button"
