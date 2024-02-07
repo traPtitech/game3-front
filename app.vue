@@ -3,6 +3,7 @@ import { TooltipProvider } from 'radix-vue'
 import { format } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 import { basePath } from './lib/url'
+import { imgToBase64 } from './lib/imgToBase64'
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
   useCurrentEventQuery()
@@ -13,14 +14,14 @@ onServerPrefetch(async () => {
 })
 
 const img = useImage()
-
-const ogImageUrl = computed(() =>
-  img(
-    currentEvent.value
-      ? useEventImageUrl(currentEvent.value?.slug)
-      : useDefaultOgpImageUrl(false),
-    { width: 600 }
-  )
+const imgSrc = await imgToBase64(
+  basePath +
+    img(
+      currentEvent.value
+        ? useEventImageUrl(currentEvent.value?.slug)
+        : useDefaultOgpImageUrl(false),
+      { width: 600 }
+    )
 )
 
 const description = computed(
@@ -44,8 +45,6 @@ useSeoMeta({
   description: () => description.value,
   ogDescription: () => description.value,
   twitterDescription: () => description.value,
-  ogImage: () => ogImageUrl.value,
-  twitterImage: () => ogImageUrl.value,
   twitterCard: 'summary_large_image',
   ogUrl: () => basePath + route.fullPath
 })
@@ -55,7 +54,7 @@ defineOgImageComponent('DefaultPage', {
   displayDate: currentEvent.value?.date
     ? format(currentEvent.value.date, 'M/d (E)', { locale: enUS })
     : undefined,
-  imgSrc: ogImageUrl.value
+  imgSrc
 })
 
 useHead({

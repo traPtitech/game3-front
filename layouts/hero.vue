@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="">
+  <div>
     <!-- TODO: add effect animation -->
     <div
       class="grid grid-cols-[auto] grid-rows-[1fr_auto] h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden lg:(grid-cols-[1fr_auto] grid-rows-[auto])"

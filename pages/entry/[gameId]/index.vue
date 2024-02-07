@@ -1,5 +1,8 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
+import { imgToBase64 } from '~/lib/imgToBase64'
+import { basePath } from '~/lib/url'
+
 const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
@@ -25,7 +28,9 @@ const seoDescription = computed(() =>
 
 const img = useImage()
 
-const ogImageUrl = computed(() => img(useGameIconUrl(gameId)))
+const imgSrc = await imgToBase64(
+  basePath + img(useGameIconUrl(gameId), { width: 600 })
+)
 
 useSeoMeta({
   title: () =>
@@ -38,8 +43,6 @@ useSeoMeta({
       : 'ゲーム詳細',
   description: () => seoDescription.value,
   ogDescription: () => seoDescription.value,
-  ogImage: () => ogImageUrl.value,
-  twitterImage: () => ogImageUrl.value,
   twitterDescription: () => seoDescription.value,
   twitterCard: 'summary'
 })
@@ -48,7 +51,7 @@ if (game.value) {
   defineOgImageComponent('EntryPage', {
     title: game.value.title,
     creatorName: game.value.creatorName,
-    imgSrc: ogImageUrl.value
+    imgSrc
   })
 }
 </script>
