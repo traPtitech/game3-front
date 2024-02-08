@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   code: {
     type: String,
     default: ''
@@ -30,9 +30,9 @@ defineProps({
 <template>
   <div class="relative w-full">
     <div class="absolute p-2 caption">
-      {{ filename }}
+      {{ props.filename }}
     </div>
-    <pre class="w-full overflow-x-auto rounded bg-black/10 p-4">
+    <pre :class="['w-full overflow-x-auto rounded b-1 b-border-secondary p-4', props.class]">
       <slot />
     </pre>
   </div>

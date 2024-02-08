@@ -99,6 +99,10 @@ export default defineNuxtConfig({
     api: {
       // デフォルトでは`/api/_content`になっておりバックエンドと競合してしまうため変更
       baseURL: '/content-api/_content'
+    },
+    highlight: {
+      theme: 'github-light',
+      langs: ['md']
     }
   },
   vite: {
