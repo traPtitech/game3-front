@@ -26,6 +26,7 @@ const { value, errorMessage, meta } = useField<Date>(() => props.name)
     </div>
     <VueDatePicker
       v-model="value"
+      :teleport="true"
       locale="ja-JP"
       :format-locale="ja"
       time-picker-inline
