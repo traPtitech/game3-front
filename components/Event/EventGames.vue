@@ -112,8 +112,7 @@ const table = useVueTable({
         : updaterOrValue
   },
   getCoreRowModel: getCoreRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  debugTable: true
+  getSortedRowModel: getSortedRowModel()
 })
 </script>
 

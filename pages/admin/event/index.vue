@@ -3,7 +3,9 @@ import {
   FlexRender,
   createColumnHelper,
   getCoreRowModel,
-  useVueTable
+  getSortedRowModel,
+  useVueTable,
+  type SortingState
 } from '@tanstack/vue-table'
 import UIButton from '~/components/UI/UIButton.vue'
 import type { Event } from '~/lib/api'
@@ -47,12 +49,26 @@ const columns = [
   })
 ]
 
+const sorting = ref<SortingState>([])
+
 const table = useVueTable({
   get data () {
     return events.value ?? []
   },
   columns,
-  getCoreRowModel: getCoreRowModel()
+  state: {
+    get sorting () {
+      return sorting.value
+    }
+  },
+  onSortingChange: (updaterOrValue) => {
+    sorting.value =
+      typeof updaterOrValue === 'function'
+        ? updaterOrValue(sorting.value)
+        : updaterOrValue
+  },
+  getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel()
 })
 </script>
 
