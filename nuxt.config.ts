@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@unocss/nuxt',
     '@nuxtjs/google-fonts',
-    'nuxt-og-image',
     'nuxt-simple-robots',
     '@nuxtjs/sitemap',
     'nuxt-gtag'
@@ -55,9 +54,6 @@ export default defineNuxtConfig({
         wght: [400, 500, 700]
       }
     }
-  },
-  ogImage: {
-    fonts: ['Noto+Sans+JP:500', 'Noto+Sans+JP:700']
   },
   content: {
     api: {

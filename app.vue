@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { TooltipProvider } from 'radix-vue'
-import { format } from 'date-fns'
-import { enUS } from 'date-fns/locale'
 import { basePath } from './lib/url'
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } =
@@ -26,6 +24,10 @@ const description = computed(
 
 const route = useRoute()
 
+const ogImageUrl = computed(() => currentEvent.value
+  ? useEventImageUrl(currentEvent.value?.slug, true)
+  : useDefaultOgpImageUrl(true))
+
 useSeoMeta({
   title: 'トップページ',
   ogTitle: 'トップページ',
@@ -34,23 +36,10 @@ useSeoMeta({
   ogDescription: () => description.value,
   twitterDescription: () => description.value,
   twitterCard: 'summary_large_image',
+  ogImage: () => ogImageUrl.value,
+  twitterImage: () => ogImageUrl.value,
   ogUrl: () => basePath + route.fullPath
 })
-
-if (process.server) {
-  const imgSrc =
-    basePath +
-    (currentEvent.value
-      ? useEventImageUrl(currentEvent.value?.slug)
-      : useDefaultOgpImageUrl(false))
-  defineOgImageComponent('DefaultPage', {
-    title: currentEvent.value?.title,
-    displayDate: currentEvent.value?.date
-      ? format(currentEvent.value.date, 'M/d (E)', { locale: enUS })
-      : undefined,
-    imgSrc
-  })
-}
 
 useHead({
   htmlAttrs: {

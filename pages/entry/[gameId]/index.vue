@@ -1,7 +1,5 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
-import { basePath } from '~/lib/url'
-
 const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
@@ -25,6 +23,8 @@ const seoDescription = computed(() =>
     : undefined
 )
 
+const ogImageUrl = useGameIconUrl(gameId, true)
+
 useSeoMeta({
   title: () =>
     game.value
@@ -37,22 +37,15 @@ useSeoMeta({
   description: () => seoDescription.value,
   ogDescription: () => seoDescription.value,
   twitterDescription: () => seoDescription.value,
-  twitterCard: 'summary'
+  twitterCard: 'summary',
+  ogImage: () => ogImageUrl,
+  twitterImage: () => ogImageUrl
 })
 
 const loadFallbackImage = (e: Event) => {
   if (e.target instanceof HTMLImageElement) {
     e.target.src = useGameIconUrl(gameId)
   }
-}
-
-if (process.server && game.value) {
-  const imgSrc = basePath + useGameIconUrl(gameId)
-  defineOgImageComponent('EntryPage', {
-    title: game.value.title,
-    creatorName: game.value.creatorName,
-    imgSrc
-  })
 }
 </script>
 
