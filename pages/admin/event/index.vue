@@ -49,7 +49,12 @@ const columns = [
   })
 ]
 
-const sorting = ref<SortingState>([])
+const sorting = ref<SortingState>([
+  {
+    id: 'date',
+    desc: true
+  }
+])
 
 const table = useVueTable({
   get data () {
@@ -88,6 +93,10 @@ const table = useVueTable({
             v-for="header in headerGroup.headers"
             :key="header.id"
             :colSpan="header.colSpan"
+            :class="
+              header.column.getCanSort() ? 'cursor-pointer select-none' : ''
+            "
+            @click="header.column.getToggleSortingHandler()?.($event)"
           >
             <div class="flex items-center gap-1">
               <FlexRender

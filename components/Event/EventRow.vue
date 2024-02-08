@@ -14,9 +14,9 @@ const props = defineProps<Props>()
   >
     <img
       :src="useEventImageUrl(props.event.slug)"
-      class="b-1 b-border-primary object-cover"
-      width="180px"
-      height="180px"
+      class="h-48 w-48 b-1 b-border-primary object-cover"
+      width="192"
+      height="192"
       loading="lazy"
     >
     <div class="flex flex-col gap-2">
