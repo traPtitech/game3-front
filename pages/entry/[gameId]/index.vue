@@ -22,6 +22,21 @@ const canEdit = computed(() => {
   )
 })
 
+const isVisible = computed(() => {
+  // TODO: 本来はgetレスポンスが404かどうかで判定するべき
+  // 現在は非admin/非作者でもゲームが取得できる
+  return game.value?.isPublished || canEdit.value
+})
+
+watchEffect(() => {
+  if (!isVisible.value) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Game Not Found'
+    })
+  }
+})
+
 const seoDescription = computed(() =>
   game.value
     ? `Game3展示作品 「${game.value.title}」 by ${game.value.creatorName} - ${game.value.description}`
@@ -55,7 +70,12 @@ const loadFallbackImage = (e: Event) => {
 </script>
 
 <template>
-  <div v-if="game">
+  <div v-if="game && isVisible">
+    <div
+      class="relative w-full break-anywhere py-4 text-center text-text-primary before:(absolute left-[min(0px,calc(50%-50vw))] top-0 z--1 block h-full w-100vw bg-brand-orange content-['']) h5-text"
+    >
+      ⚠この作品は運営による内容確認が完了していないため、作品登録者と運営のみが閲覧できる状態になっています。運営による確認作業をお待ちください
+    </div>
     <ProseH1>{{ game.title }}</ProseH1>
     <div class="space-y-4">
       <img
