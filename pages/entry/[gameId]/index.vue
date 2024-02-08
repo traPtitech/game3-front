@@ -4,7 +4,12 @@ const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 onServerPrefetch(async () => {
-  await suspenseGame().catch(() => {})
+  await suspenseGame().catch(() => {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Game Not Found'
+    })
+  })
 })
 
 const { useMeStore } = useLogin()

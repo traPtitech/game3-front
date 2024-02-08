@@ -7,7 +7,12 @@ const { data: event, suspense: suspenseEvent } = useEventQuery({
   eventSlug
 })
 onServerPrefetch(async () => {
-  await Promise.all([suspenseGames(), suspenseEvent()]).catch(() => {})
+  await Promise.all([suspenseGames(), suspenseEvent()]).catch(() => {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Event Not Found'
+    })
+  })
 })
 
 useSeoMeta({
