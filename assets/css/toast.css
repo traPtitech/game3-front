@@ -54,7 +54,12 @@
   overflow: hidden;
   z-index: 1090;
   pointer-events: none;
-  font-size: 1rem;
+  font-size: 0.875rem;
+}
+@media (min-width: 768px) {
+  .v-toast {
+    font-size: 1rem;
+  }
 }
 .v-toast__item {
   display: inline-flex;
@@ -121,12 +126,6 @@
 }
 .v-toast.v-toast--custom-parent {
   position: absolute;
-}
-@media screen and (max-width: 768px) {
-  .v-toast {
-    padding: 0;
-    position: fixed !important;
-  }
 }
 .v-toast__item {
   opacity: 1;
