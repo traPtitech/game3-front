@@ -69,7 +69,7 @@ const onSubmit = handleSubmit(async (values) => {
             キャンセル
           </UIButton>
           <UIButton type="submit" :disabled="!meta.valid || meta.pending">
-            作成
+            変更
           </UIButton>
         </div>
       </form>
