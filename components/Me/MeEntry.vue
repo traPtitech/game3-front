@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const { data: currentEvent, isLoading } = useCurrentEventQuery();
+const { data: currentEvent, isLoading } = useCurrentEventQuery()
 const canSubmit = computed(() => {
   if (!currentEvent.value) {
-    return false;
+    return false
   }
-  const today = new Date();
+  const today = new Date()
   return (
     currentEvent.value.gameSubmissionPeriodStart <= today &&
     today <= currentEvent.value.gameSubmissionPeriodEnd
-  );
-});
+  )
+})
 </script>
 
 <template>
@@ -30,7 +30,15 @@ const canSubmit = computed(() => {
             }}
           </div>
           <div class="text-text-semantic-error">
-            出展に関するご案内はDiscordサーバーで行います
+            出展に関するご案内は
+            <ProseA
+              href="https://discord.gg/nJCpsttgUU"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Game³ Discordサーバー
+            </ProseA>
+            で行います
           </div>
           <UIButton class="mt-2" @click="navigateTo('/entry/register')">
             登録ページへ

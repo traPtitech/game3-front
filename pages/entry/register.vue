@@ -105,7 +105,15 @@ useSeoMeta({
             }}
           </div>
           <div class="text-text-semantic-error">
-            出展に関するご案内はDiscordサーバーで行います
+            出展に関するご案内は
+            <ProseA
+              href="https://discord.gg/nJCpsttgUU"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Game³ Discordサーバー
+            </ProseA>
+            で行います
           </div>
         </div>
         <form class="flex flex-col gap-4">
