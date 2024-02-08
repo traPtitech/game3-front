@@ -8,6 +8,7 @@ import {
   type SortingState
 } from '@tanstack/vue-table'
 import ProseA from '../content/ProseA.vue'
+import EventEntryTermSelect from './EventEntryTermSelect.vue'
 
 type Props = {
   eventSlug: string;
@@ -25,36 +26,30 @@ onServerPrefetch(async () => {
   await Promise.all([suspenseTerms(), suspenseGames()]).catch(() => {})
 })
 
-const termMap = computed(
-  () =>
-    new Map(
-      terms.value
-        ?.sort((a, b) =>
-          a.startAt && b.startAt && a.startAt > b.startAt ? 1 : -1
-        )
-        .map((term, i) => [
-          term.id,
-          {
-            term,
-            termName: term.isDefault ? 'ターム未割当' : `ターム${i}`
-          }
-        ]) ?? []
-    )
+const termMap = computed(() =>
+  Object.groupBy(terms.value ?? [], term => term.id)
 )
 
 const displayGames = computed(
-  () =>
-    games.value?.map(game => ({
+  () => {
+    return games.value?.map(game => ({
       ...game,
-      ...termMap.value.get(game.termId)
+      term: termMap.value[game.termId]?.[0]
     })) ?? []
+  }
 )
 
 const termColumnHelper =
   createColumnHelper<(typeof displayGames)['value'][number]>()
 const columns = [
-  termColumnHelper.accessor('termName', {
-    cell: info => info.getValue(),
+  termColumnHelper.accessor('term', {
+    cell: info =>
+      h(EventEntryTermSelect, {
+        termName: info.row.original.term?.name ?? '',
+        gameId: info.row.original.id,
+        defaultTermId: info.row.original.termId,
+        eventSlug: props.eventSlug
+      }),
     header: 'ターム'
   }),
   termColumnHelper.accessor('title', {
