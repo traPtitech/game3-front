@@ -145,7 +145,7 @@ onMounted(() => {
                 </div>
               </div>
               <div
-                class="i-tabler:chevron-right h-12 w-12 color-text-white lg:(h-20 w-20)"
+                class="i-tabler:chevron-right h-12 w-12 animate-[2s_infinite_shake-x] color-text-white lg:(h-20 w-20)"
               />
             </div>
           </NuxtLink>

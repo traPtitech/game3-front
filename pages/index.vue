@@ -16,6 +16,7 @@ definePageMeta({
     <ProseP>
       本イベントは「すべてのゲームクリエイターへ。」をコンセプトに、学生などの「はじめての出展」を応援しています。「ゲームを作ったけど人に見せる機会がない」「プレイヤーから直接フィードバックを受けたい」などでお困りの方が、まず作品を公開してみようと思える場を目指しています。
     </ProseP>
+    <CurrentEventSummary />
     <ProseH2> 特徴 </ProseH2>
     <h3
       class="mb-6 mt-10 w-fit bg-brand-violet px-6 text-text-white line-height-normal h3-text"
