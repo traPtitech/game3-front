@@ -33,8 +33,8 @@ const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 const iconDataPromise = gamesApi.getGameIcon({ gameId })
 const imageDataPromise = gamesApi.getGameImage({ gameId })
 
-const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>(
-  {
+const { handleSubmit, meta, values, setFieldValue, isSubmitting } =
+  useForm<PatchGameRequest>({
     validationSchema: toTypedSchema(
       object({
         gameId: string(),
@@ -73,8 +73,7 @@ const { handleSubmit, meta, values, setFieldValue } = useForm<PatchGameRequest>(
     initialValues: {
       gameId
     }
-  }
-)
+  })
 
 const setGameData = suspenseGame().then((gameData) => {
   setFieldValue('title', gameData.data?.title)
@@ -229,7 +228,7 @@ useSeoMeta({
                   </UIButton>
                   <UIButton
                     type="submit"
-                    :disabled="meta.pending"
+                    :is-loading="isSubmitting"
                     @click="onSubmit"
                   >
                     登録する

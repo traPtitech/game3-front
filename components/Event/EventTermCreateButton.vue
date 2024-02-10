@@ -16,7 +16,7 @@ const { $toast } = useNuxtApp()
 
 const { mutateAsync } = useMutatePostTerm()
 
-const { handleSubmit, meta } = useForm<PostTermRequest>({
+const { handleSubmit, meta, isSubmitting } = useForm<PostTermRequest>({
   validationSchema: toTypedSchema(
     object({
       startAt: date(),
@@ -76,7 +76,8 @@ const onSubmit = handleSubmit(async (values) => {
           </UIButton>
           <UIButton
             type="submit"
-            :disabled="!meta.valid || meta.pending"
+            :disabled="!meta.valid"
+            :is-loading="isSubmitting"
           >
             作成
           </UIButton>

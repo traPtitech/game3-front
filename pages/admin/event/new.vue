@@ -17,7 +17,7 @@ definePageMeta({
   middleware: ['need-admin']
 })
 
-const { handleSubmit, meta, values } = useForm({
+const { handleSubmit, meta, values, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     object({
       title: string([
@@ -145,7 +145,7 @@ useSeoMeta({
                   </UIButton>
                   <UIButton
                     type="submit"
-                    :disabled="meta.pending"
+                    :is-loading="isSubmitting"
                     @click="onSubmit"
                   >
                     登録する

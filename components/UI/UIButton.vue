@@ -6,6 +6,7 @@ interface ButtonProps {
   full?: boolean;
   ignoreMinWidth?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
   onClick?: (event: Events['onClick']) => void;
 }
 
@@ -14,14 +15,16 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   full: false,
   ignoreMinWidth: false,
   disabled: false,
+  isLoading: false,
   onClick: () => {}
 })
 </script>
 
 <template>
   <button
-    class="group relative h-14 w-fit appearance-none disabled:(cursor-not-allowed opacity-50)"
-    :disabled="props.disabled"
+    class="group relative h-14 w-fit appearance-none disabled:(cursor-not-allowed opacity-50) data-[loading=true]:cursor-wait!"
+    :disabled="props.disabled || props.isLoading"
+    :data-loading="props.isLoading"
     @click="props.onClick"
   >
     <div

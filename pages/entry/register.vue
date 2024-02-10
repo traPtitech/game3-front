@@ -31,7 +31,7 @@ const canSubmit = computed(() => {
   )
 })
 
-const { handleSubmit, meta, values } = useForm<PostGameRequest>({
+const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
   validationSchema: toTypedSchema(
     object({
       title: string([
@@ -186,7 +186,7 @@ useSeoMeta({
                     </UIButton>
                     <UIButton
                       type="submit"
-                      :disabled="meta.pending"
+                      :is-loading="isSubmitting"
                       @click="onSubmit"
                     >
                       登録する
