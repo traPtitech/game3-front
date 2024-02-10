@@ -42,11 +42,7 @@ const props = defineProps<{
           {{ props.error.statusCode }} {{ props.error.statusMessage }}
         </ProseH1>
         <ProseP>
-          {{
-            props.error.statusCode === 404
-              ? "ページが見つかりませんでした"
-              : "予期せぬエラーが発生しました"
-          }}
+          {{ props.error.message ?? "予期せぬエラーが発生しました" }}
         </ProseP>
         <ProseP>
           <ProseA to="/">

@@ -10,7 +10,8 @@ onServerPrefetch(async () => {
   await Promise.all([suspenseGames(), suspenseEvent()]).catch(() => {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Event Not Found'
+      statusMessage: 'Event Not Found',
+      message: 'イベントが見つかりませんでした'
     })
   })
 })

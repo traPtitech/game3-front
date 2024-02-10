@@ -12,7 +12,8 @@ export default defineNuxtRouteMiddleware((to) => {
   } else if (!isAdmin()) {
     throw createError({
       statusCode: 403,
-      statusMessage: 'Forbidden'
+      statusMessage: 'Forbidden',
+      message: 'You are not allowed to access this page'
     })
   }
 })

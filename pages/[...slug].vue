@@ -7,7 +7,11 @@ const { data, error } = await useAsyncData(`content-${path}`, () => {
   return queryContent().where({ _path: path }).findOne()
 })
 if (error.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page Not Found',
+    message: 'ページが見つかりませんでした'
+  })
 }
 
 useContentHead(data)
