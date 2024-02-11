@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const { useMeStore } = useLogin()
 const me = useMeStore()
-const { data: currentEvent, suspense: suspenseCurrentEvent } = useCurrentEventQuery()
+const { data: currentEvent, suspense: suspenseCurrentEvent } =
+  useCurrentEventQuery()
+const canPost = computed(() =>
+  currentEvent.value ? useCanPostGame(currentEvent.value.slug).value : undefined
+)
 
 onServerPrefetch(async () => {
   // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
@@ -18,10 +22,7 @@ onServerPrefetch(async () => {
           :to="`/event/${currentEvent.slug}#開催概要`"
         >
           <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
-          <StrokedText
-            class="text-stroke-white"
-            :width="3"
-          >
+          <StrokedText class="text-stroke-white" :width="3">
             開催概要
           </StrokedText>
         </NuxtLink>
@@ -32,36 +33,26 @@ onServerPrefetch(async () => {
           :to="`/event/${currentEvent.slug}#出展情報`"
         >
           <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
-          <StrokedText
-            class="text-stroke-white"
-            :width="3"
-          >
+          <StrokedText class="text-stroke-white" :width="3">
             出展者一覧
           </StrokedText>
         </NuxtLink>
       </li>
-      <li>
-        <NuxtLink class="w-full inline-flex items-center gap-2" to="/entry/register">
+      <li v-if="canPost?.state === 'enabled'">
+        <NuxtLink
+          class="w-full inline-flex items-center gap-2"
+          to="/entry/register"
+        >
           <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
-          <StrokedText
-            class="text-stroke-white"
-            :width="3"
-          >
-            {{
-              me.user === undefined
-                ? "ログイン/作品登録"
-                : "作品登録"
-            }}
+          <StrokedText class="text-stroke-white" :width="3">
+            {{ me.user === undefined ? "ログイン/作品登録" : "作品登録" }}
           </StrokedText>
         </NuxtLink>
       </li>
       <li v-if="me.user">
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/me">
           <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
-          <StrokedText
-            class="text-stroke-white"
-            :width="3"
-          >
+          <StrokedText class="text-stroke-white" :width="3">
             マイページ
           </StrokedText>
         </NuxtLink>
@@ -71,10 +62,7 @@ onServerPrefetch(async () => {
       <li v-if="me.user">
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/me">
           <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
-          <StrokedText
-            class="text-stroke-white"
-            :width="3"
-          >
+          <StrokedText class="text-stroke-white" :width="3">
             マイページ
           </StrokedText>
         </NuxtLink>
@@ -82,10 +70,7 @@ onServerPrefetch(async () => {
       <li v-else>
         <NuxtLink class="w-full inline-flex items-center gap-2" to="/login">
           <img width="24" height="24" src="/img/list-marker.svg" aria-hidden>
-          <StrokedText
-            class="text-stroke-white"
-            :width="3"
-          >
+          <StrokedText class="text-stroke-white" :width="3">
             ログイン
           </StrokedText>
         </NuxtLink>

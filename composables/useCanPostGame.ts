@@ -1,8 +1,18 @@
 type CanPost =
-  | 'enabled' // 投稿可能
-  | 'prePeriod' // 投稿期間が始まっていない
-  | 'postPeriod' // 投稿期間が終わっている
-  | 'notLoggedIn' // ログインしていない
+  | {
+      state: 'enabled'; // 投稿可能
+    }
+  | {
+      state: 'prePeriod'; // 投稿期間が始まっていない
+      startAt: Date;
+    }
+  | {
+      state: 'postPeriod'; // 投稿期間が終わっている
+      endAt: Date;
+    }
+  | {
+      state: 'notLoggedIn'; // ログインしていない
+    }
   | undefined;
 
 export const useCanPostGame = (eventSlug: string) => {
@@ -14,15 +24,21 @@ export const useCanPostGame = (eventSlug: string) => {
   return computed<CanPost>(() => {
     if (targetEvent.value) {
       if (today < targetEvent.value.gameSubmissionPeriodStart) {
-        return 'prePeriod'
+        return {
+          state: 'prePeriod',
+          startAt: targetEvent.value.gameSubmissionPeriodStart
+        }
       } else if (targetEvent.value.gameSubmissionPeriodEnd < today) {
-        return 'postPeriod'
+        return {
+          state: 'postPeriod',
+          endAt: targetEvent.value.gameSubmissionPeriodEnd
+        }
       }
 
       if (me.value) {
-        return 'enabled'
+        return { state: 'enabled' }
       } else {
-        return 'notLoggedIn'
+        return { state: 'notLoggedIn' }
       }
     } else {
       return undefined
