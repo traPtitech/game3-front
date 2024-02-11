@@ -53,56 +53,61 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
 </script>
 
 <template>
-  <TabsRoot v-if="showTerms" :default-value="termGamesMap[0].term.id">
-    <TabsList class="relative mb-8 flex justify-around">
-      <TabsIndicator
-        class="absolute bottom-0 left-0 h-2px w-[--radix-tabs-indicator-size] translate-x-[--radix-tabs-indicator-position] transition-transform duration-300"
-      >
-        <div class="h-full w-full rounded-full bg-brand-violet" />
-      </TabsIndicator>
-      <TabsTrigger
+  <div v-if="eventGames && eventGames.length > 0">
+    <ProseH2>
+      出展情報
+    </ProseH2>
+    <TabsRoot v-if="showTerms" :default-value="termGamesMap[0].term.id">
+      <TabsList class="relative mb-8 flex justify-around">
+        <TabsIndicator
+          class="absolute bottom-0 left-0 h-2px w-[--radix-tabs-indicator-size] translate-x-[--radix-tabs-indicator-position] transition-transform duration-300"
+        >
+          <div class="h-full w-full rounded-full bg-brand-violet" />
+        </TabsIndicator>
+        <TabsTrigger
+          v-for="term in termGamesMap"
+          :key="term.term.id"
+          :value="term.term.id"
+          class="data-[state=inactive]:text-text-secondary!"
+        >
+          <div class="font-500 h3-text">
+            {{ term.term.name }}
+          </div>
+          <div class="font-500 h4-text">
+            {{
+              term.term.startAt?.toLocaleTimeString(
+                "ja-JP",
+                localeTimeStringOptions
+              )
+            }}
+            ~
+            {{
+              term.term.endAt?.toLocaleTimeString(
+                "ja-JP",
+                localeTimeStringOptions
+              )
+            }}
+          </div>
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent
         v-for="term in termGamesMap"
         :key="term.term.id"
         :value="term.term.id"
-        class="data-[state=inactive]:text-text-secondary!"
       >
-        <div class="font-500 h3-text">
-          {{ term.term.name }}
-        </div>
-        <div class="font-500 h4-text">
-          {{
-            term.term.startAt?.toLocaleTimeString(
-              "ja-JP",
-              localeTimeStringOptions
-            )
-          }}
-          ~
-          {{
-            term.term.endAt?.toLocaleTimeString(
-              "ja-JP",
-              localeTimeStringOptions
-            )
-          }}
-        </div>
-      </TabsTrigger>
-    </TabsList>
-    <TabsContent
-      v-for="term in termGamesMap"
-      :key="term.term.id"
-      :value="term.term.id"
-    >
+        <ul class="space-y-6">
+          <li v-for="game in term.games" :key="game.id">
+            <EntryRow :game="game" />
+          </li>
+        </ul>
+      </TabsContent>
+    </TabsRoot>
+    <div v-else>
       <ul class="space-y-6">
-        <li v-for="game in term.games" :key="game.id">
+        <li v-for="game in eventGames" :key="game.id">
           <EntryRow :game="game" />
         </li>
       </ul>
-    </TabsContent>
-  </TabsRoot>
-  <div v-else>
-    <ul class="space-y-6">
-      <li v-for="game in eventGames" :key="game.id">
-        <EntryRow :game="game" />
-      </li>
-    </ul>
+    </div>
   </div>
 </template>
