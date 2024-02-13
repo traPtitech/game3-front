@@ -38,7 +38,7 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting } =
     validationSchema: toTypedSchema(
       object({
         gameId: string(),
-        termId: string(),
+        termId: optional(string()),
         title: string([
           minLength(1, '作品タイトルは1文字以上で入力してください')
         ]),
@@ -77,13 +77,16 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting } =
 
 const setGameData = suspenseGame().then((gameData) => {
   setFieldValue('title', gameData.data?.title)
-  setFieldValue('termId', gameData.data?.termId)
   setFieldValue('gamePageUrl', gameData.data?.gamePageUrl)
   setFieldValue('creatorName', gameData.data?.creatorName)
   setFieldValue('creatorPageUrl', gameData.data?.creatorPageUrl)
   setFieldValue('description', gameData.data?.description)
-  setFieldValue('place', gameData.data?.place)
-  setFieldValue('isPublished', gameData.data?.isPublished)
+
+  if (me.value.user?.role === 'admin') {
+    setFieldValue('termId', gameData.data?.termId)
+    setFieldValue('place', gameData.data?.place)
+    setFieldValue('isPublished', gameData.data?.isPublished)
+  }
 })
 
 const setIconData = iconDataPromise.then((icon) => {
@@ -108,7 +111,20 @@ const { $toast } = useNuxtApp()
 const { mutateAsync } = useMutatePatchGame()
 const onSubmit = handleSubmit(async (values) => {
   try {
-    await mutateAsync(values)
+    if (me.value.user?.role === 'admin') {
+      await mutateAsync(values)
+    } else {
+      await mutateAsync({
+        gameId: values.gameId,
+        title: values.title,
+        gamePageUrl: values.gamePageUrl,
+        creatorName: values.creatorName,
+        creatorPageUrl: values.creatorPageUrl,
+        description: values.description,
+        icon: values.icon,
+        image: values.image
+      })
+    }
     $toast.success('ゲームの編集が完了しました！')
     await navigateTo(`/entry/${values.gameId}`)
   } catch (e) {
