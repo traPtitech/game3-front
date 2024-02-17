@@ -82,7 +82,7 @@ const onSubmit = handleSubmit(async (values) => {
         <UIFileField
           label="イベントトップ画像"
           helper-text="最大辺のサイズ1024px程度を推奨。トップページ等で使用します。"
-          accept="image/png, image,jpeg, image/gif"
+          accept="image/png, image/jpeg"
           name="image"
         />
         <div class="flex justify-center">

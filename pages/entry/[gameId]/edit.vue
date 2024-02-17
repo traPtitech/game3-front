@@ -166,13 +166,13 @@ useSeoMeta({
         <UITextAreaField label="ゲーム詳細" name="description" />
         <UIFileField
           label="ゲーム画像"
-          accept="image/png, image,jpeg, image/gif"
+          accept="image/png, image/jpeg"
           name="image"
           helper-text="作品詳細ページに表示されます。"
         />
         <UIFileField
           label="アイコン画像"
-          accept="image/png, image,jpeg, image/gif"
+          accept="image/png, image/jpeg"
           name="icon"
           use-crop
           :aspect-ratio="1"
