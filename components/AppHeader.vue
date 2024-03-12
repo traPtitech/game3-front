@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const { data: currentEvent, suspense: suspenseCurrentEvent } =
+  useCurrentEventQuery()
+const canPost = currentEvent.value?.slug
+  ? useCanPostGame(currentEvent.value?.slug)
+  : undefined
+onServerPrefetch(async () => {
+  await suspenseCurrentEvent().catch(() => {})
+})
+</script>
+
 <template>
   <header class="bg-surface-primary">
     <nav class="flex items-center gap-4 px-4 py-2">
@@ -16,11 +27,19 @@
           >
         </picture>
       </NuxtLink>
-      <div class="hidden items-center gap-4 lg:flex">
+      <div class="hidden items-center gap-4 xl:flex">
+        <NuxtLink
+          v-if="canPost?.state === 'enabled'"
+          to="/entry/register"
+        >
+          <UIButton variant="secondary">
+            作品登録
+          </UIButton>
+        </NuxtLink>
         <HeaderEventNavButton />
         <HeaderEventsButton />
       </div>
-      <div class="lg:hidden">
+      <div class="xl:hidden">
         <HeaderCompactNav />
       </div>
     </nav>
