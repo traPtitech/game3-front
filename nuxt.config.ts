@@ -80,5 +80,10 @@ export default defineNuxtConfig({
     sources: [
       '/__sitemap__/urls'
     ]
+  },
+  eslint: {
+    config: {
+      stylistic: true
+    }
   }
 })

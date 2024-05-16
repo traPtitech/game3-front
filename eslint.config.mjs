@@ -1,10 +1,9 @@
 import withNuxt from './.nuxt/eslint.config.mjs'
+import gitignore from 'eslint-config-flat-gitignore'
+import unocss from '@unocss/eslint-config/flat'
 
-export default withNuxt(
-  {
-    plugins: [
-      '@unocss',
-      "plugin:@tanstack/eslint-plugin-query/recommended"
-    ]
-  }
-)
+export default withNuxt().append([gitignore({
+  files: [".gitignore"]
+}),
+  unocss
+])
