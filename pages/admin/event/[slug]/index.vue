@@ -5,11 +5,11 @@ import {
   TabsIndicator,
   TabsList,
   TabsRoot,
-  TabsTrigger
+  TabsTrigger,
 } from 'radix-vue'
 
 definePageMeta({
-  middleware: ['need-admin']
+  middleware: ['need-admin'],
 })
 
 const eventSlug = usePathParams('slug')

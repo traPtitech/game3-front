@@ -3,12 +3,12 @@ import { SwitchRoot, SwitchThumb } from 'radix-vue'
 import { useField } from 'vee-validate'
 
 type Props = {
-  label: string;
-  name: string;
-  trueState: string;
-  falseState: string;
-  defaultValue?: boolean;
-  helperText?: string;
+  label: string
+  name: string
+  trueState: string
+  falseState: string
+  defaultValue?: boolean
+  helperText?: string
 }
 const props = defineProps<Props>()
 const { value, errorMessage, meta } = useField<boolean>(() => props.name)
@@ -18,7 +18,10 @@ const { value, errorMessage, meta } = useField<boolean>(() => props.name)
   <label class="flex flex-col gap-2">
     <div class="flex items-end gap-2 text-brand-violet label">
       {{ props.label }}
-      <div v-if="meta.required" class="text-text-semantic-error caption">
+      <div
+        v-if="meta.required"
+        class="text-text-semantic-error caption"
+      >
         必須
       </div>
 

@@ -1,13 +1,13 @@
 // see: https://tanstack.com/query/latest/docs/vue/guides/ssr
 import type {
   DehydratedState,
-  VueQueryPluginOptions
+  VueQueryPluginOptions,
 } from '@tanstack/vue-query'
 import {
   VueQueryPlugin,
   QueryClient,
   hydrate,
-  dehydrate
+  dehydrate,
 } from '@tanstack/vue-query'
 
 // Modify your Vue Query global settings here
@@ -15,10 +15,10 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: process.client ? 1000 * 60 * 60 * 2 : Infinity, // 2 hours on client, never on server
-      throwOnError: false
-    }
-  }
+      gcTime: import.meta.client ? 1000 * 60 * 60 * 2 : Infinity, // 2 hours on client, never on server
+      throwOnError: false,
+    },
+  },
 })
 
 export default defineNuxtPlugin((nuxt) => {
@@ -28,13 +28,13 @@ export default defineNuxtPlugin((nuxt) => {
 
   nuxt.vueApp.use(VueQueryPlugin, options)
 
-  if (process.server) {
+  if (import.meta.server) {
     nuxt.hooks.hook('app:rendered', () => {
       vueQueryState.value = dehydrate(queryClient)
     })
   }
 
-  if (process.client) {
+  if (import.meta.client) {
     nuxt.hooks.hook('app:created', () => {
       hydrate(queryClient, vueQueryState.value)
     })

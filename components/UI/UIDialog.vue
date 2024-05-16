@@ -6,7 +6,7 @@ import {
   DialogOverlay,
   DialogPortal,
   useEmitAsProps,
-  DialogClose
+  DialogClose,
 } from 'radix-vue'
 
 const props = defineProps<DialogContentProps>()

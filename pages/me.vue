@@ -1,7 +1,7 @@
 <!-- `/me` -->
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['need-login']
+  middleware: ['need-login'],
 })
 
 const { useMeStore } = useLogin()
@@ -9,7 +9,7 @@ const me = useMeStore()
 
 useSeoMeta({
   title: 'マイページ',
-  ogTitle: 'マイページ'
+  ogTitle: 'マイページ',
 })
 </script>
 

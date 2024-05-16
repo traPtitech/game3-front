@@ -7,7 +7,7 @@ export const usePathParams = (name: string) => {
   if (!param) {
     throw createError({
       statusCode: 404,
-      statusMessage: `Not Found: ${name}=${route.params[name]}`
+      statusMessage: `Not Found: ${name}=${route.params[name]}`,
     })
   }
   return param

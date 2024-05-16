@@ -5,42 +5,42 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useVueTable,
-  type SortingState
+  type SortingState,
 } from '@tanstack/vue-table'
 import ProseA from '../content/ProseA.vue'
 import EventEntryTermSelect from './EventEntryTermSelect.vue'
 
 type Props = {
-  eventSlug: string;
-};
+  eventSlug: string
+}
 const props = defineProps<Props>()
 
 const { data: terms, suspense: suspenseTerms } = useEventTermsQuery({
-  eventSlug: props.eventSlug
+  eventSlug: props.eventSlug,
 })
 const { data: games, suspense: suspenseGames } = useGamesQuery({
   eventSlug: props.eventSlug,
-  includeUnpublished: true
+  includeUnpublished: true,
 })
 onServerPrefetch(async () => {
   await Promise.all([suspenseTerms(), suspenseGames()]).catch(() => {})
 })
 
 const termMap = computed(() =>
-  Object.groupBy(terms.value ?? [], term => term.id)
+  Object.groupBy(terms.value ?? [], term => term.id),
 )
 
 const displayGames = computed(
   () => {
     return games.value?.map(game => ({
       ...game,
-      term: termMap.value[game.termId]?.[0]
+      term: termMap.value[game.termId]?.[0],
     })) ?? []
-  }
+  },
 )
 
-const termColumnHelper =
-  createColumnHelper<(typeof displayGames)['value'][number]>()
+const termColumnHelper
+  = createColumnHelper<(typeof displayGames)['value'][number]>()
 const columns = [
   termColumnHelper.accessor('term', {
     cell: info =>
@@ -48,21 +48,21 @@ const columns = [
         termName: info.row.original.term?.name ?? '',
         gameId: info.row.original.id,
         defaultTermId: info.row.original.termId,
-        eventSlug: props.eventSlug
+        eventSlug: props.eventSlug,
       }),
-    header: 'ターム'
+    header: 'ターム',
   }),
   termColumnHelper.accessor('title', {
     cell: info => info.getValue(),
-    header: 'ゲームタイトル'
+    header: 'ゲームタイトル',
   }),
   termColumnHelper.accessor('creatorName', {
     cell: info => info.getValue(),
-    header: '出展者名'
+    header: '出展者名',
   }),
   termColumnHelper.accessor('isPublished', {
     cell: info => (info.getValue() ? '全体公開中' : '非公開'),
-    header: '公開状態'
+    header: '公開状態',
   }),
   termColumnHelper.display({
     id: 'links',
@@ -70,49 +70,49 @@ const columns = [
       h(
         'div',
         {
-          class: 'flex gap-2'
+          class: 'flex gap-2',
         },
         [
           h(
             ProseA,
             {
-              to: `/entry/${info.row.original.id}`
+              to: `/entry/${info.row.original.id}`,
             },
-            ['詳細ページ']
+            ['詳細ページ'],
           ),
           h(
             ProseA,
             {
-              to: `/entry/${info.row.original.id}/edit`
+              to: `/entry/${info.row.original.id}/edit`,
             },
-            ['編集ページ']
-          )
-        ]
+            ['編集ページ'],
+          ),
+        ],
       ),
-    header: 'リンク'
-  })
+    header: 'リンク',
+  }),
 ]
 
 const sorting = ref<SortingState>([])
 
 const table = useVueTable({
-  get data () {
+  get data() {
     return displayGames.value
   },
   columns,
   state: {
-    get sorting () {
+    get sorting() {
       return sorting.value
-    }
+    },
   },
   onSortingChange: (updaterOrValue) => {
-    sorting.value =
-      typeof updaterOrValue === 'function'
+    sorting.value
+      = typeof updaterOrValue === 'function'
         ? updaterOrValue(sorting.value)
         : updaterOrValue
   },
   getCoreRowModel: getCoreRowModel(),
-  getSortedRowModel: getSortedRowModel()
+  getSortedRowModel: getSortedRowModel(),
 })
 </script>
 
@@ -153,15 +153,24 @@ const table = useVueTable({
                   v-else-if="header.column.getIsSorted() === 'desc'"
                   class="i-tabler:arrow-narrow-down"
                 />
-                <div v-else class="i-tabler:arrows-sort" />
+                <div
+                  v-else
+                  class="i-tabler:arrows-sort"
+                />
               </div>
             </div>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="row in table.getRowModel().rows" :key="row.id">
-          <td v-for="cell in row.getVisibleCells()" :key="cell.id">
+        <tr
+          v-for="row in table.getRowModel().rows"
+          :key="row.id"
+        >
+          <td
+            v-for="cell in row.getVisibleCells()"
+            :key="cell.id"
+          >
             <FlexRender
               :render="cell.column.columnDef.cell"
               :props="cell.getContext()"

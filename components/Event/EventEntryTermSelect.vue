@@ -6,11 +6,11 @@ import { DialogRoot } from 'radix-vue'
 import type { PatchGameRequest } from '~/lib/api'
 
 type Props = {
-  termName: string;
-  gameId: string;
-  defaultTermId: string;
-  eventSlug: string;
-};
+  termName: string
+  gameId: string
+  defaultTermId: string
+  eventSlug: string
+}
 const props = defineProps<Props>()
 
 const modalOpen = ref(false)
@@ -25,23 +25,24 @@ const { handleSubmit, meta } = useForm<
   validationSchema: toTypedSchema(
     object({
       gameId: string(),
-      termId: string()
-    })
+      termId: string(),
+    }),
   ),
   initialValues: {
     gameId: props.gameId,
-    termId: props.defaultTermId
-  }
+    termId: props.defaultTermId,
+  },
 })
 const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync({
       gameId: values.gameId,
-      termId: values.termId
+      termId: values.termId,
     })
     $toast.success('タームの割り当てが完了しました！')
     modalOpen.value = false
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('タームの割り当てに失敗しました')
     console.error(e)
   }
@@ -50,11 +51,18 @@ const onSubmit = handleSubmit(async (values) => {
 
 <template>
   <DialogRoot v-model:open="modalOpen">
-    <button type="button" class="h-full w-full" @click="modalOpen = true">
+    <button
+      type="button"
+      class="h-full w-full"
+      @click="modalOpen = true"
+    >
       {{ props.termName }}
     </button>
     <UIDialog>
-      <form class="w-full flex flex-col gap-4" @submit="onSubmit">
+      <form
+        class="w-full flex flex-col gap-4"
+        @submit="onSubmit"
+      >
         <EntryTermSelect
           name="termId"
           label="ターム"
@@ -68,7 +76,10 @@ const onSubmit = handleSubmit(async (values) => {
           >
             キャンセル
           </UIButton>
-          <UIButton type="submit" :disabled="!meta.valid || meta.pending">
+          <UIButton
+            type="submit"
+            :disabled="!meta.valid || meta.pending"
+          >
             変更
           </UIButton>
         </div>

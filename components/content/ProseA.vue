@@ -13,12 +13,12 @@
 defineProps({
   href: {
     type: String,
-    default: ''
+    default: '',
   },
   target: {
     type: String,
     default: undefined,
-    required: false
-  }
+    required: false,
+  },
 })
 </script>

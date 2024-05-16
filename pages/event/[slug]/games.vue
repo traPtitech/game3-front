@@ -1,17 +1,17 @@
 <script setup lang="ts">
 const eventSlug = usePathParams('slug')
 const { data: games, suspense: suspenseGames } = useGamesQuery({
-  eventSlug
+  eventSlug,
 })
 const { data: event, suspense: suspenseEvent } = useEventQuery({
-  eventSlug
+  eventSlug,
 })
 onServerPrefetch(async () => {
   await Promise.all([suspenseGames(), suspenseEvent()]).catch(() => {
     throw createError({
       statusCode: 404,
       statusMessage: 'Event Not Found',
-      message: 'イベントが見つかりませんでした'
+      message: 'イベントが見つかりませんでした',
     })
   })
 })
@@ -20,7 +20,7 @@ useSeoMeta({
   title: () =>
     event.value ? `${event.value.title} Game³ ゲーム一覧` : 'Game³ ゲーム一覧',
   ogTitle: () =>
-    event.value ? `${event.value.title} Game³ ゲーム一覧` : 'Game³ ゲーム一覧'
+    event.value ? `${event.value.title} Game³ ゲーム一覧` : 'Game³ ゲーム一覧',
 })
 </script>
 
@@ -32,7 +32,10 @@ useSeoMeta({
       ゲーム一覧
     </ProseH1>
     <ul class="space-y-6">
-      <li v-for="game in games" :key="game.id">
+      <li
+        v-for="game in games"
+        :key="game.id"
+      >
         <EntryRow :game="game" />
       </li>
     </ul>

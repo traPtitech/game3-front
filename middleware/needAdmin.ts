@@ -9,11 +9,12 @@ const loginPage = '/login'
 export default defineNuxtRouteMiddleware((to) => {
   if (isAdmin() === undefined) {
     return navigateTo(loginPage + '?redirect=' + encodeURIComponent(to.path))
-  } else if (!isAdmin()) {
+  }
+  else if (!isAdmin()) {
     throw createError({
       statusCode: 403,
       statusMessage: 'Forbidden',
-      message: 'You are not allowed to access this page'
+      message: 'You are not allowed to access this page',
     })
   }
 })

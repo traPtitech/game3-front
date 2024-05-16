@@ -75,7 +75,10 @@ onMounted(() => {
             },
           ]"
         />
-        <div v-if="!pageLoaded" class="absolute inset-0">
+        <div
+          v-if="!pageLoaded"
+          class="absolute inset-0"
+        >
           <LoadingIndicator class="color-white" />
         </div>
         <div
@@ -128,7 +131,10 @@ onMounted(() => {
               Game³
             </h1>
           </div>
-          <NuxtLink v-if="currentEvent" :to="`/event/${currentEvent?.slug}`">
+          <NuxtLink
+            v-if="currentEvent"
+            :to="`/event/${currentEvent?.slug}`"
+          >
             <div class="flex items-center gap-4">
               <div
                 class="text-brand-violet font-700 space-y-2 h3-text lg:(text-12 space-y-6) md:text-8 xl:text-16"
@@ -152,7 +158,11 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div grid min-h-screen class="grid-rows-[1fr_auto]">
+    <div
+      grid
+      min-h-screen
+      class="grid-rows-[1fr_auto]"
+    >
       <main class="h-full w-full flex flex-col items-center px-4 pb-16 pt-0">
         <div class="max-w-240 w-full">
           <slot />

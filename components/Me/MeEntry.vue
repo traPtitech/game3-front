@@ -6,8 +6,8 @@ const canSubmit = computed(() => {
   }
   const today = new Date()
   return (
-    currentEvent.value.gameSubmissionPeriodStart <= today &&
-    today <= currentEvent.value.gameSubmissionPeriodEnd
+    currentEvent.value.gameSubmissionPeriodStart <= today
+    && today <= currentEvent.value.gameSubmissionPeriodEnd
   )
 })
 </script>
@@ -19,7 +19,10 @@ const canSubmit = computed(() => {
       <LoadingIndicator class="color-brand-violet" />
     </div>
     <div v-else>
-      <div v-if="currentEvent && canSubmit" class="w-full flex flex-col gap-4">
+      <div
+        v-if="currentEvent && canSubmit"
+        class="w-full flex flex-col gap-4"
+      >
         <div class="text-center text-brand-violet font-700 body">
           <div>現在の出展対象イベント：{{ currentEvent.title }} Game³</div>
           <div>
@@ -40,7 +43,10 @@ const canSubmit = computed(() => {
             </ProseA>
             で行います
           </div>
-          <UIButton class="mt-2" @click="navigateTo('/entry/register')">
+          <UIButton
+            class="mt-2"
+            @click="navigateTo('/entry/register')"
+          >
             登録ページへ
           </UIButton>
         </div>
@@ -67,7 +73,10 @@ const canSubmit = computed(() => {
           </div>
         </div>
       </div>
-      <div v-else class="text-center text-text-semantic-error">
+      <div
+        v-else
+        class="text-center text-text-semantic-error"
+      >
         現在申し込み対象のイベントがありません
       </div>
     </div>

@@ -1,6 +1,6 @@
 import type { Term } from './api'
 
-export type TermWithName = Term & { name: string };
+export type TermWithName = Term & { name: string }
 
 /**
  * タームに名前を追加する
@@ -15,7 +15,7 @@ export const addTermName = (terms: Term[]): TermWithName[] =>
     .map((term, i) => {
       return {
         ...term,
-        name: `ターム${i + 1}`
+        name: `ターム${i + 1}`,
       }
     })
     .concat(
@@ -24,9 +24,9 @@ export const addTermName = (terms: Term[]): TermWithName[] =>
         .map((term) => {
           return {
             ...term,
-            name: '未割当用ターム'
+            name: '未割当用ターム',
           }
-        })
+        }),
     )
 
 /**

@@ -11,7 +11,7 @@ import {
   optional,
   union,
   literal,
-  boolean
+  boolean,
 } from 'valibot'
 import { useForm } from 'vee-validate'
 import { gamesApi } from '~/composables/useQuery'
@@ -19,7 +19,7 @@ import type { PatchGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
 definePageMeta({
-  middleware: ['need-login']
+  middleware: ['need-login'],
 })
 
 const gameId = usePathParams('gameId')
@@ -33,46 +33,46 @@ const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
 const iconDataPromise = gamesApi.getGameIcon({ gameId })
 const imageDataPromise = gamesApi.getGameImage({ gameId })
 
-const { handleSubmit, meta, values, setFieldValue, isSubmitting } =
-  useForm<PatchGameRequest>({
+const { handleSubmit, meta, values, setFieldValue, isSubmitting }
+  = useForm<PatchGameRequest>({
     validationSchema: toTypedSchema(
       object({
         gameId: string(),
         termId: optional(string()),
         title: string([
-          minLength(1, '作品タイトルは1文字以上で入力してください')
+          minLength(1, '作品タイトルは1文字以上で入力してください'),
         ]),
         gamePageUrl: optional(
           union(
             [
               literal(''),
-              string([url('ゲームページURLは正しいURL形式で入力してください')])
+              string([url('ゲームページURLは正しいURL形式で入力してください')]),
             ],
-            'ゲームページURLは正しいURL形式で入力してください'
-          )
+            'ゲームページURLは正しいURL形式で入力してください',
+          ),
         ),
         creatorName: string([
-          minLength(1, '出展者名は1文字以上で入力してください')
+          minLength(1, '出展者名は1文字以上で入力してください'),
         ]),
         creatorPageUrl: optional(
           union(
             [
               string([url('出展者ページURLは正しいURL形式で入力してください')]),
-              literal('')
+              literal(''),
             ],
-            'ゲームページURLは正しいURL形式で入力してください'
-          )
+            'ゲームページURLは正しいURL形式で入力してください',
+          ),
         ),
         icon: blob(),
         description: optional(string(), ''),
         place: optional(string(), ''),
         image: optional(blob()),
-        isPublished: optional(boolean())
-      })
+        isPublished: optional(boolean()),
+      }),
     ),
     initialValues: {
-      gameId
-    }
+      gameId,
+    },
   })
 
 const setGameData = suspenseGame().then((gameData) => {
@@ -102,7 +102,7 @@ const setImageData = imageDataPromise.then((image) => {
 })
 
 const { pending } = useLazyAsyncData(() =>
-  Promise.all([setGameData, setIconData, setImageData])
+  Promise.all([setGameData, setIconData, setImageData]),
 )
 
 const confirmModalOpen = ref(false)
@@ -113,7 +113,8 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     if (me.value.user?.role === 'admin') {
       await mutateAsync(values)
-    } else {
+    }
+    else {
       await mutateAsync({
         gameId: values.gameId,
         title: values.title,
@@ -122,12 +123,13 @@ const onSubmit = handleSubmit(async (values) => {
         creatorPageUrl: values.creatorPageUrl,
         description: values.description,
         icon: values.icon,
-        image: values.image
+        image: values.image,
       })
     }
     $toast.success('ゲームの編集が完了しました！')
     await navigateTo(`/entry/${values.gameId}`)
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('ゲームの編集に失敗しました')
     console.error(e)
   }
@@ -141,7 +143,7 @@ useSeoMeta({
   ogTitle: () =>
     game.value
       ? `${game.value.title} by ${game.value.creatorName} | 編集ページ`
-      : 'ゲーム編集'
+      : 'ゲーム編集',
 })
 </script>
 
@@ -149,21 +151,33 @@ useSeoMeta({
   <div>
     <ProseH1> 作品編集ページ </ProseH1>
     <ProseH2> 作品情報入力フォーム </ProseH2>
-    <div v-if="!pending" class="w-full flex flex-col gap-4">
+    <div
+      v-if="!pending"
+      class="w-full flex flex-col gap-4"
+    >
       <form class="flex flex-col gap-4">
-        <UITextField label="ゲーム名" name="title" />
+        <UITextField
+          label="ゲーム名"
+          name="title"
+        />
         <UITextField
           label="ゲームページリンク"
           name="gamePageUrl"
           placeholder="https://example.com"
         />
-        <UITextField label="出展者名" name="creatorName" />
+        <UITextField
+          label="出展者名"
+          name="creatorName"
+        />
         <UITextField
           label="出展者ホームページ"
           name="creatorPageUrl"
           placeholder="https://example.com"
         />
-        <UITextAreaField label="ゲーム詳細" name="description" />
+        <UITextAreaField
+          label="ゲーム詳細"
+          name="description"
+        />
         <UIFileField
           label="ゲーム画像"
           accept="image/png, image/jpeg"

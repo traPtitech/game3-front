@@ -3,11 +3,11 @@ import type { InputTypeHTMLAttribute } from 'vue'
 import { useField } from 'vee-validate'
 
 type Props = {
-  label: string;
-  name: string;
-  type?: Exclude<InputTypeHTMLAttribute, 'file'>;
-  placeholder?: string;
-  helperText?: string;
+  label: string
+  name: string
+  type?: Exclude<InputTypeHTMLAttribute, 'file'>
+  placeholder?: string
+  helperText?: string
 }
 const props = defineProps<Props>()
 const { value, errorMessage, meta } = useField(() => props.name)
@@ -17,11 +17,17 @@ const { value, errorMessage, meta } = useField(() => props.name)
   <label class="flex flex-col gap-2">
     <div class="flex items-end gap-2 text-brand-violet label">
       {{ props.label }}
-      <div v-if="meta.required" class="text-text-semantic-error caption">
+      <div
+        v-if="meta.required"
+        class="text-text-semantic-error caption"
+      >
         必須
       </div>
     </div>
-    <div v-if="$props.helperText" class="text-text-secondary">
+    <div
+      v-if="$props.helperText"
+      class="text-text-secondary"
+    >
       {{ props.helperText }}
     </div>
     <input

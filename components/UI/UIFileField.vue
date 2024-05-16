@@ -4,24 +4,24 @@ import {
   Cropper,
   type CropperResult,
   type ImageTransforms,
-  type ImageSize
+  type ImageSize,
 } from 'vue-advanced-cropper'
 
 type Props = {
-  label: string;
-  name: string;
-  accept?: string;
-  helperText?: string;
+  label: string
+  name: string
+  accept?: string
+  helperText?: string
 } & (
   | {
-      useCrop: true;
-      aspectRatio: number;
-    }
+    useCrop: true
+    aspectRatio: number
+  }
   | {
-      useCrop?: false;
-      aspectRatio?: undefined;
-    }
-);
+    useCrop?: false
+    aspectRatio?: undefined
+  }
+)
 const props = defineProps<Props>()
 
 // input要素を隠しつつbuttonを使ってフォーカスできるように
@@ -37,7 +37,7 @@ const {
   errorMessage,
   meta,
   handleChange,
-  handleBlur
+  handleBlur,
 } = useField<Blob | undefined>(() => props.name)
 
 // トリミングする場合はinput要素から読み込んだ画像をここに入れる
@@ -89,8 +89,8 @@ const removeImage = () => {
 
 const onCropChange = (
   data: CropperResult & {
-    imageTransforms: ImageTransforms;
-  }
+    imageTransforms: ImageTransforms
+  },
 ) => {
   data.canvas?.toBlob((blob) => {
     if (blob) {
@@ -104,11 +104,17 @@ const onCropChange = (
   <div class="flex flex-col gap-2">
     <div class="flex items-end gap-2 text-brand-violet label">
       {{ props.label }}
-      <div v-if="meta.required" class="text-text-semantic-error caption">
+      <div
+        v-if="meta.required"
+        class="text-text-semantic-error caption"
+      >
         必須
       </div>
     </div>
-    <div v-if="$props.helperText" class="text-text-secondary">
+    <div
+      v-if="$props.helperText"
+      class="text-text-secondary"
+    >
       {{ props.helperText }}
     </div>
     <div
@@ -163,7 +169,10 @@ const onCropChange = (
       @input="handleChange"
       @blur="handleBlur"
     >
-    <div v-if="errorMessage" class="text-text-semantic-error caption">
+    <div
+      v-if="errorMessage"
+      class="text-text-semantic-error caption"
+    >
       {{ errorMessage }}
     </div>
   </div>

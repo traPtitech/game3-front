@@ -3,14 +3,14 @@ import {
   PopoverContent,
   PopoverPortal,
   PopoverRoot,
-  PopoverTrigger
+  PopoverTrigger,
 } from 'radix-vue'
 
 const { data: events, suspense: suspenseEvents } = useEventsQuery()
 const top3Events = computed(() => {
-  if (!events.value) { return [] }
+  if (!events.value) return []
   return events.value.toSorted(
-    (a, b) => b.gameSubmissionPeriodEnd < a.gameSubmissionPeriodEnd ? -1 : 1
+    (a, b) => b.gameSubmissionPeriodEnd < a.gameSubmissionPeriodEnd ? -1 : 1,
   ).slice(0, 3)
 })
 
@@ -22,13 +22,22 @@ onServerPrefetch(async () => {
 
 <template>
   <PopoverRoot v-if="top3Events">
-    <PopoverTrigger as-child class="group">
+    <PopoverTrigger
+      as-child
+      class="group"
+    >
       <UIButton
         variant="secondary"
       >
         過去の開催
         <template #suffix>
-          <img width="24" height="24" src="/img/list-marker.svg" aria-hidden class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270">
+          <img
+            width="24"
+            height="24"
+            src="/img/list-marker.svg"
+            aria-hidden
+            class="transition-transform group-data-[state=closed]:rotate-90 group-data-[state=open]:rotate-270"
+          >
         </template>
       </UIButton>
     </PopoverTrigger>

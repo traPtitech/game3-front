@@ -8,7 +8,10 @@ const me = useMeStore()
     class="flex flex-col gap-4 bg-brand-violet px-4 py-6 text-text-white font-700 lg:(px-12 py-8) body"
   >
     <div class="flex items-center gap-2">
-      <a href="https://trap.jp" class="w-full">
+      <a
+        href="https://trap.jp"
+        class="w-full"
+      >
         <img
           src="/img/logo/traP_logo_full_white.svg"
           alt="東京工業大学デジタル創作同好会traPロゴ"
@@ -34,10 +37,16 @@ const me = useMeStore()
       <NuxtLink to="/about-google-analytics">
         <StrokedText> Googleアナリティクスについて </StrokedText>
       </NuxtLink>
-      <NuxtLink v-if="me.user" to="/me">
+      <NuxtLink
+        v-if="me.user"
+        to="/me"
+      >
         <StrokedText> マイページ </StrokedText>
       </NuxtLink>
-      <NuxtLink v-else to="/login">
+      <NuxtLink
+        v-else
+        to="/login"
+      >
         <StrokedText> ログイン </StrokedText>
       </NuxtLink>
       <StrokedText class="ml-auto">

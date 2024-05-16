@@ -5,13 +5,13 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useVueTable,
-  type SortingState
+  type SortingState,
 } from '@tanstack/vue-table'
 import UIButton from '~/components/UI/UIButton.vue'
 import type { Event } from '~/lib/api'
 
 definePageMeta({
-  middleware: ['need-admin']
+  middleware: ['need-admin'],
 })
 
 const { data: events, isLoading } = useEventsQuery()
@@ -20,60 +20,60 @@ const columnHelper = createColumnHelper<Event>()
 const columns = [
   columnHelper.accessor('slug', {
     cell: info => info.getValue(),
-    header: 'イベントslug (URL内ID)'
+    header: 'イベントslug (URL内ID)',
   }),
   columnHelper.accessor('title', {
     cell: info => info.getValue(),
-    header: 'イベントタイトル'
+    header: 'イベントタイトル',
   }),
   columnHelper.accessor('date', {
     cell: info =>
       info.getValue().toLocaleString('ja-JP', {
-        timeZone: 'Asia/Tokyo'
+        timeZone: 'Asia/Tokyo',
       }),
-    header: '開催日'
+    header: '開催日',
   }),
   columnHelper.accessor('gameSubmissionPeriodStart', {
     cell: info =>
       info.getValue().toLocaleString('ja-JP', {
-        timeZone: 'Asia/Tokyo'
+        timeZone: 'Asia/Tokyo',
       }),
-    header: '出展受付開始日時'
+    header: '出展受付開始日時',
   }),
   columnHelper.accessor('gameSubmissionPeriodEnd', {
     cell: info =>
       info.getValue().toLocaleString('ja-JP', {
-        timeZone: 'Asia/Tokyo'
+        timeZone: 'Asia/Tokyo',
       }),
-    header: '出展受付終了日時'
-  })
+    header: '出展受付終了日時',
+  }),
 ]
 
 const sorting = ref<SortingState>([
   {
     id: 'date',
-    desc: true
-  }
+    desc: true,
+  },
 ])
 
 const table = useVueTable({
-  get data () {
+  get data() {
     return events.value ?? []
   },
   columns,
   state: {
-    get sorting () {
+    get sorting() {
       return sorting.value
-    }
+    },
   },
   onSortingChange: (updaterOrValue) => {
-    sorting.value =
-      typeof updaterOrValue === 'function'
+    sorting.value
+      = typeof updaterOrValue === 'function'
         ? updaterOrValue(sorting.value)
         : updaterOrValue
   },
   getCoreRowModel: getCoreRowModel(),
-  getSortedRowModel: getSortedRowModel()
+  getSortedRowModel: getSortedRowModel(),
 })
 </script>
 
@@ -113,7 +113,10 @@ const table = useVueTable({
                   v-else-if="header.column.getIsSorted() === 'desc'"
                   class="i-tabler:arrow-narrow-down"
                 />
-                <div v-else class="i-tabler:arrows-sort" />
+                <div
+                  v-else
+                  class="i-tabler:arrows-sort"
+                />
               </div>
             </div>
           </th>
@@ -128,7 +131,10 @@ const table = useVueTable({
             async () => await navigateTo(`/admin/event/${row.getValue('slug')}`)
           "
         >
-          <td v-for="cell in row.getVisibleCells()" :key="cell.id">
+          <td
+            v-for="cell in row.getVisibleCells()"
+            :key="cell.id"
+          >
             <FlexRender
               :render="cell.column.columnDef.cell"
               :props="cell.getContext()"

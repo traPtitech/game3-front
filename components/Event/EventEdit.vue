@@ -6,34 +6,34 @@ import { DialogRoot } from 'radix-vue'
 import type { Event } from '~/lib/api'
 
 type Props = {
-  event: Event;
-};
+  event: Event
+}
 const props = defineProps<Props>()
 
 const { handleSubmit, meta, values, setValues, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     object({
       title: string([
-        minLength(1, 'イベントタイトルは1文字以上で入力してください')
+        minLength(1, 'イベントタイトルは1文字以上で入力してください'),
       ]),
       date: date(),
       gameSubmissionPeriodStart: date(),
       gameSubmissionPeriodEnd: date(),
-      image: optional(blob())
-    })
+      image: optional(blob()),
+    }),
   ),
   initialValues: {
-    ...props.event
-  }
+    ...props.event,
+  },
 })
 
 // useQueryを使うと`Cannot stringify arbitrary non-POJOs`エラーで落ちるので直接呼ぶ
 const imageDataPromise = eventsApi.getEventImage({
-  eventSlug: props.event.slug
+  eventSlug: props.event.slug,
 })
 const setImageData = imageDataPromise.then((data) => {
   setValues({
-    image: data
+    image: data,
   })
 })
 const { pending } = useLazyAsyncData(() => setImageData)
@@ -46,11 +46,12 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync({
       ...values,
-      eventSlug: props.event.slug
+      eventSlug: props.event.slug,
     })
     $toast.success('イベントの編集が完了しました！')
     confirmModalOpen.value = false
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('イベントの編集に失敗しました')
     console.error(e)
   }
@@ -60,7 +61,10 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <div>
     <ProseH2>イベント編集フォーム</ProseH2>
-    <div v-if="!pending" class="w-full flex flex-col gap-4">
+    <div
+      v-if="!pending"
+      class="w-full flex flex-col gap-4"
+    >
       <form class="flex flex-col gap-4">
         <UITextField
           label="イベントタイトル"
@@ -68,7 +72,11 @@ const onSubmit = handleSubmit(async (values) => {
           name="title"
           placeholder="第99回"
         />
-        <UIDatePicker label="開催日" helper-text="イベント開催日" name="date" />
+        <UIDatePicker
+          label="開催日"
+          helper-text="イベント開催日"
+          name="date"
+        />
         <UIDatePicker
           label="出展受付開始日時"
           helper-text="ゲーム登録期間開始日時"
@@ -114,7 +122,7 @@ const onSubmit = handleSubmit(async (values) => {
                         "ja-JP",
                         {
                           timeZone: "Asia/Tokyo",
-                        }
+                        },
                       )
                     }}
                   </div>

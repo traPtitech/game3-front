@@ -15,12 +15,13 @@ export const useMe = () => {
     try {
       const data = await usersApi.getMe()
       me.value = {
-        user: data
+        user: data,
       }
       return data
-    } catch (e) {
+    }
+    catch (e) {
       me.value = {
-        user: undefined
+        user: undefined,
       }
       return undefined
     }
@@ -29,13 +30,15 @@ export const useMe = () => {
   const logout = async () => {
     const me = useMeStore()
     me.value = {
-      user: undefined
+      user: undefined,
     }
     try {
       await mutateLogout()
-    } catch (e) {
+    }
+    catch (e) {
       console.error(e)
-    } finally {
+    }
+    finally {
       await navigateTo('/')
     }
   }
@@ -43,6 +46,6 @@ export const useMe = () => {
   return {
     useMeStore,
     fetchMe,
-    logout
+    logout,
   }
 }

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 type Props = {
-  slug?: string;
-};
+  slug?: string
+}
 const props = defineProps<Props>()
 const loadedSlug = usePathParams('slug')
 const eventSlug = computed(() => props.slug || loadedSlug)
 
 const { data: event, suspense: suspenseEvent } = useEventQuery({
-  eventSlug: eventSlug.value
+  eventSlug: eventSlug.value,
 })
 
 onServerPrefetch(async () => {
