@@ -6,7 +6,7 @@ const top3Events = computed(() => {
   }
   return events.value
     .toSorted((a, b) =>
-      b.gameSubmissionPeriodEnd < a.gameSubmissionPeriodEnd ? -1 : 1
+      b.gameSubmissionPeriodEnd < a.gameSubmissionPeriodEnd ? -1 : 1,
     )
     .slice(0, 3)
 })
@@ -18,9 +18,15 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-  <nav v-if="top3Events" class="text-button text-brand-violet">
+  <nav
+    v-if="top3Events"
+    class="text-button text-brand-violet"
+  >
     <ul class="space-y-4">
-      <li v-for="event in top3Events" :key="event.slug">
+      <li
+        v-for="event in top3Events"
+        :key="event.slug"
+      >
         <NuxtLink
           class="w-full inline-flex items-center gap-2"
           :to="`/event/${event.slug}`"
@@ -31,20 +37,29 @@ onServerPrefetch(async () => {
             src="/img/list-marker.svg"
             aria-hidden
           >
-          <StrokedText class="text-stroke-white" :width="3">
+          <StrokedText
+            class="text-stroke-white"
+            :width="3"
+          >
             {{ event.title }}
           </StrokedText>
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink class="w-full inline-flex items-center gap-2" to="/event">
+        <NuxtLink
+          class="w-full inline-flex items-center gap-2"
+          to="/event"
+        >
           <img
             width="24"
             height="24"
             src="/img/list-marker.svg"
             aria-hidden
           >
-          <StrokedText class="text-stroke-white" :width="3">
+          <StrokedText
+            class="text-stroke-white"
+            :width="3"
+          >
             開催一覧
           </StrokedText>
         </NuxtLink>

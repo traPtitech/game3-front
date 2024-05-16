@@ -4,8 +4,8 @@ import { type User } from '~/lib/api'
 const { logout } = useLogin()
 
 type Props = {
-  user: User;
-};
+  user: User
+}
 const props = defineProps<Props>()
 
 const isAdmin = computed(() => props.user.role === 'admin')

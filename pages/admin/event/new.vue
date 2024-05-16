@@ -8,31 +8,31 @@ import {
   blob,
   optional,
   regex,
-  date
+  date,
 } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 
 definePageMeta({
-  middleware: ['need-admin']
+  middleware: ['need-admin'],
 })
 
 const { handleSubmit, meta, values, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     object({
       title: string([
-        minLength(1, 'イベントタイトルは1文字以上で入力してください')
+        minLength(1, 'イベントタイトルは1文字以上で入力してください'),
       ]),
       slug: string([
         minLength(1, 'slugは1文字以上で入力してください'),
-        regex(/^[a-z0-9]+$/, 'slugは半角英数字のみで入力してください')
+        regex(/^[a-z0-9]+$/, 'slugは半角英数字のみで入力してください'),
       ]),
       date: date(),
       gameSubmissionPeriodStart: date(),
       gameSubmissionPeriodEnd: date(),
-      image: optional(blob())
-    })
-  )
+      image: optional(blob()),
+    }),
+  ),
 })
 
 const confirmModalOpen = ref(false)
@@ -44,7 +44,8 @@ const onSubmit = handleSubmit(async (values) => {
     const submittedEvent = await mutateAsync(values)
     $toast.success('イベントの登録が完了しました！')
     await navigateTo(`/admin/event/${submittedEvent.slug}`)
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('イベントの登録に失敗しました')
     console.error(e)
   }
@@ -52,7 +53,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 useSeoMeta({
   title: 'イベント新規作成',
-  ogTitle: 'イベント新規作成'
+  ogTitle: 'イベント新規作成',
 })
 </script>
 
@@ -74,7 +75,11 @@ useSeoMeta({
           name="slug"
           placeholder="99th"
         />
-        <UIDatePicker label="開催日" helper-text="イベント開催日" name="date" />
+        <UIDatePicker
+          label="開催日"
+          helper-text="イベント開催日"
+          name="date"
+        />
         <UIDatePicker
           label="出展受付開始日時"
           helper-text="ゲーム登録期間開始日時"
@@ -123,7 +128,7 @@ useSeoMeta({
                         "ja-JP",
                         {
                           timeZone: "Asia/Tokyo",
-                        }
+                        },
                       )
                     }}
                   </div>

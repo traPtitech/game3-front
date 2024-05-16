@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { data: currentEvent, suspense: suspenseCurrentEvent } =
-  useCurrentEventQuery()
+const { data: currentEvent, suspense: suspenseCurrentEvent }
+  = useCurrentEventQuery()
 const canPost = currentEvent.value?.slug
   ? useCanPostGame(currentEvent.value?.slug)
   : undefined

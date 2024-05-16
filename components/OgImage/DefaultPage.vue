@@ -1,14 +1,19 @@
 <script setup lang="ts">
 defineProps<{
   title?: string
-  displayDate?: string,
+  displayDate?: string
   imgSrc: string
 }>()
 </script>
 
 <template>
   <div class="h-full w-full flex bg-white font-700">
-    <img :src="imgSrc" width="600" height="600" class="object-cover">
+    <img
+      :src="imgSrc"
+      width="600"
+      height="600"
+      class="object-cover"
+    >
     <div
       class="flex flex-col justify-center bg-[#3d1192] pl-4 pr-16 text-white"
     >

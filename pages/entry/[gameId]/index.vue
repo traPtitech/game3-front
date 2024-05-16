@@ -8,7 +8,7 @@ onServerPrefetch(async () => {
     throw createError({
       statusCode: 404,
       statusMessage: 'Game Not Found',
-      message: '作品が見つかりませんでした'
+      message: '作品が見つかりませんでした',
     })
   })
 })
@@ -17,15 +17,17 @@ const { useMeStore } = useLogin()
 const me = useMeStore()
 
 const canEdit = computed(() => {
-  if (process.server) {
+  if (import.meta.server) {
     // SSR時はログイン情報が取得できない
     return undefined
-  } else if (me.value.user === undefined) {
+  }
+  else if (me.value.user === undefined) {
     return false // 未ログイン
-  } else {
+  }
+  else {
     return (
-      me.value.user.role === 'admin' || // admin
-      me.value.user.userId === game.value?.discordUserId
+      me.value.user.role === 'admin' // admin
+      || me.value.user.userId === game.value?.discordUserId
     ) // creator
   }
 })
@@ -35,7 +37,8 @@ const isVisible = computed(() => {
   // 現在は非admin/非作者でもゲームが取得できる
   if (game.value === undefined) {
     return undefined
-  } else {
+  }
+  else {
     return game.value.isPublished || canEdit.value
   }
 })
@@ -47,15 +50,16 @@ watchEffect(() => {
       statusCode: 401,
       statusMessage: 'Unauthorized',
       message: 'ログインが必要です',
-      fatal: true
+      fatal: true,
     })
-  } else if (isVisible.value === false) {
+  }
+  else if (isVisible.value === false) {
     // ログイン済み かつ 編集権限なし
     throw createError({
       statusCode: 403,
       statusMessage: 'Forbidden',
       message: 'この作品は非公開です',
-      fatal: true
+      fatal: true,
     })
   }
 })
@@ -63,7 +67,7 @@ watchEffect(() => {
 const seoDescription = computed(() =>
   game.value
     ? `Game3展示作品 「${game.value.title}」 by ${game.value.creatorName} - ${game.value.description}`
-    : undefined
+    : undefined,
 )
 
 const ogImageUrl = useGameIconUrl(gameId, true)
@@ -82,7 +86,7 @@ useSeoMeta({
   twitterDescription: () => seoDescription.value,
   twitterCard: 'summary',
   ogImage: () => ogImageUrl,
-  twitterImage: () => ogImageUrl
+  twitterImage: () => ogImageUrl,
 })
 
 const loadFallbackImage = (e: Event) => {
@@ -123,7 +127,10 @@ const loadFallbackImage = (e: Event) => {
             {{ game.creatorName }}
           </ProseP>
         </div>
-        <div v-if="game.creatorPageUrl" class="flex items-center gap-1">
+        <div
+          v-if="game.creatorPageUrl"
+          class="flex items-center gap-1"
+        >
           <div class="i-tabler:link h-1.5em w-1.5em" />
           <ProseA
             :href="game.gamePageUrl"
@@ -133,13 +140,19 @@ const loadFallbackImage = (e: Event) => {
             {{ game.gamePageUrl }}
           </ProseA>
         </div>
-        <div v-if="game.place" class="flex items-center gap-1">
+        <div
+          v-if="game.place"
+          class="flex items-center gap-1"
+        >
           <div class="i-tabler:map-pin h-1.5em w-1.5em" />
           {{ game.place }}
         </div>
       </div>
       <ProseP>{{ game.description }}</ProseP>
-      <div v-if="canEdit" class="w-full flex justify-center">
+      <div
+        v-if="canEdit"
+        class="w-full flex justify-center"
+      >
         <UIButton @click="navigateTo(`/entry/${gameId}/edit`)">
           ゲーム情報を編集する
         </UIButton>

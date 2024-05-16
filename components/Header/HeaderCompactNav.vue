@@ -6,7 +6,7 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogRoot,
-  DialogTrigger
+  DialogTrigger,
 } from 'radix-vue'
 
 const { data: currentEvent, suspense: suspenseCurrentEvent } = useCurrentEventQuery()

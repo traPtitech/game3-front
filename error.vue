@@ -1,22 +1,29 @@
 <script setup lang="ts">
 const props = defineProps<{
   error: {
-    url: string;
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    description: string;
-    data: any;
-  };
+    url: string
+    statusCode: number
+    statusMessage: string
+    message: string
+    description: string
+    data: any
+  }
 }>()
 </script>
 
 <template>
-  <div grid min-h-screen class="grid-rows-[auto_1fr_auto]">
+  <div
+    grid
+    min-h-screen
+    class="grid-rows-[auto_1fr_auto]"
+  >
     <div class="sticky top-0 z-1 shadow">
       <header class="bg-surface-primary">
         <nav class="flex items-center gap-4 px-4 py-2">
-          <NuxtLink to="/" class="mr-auto">
+          <NuxtLink
+            to="/"
+            class="mr-auto"
+          >
             <picture>
               <source
                 srcset="/img/logo/Gamecube_symbol.svg"
@@ -66,7 +73,10 @@ const props = defineProps<{
       class="flex flex-col gap-4 bg-brand-violet px-4 py-6 text-text-white font-700 lg:(px-12 py-8) body"
     >
       <div class="flex items-center gap-2">
-        <a href="https://trap.jp" class="w-full">
+        <a
+          href="https://trap.jp"
+          class="w-full"
+        >
           <img
             src="/img/logo/traP_logo_full_white.svg"
             alt="東京工業大学デジタル創作同好会traPロゴ"

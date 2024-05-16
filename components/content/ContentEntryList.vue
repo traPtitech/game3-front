@@ -4,21 +4,21 @@ import {
   TabsIndicator,
   TabsList,
   TabsRoot,
-  TabsTrigger
+  TabsTrigger,
 } from 'radix-vue'
 
 type Props = {
-  slug?: string;
-};
+  slug?: string
+}
 const props = defineProps<Props>()
 const loadedSlug = usePathParams('slug')
 const eventSlug = computed(() => props.slug || loadedSlug)
 
 const { data: eventGames, suspense: suspenseEventGames } = useGamesQuery({
-  eventSlug: eventSlug.value
+  eventSlug: eventSlug.value,
 })
 const { data: eventTerms, suspense: suspenseEventTerms } = useEventTermsQuery({
-  eventSlug: eventSlug.value
+  eventSlug: eventSlug.value,
 })
 
 const termGamesMap = computed(() => {
@@ -30,25 +30,25 @@ const termGamesMap = computed(() => {
     .filter(term => !term.isDefault)
     .map(term => ({
       term,
-      games: gameMap[term.id] || []
+      games: gameMap[term.id] || [],
     }))
 })
 
 const showTerms = computed(
-  () => eventTerms.value && eventTerms.value.length > 1
+  () => eventTerms.value && eventTerms.value.length > 1,
 )
 
 onServerPrefetch(async () => {
   // https://github.com/TanStack/query/discussions/5688#discussioncomment-6652179
   await Promise.all([suspenseEventGames(), suspenseEventTerms()]).catch(
-    () => {}
+    () => {},
   )
 })
 
 const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
   hour: 'numeric',
   minute: 'numeric',
-  timeZone: 'Asia/Tokyo'
+  timeZone: 'Asia/Tokyo',
 }
 </script>
 
@@ -57,7 +57,10 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
     <ProseH2>
       出展情報
     </ProseH2>
-    <TabsRoot v-if="showTerms" :default-value="termGamesMap[0].term.id">
+    <TabsRoot
+      v-if="showTerms"
+      :default-value="termGamesMap[0].term.id"
+    >
       <TabsList class="relative mb-8 flex justify-around">
         <TabsIndicator
           class="absolute bottom-0 left-0 h-2px w-[--radix-tabs-indicator-size] translate-x-[--radix-tabs-indicator-position] transition-transform duration-300"
@@ -77,14 +80,14 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
             {{
               term.term.startAt?.toLocaleTimeString(
                 "ja-JP",
-                localeTimeStringOptions
+                localeTimeStringOptions,
               )
             }}
             ~
             {{
               term.term.endAt?.toLocaleTimeString(
                 "ja-JP",
-                localeTimeStringOptions
+                localeTimeStringOptions,
               )
             }}
           </div>
@@ -96,7 +99,10 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
         :value="term.term.id"
       >
         <ul class="space-y-6">
-          <li v-for="game in term.games" :key="game.id">
+          <li
+            v-for="game in term.games"
+            :key="game.id"
+          >
             <EntryRow :game="game" />
           </li>
         </ul>
@@ -104,7 +110,10 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
     </TabsRoot>
     <div v-else>
       <ul class="space-y-6">
-        <li v-for="game in eventGames" :key="game.id">
+        <li
+          v-for="game in eventGames"
+          :key="game.id"
+        >
           <EntryRow :game="game" />
         </li>
       </ul>

@@ -1,7 +1,7 @@
 <!-- `/` -->
 <script setup lang="ts">
 definePageMeta({
-  layout: 'hero'
+  layout: 'hero',
 })
 </script>
 
@@ -52,7 +52,12 @@ definePageMeta({
     </ProseP>
     <ProseH2> 主催 </ProseH2>
     <ProseH3> 東京工業大学デジタル創作同好会 </ProseH3>
-    <a href="https://trap.jp" target="_blank" rel="noopener" class="block">
+    <a
+      href="https://trap.jp"
+      target="_blank"
+      rel="noopener"
+      class="block"
+    >
       <img
         src="/img/logo/traP_logo_full.svg"
         alt="東京工業大学デジタル創作同好会traPロゴ"

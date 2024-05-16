@@ -1,7 +1,7 @@
 import type { LocationQueryValue } from 'vue-router'
 
 export const getFirstQuery = (
-  query: LocationQueryValue | LocationQueryValue[] | undefined
+  query: LocationQueryValue | LocationQueryValue[] | undefined,
 ) => {
   if (Array.isArray(query)) {
     return query[0] ?? undefined

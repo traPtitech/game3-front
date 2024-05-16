@@ -2,8 +2,8 @@
 import type { Event } from '~/lib/api'
 
 type Props = {
-  event: Event;
-};
+  event: Event
+}
 const props = defineProps<Props>()
 </script>
 

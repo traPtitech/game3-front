@@ -11,7 +11,7 @@ const sortedEvents = computed(() => {
 
 useSeoMeta({
   title: '過去の開催',
-  ogTitle: '過去の開催'
+  ogTitle: '過去の開催',
 })
 </script>
 
@@ -20,7 +20,11 @@ useSeoMeta({
     <ProseH1> 過去の開催 </ProseH1>
     <ProseH2> 開催イベント一覧 </ProseH2>
     <ul class="divide-y-2">
-      <li v-for="event in sortedEvents" :key="event.slug" class="py-5">
+      <li
+        v-for="event in sortedEvents"
+        :key="event.slug"
+        class="py-5"
+      >
         <EventRow :event="event" />
       </li>
     </ul>

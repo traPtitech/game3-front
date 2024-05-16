@@ -2,12 +2,12 @@
 import type { Events } from 'vue'
 
 interface ButtonProps {
-  variant?: 'primary' | 'secondary';
-  full?: boolean;
-  ignoreMinWidth?: boolean;
-  disabled?: boolean;
-  isLoading?: boolean;
-  onClick?: (event: Events['onClick']) => void;
+  variant?: 'primary' | 'secondary'
+  full?: boolean
+  ignoreMinWidth?: boolean
+  disabled?: boolean
+  isLoading?: boolean
+  onClick?: (event: Events['onClick']) => void
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   ignoreMinWidth: false,
   disabled: false,
   isLoading: false,
-  onClick: () => {}
+  onClick: () => {},
 })
 </script>
 
@@ -37,8 +37,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
           'min-w-64': !props.ignoreMinWidth,
           'w-full': props.full,
           'bg-brand-yellow': props.variant === 'primary',
-          'bg-brand-cyan': props.variant === 'secondary'
-        }
+          'bg-brand-cyan': props.variant === 'secondary',
+        },
       ]"
     >
       <div class="absolute left-4">
@@ -46,7 +46,10 @@ const props = withDefaults(defineProps<ButtonProps>(), {
           <div />
         </slot>
       </div>
-      <StrokedText class="text-stroke-white!" :width="4">
+      <StrokedText
+        class="text-stroke-white!"
+        :width="4"
+      >
         <slot />
       </StrokedText>
       <div class="absolute right-4">

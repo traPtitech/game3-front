@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { data: currentEvent, suspense: suspenseCurrentEvent } =
-  useCurrentEventQuery()
+const { data: currentEvent, suspense: suspenseCurrentEvent }
+  = useCurrentEventQuery()
 const canPost = currentEvent.value?.slug
   ? useCanPostGame(currentEvent.value?.slug)
   : undefined
@@ -12,7 +12,10 @@ onServerPrefetch(async () => {
 <template>
   <header class="bg-surface-primary">
     <nav class="flex items-center gap-4 px-4 py-2">
-      <NuxtLink to="/" class="mr-auto">
+      <NuxtLink
+        to="/"
+        class="mr-auto"
+      >
         <picture>
           <source
             srcset="/img/logo/Gamecube_symbol.svg"

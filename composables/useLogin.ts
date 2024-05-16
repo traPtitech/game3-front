@@ -7,10 +7,10 @@ export const useLogin = () => {
 
   const login = () => {
     const params = new URLSearchParams({
-      redirect: basePath + (redirectPath.value ?? '/')
+      redirect: basePath + (redirectPath.value ?? '/'),
     })
-    const authPath =
-      basePath + '/api/auth/login?' + params.toString()
+    const authPath
+      = basePath + '/api/auth/login?' + params.toString()
 
     // 本来はAuthApi.login()を使うべきだが
     // CORSの問題で使えないため直接location.hrefを変更しています
@@ -20,6 +20,6 @@ export const useLogin = () => {
   return {
     useMeStore,
     login,
-    logout
+    logout,
   }
 }

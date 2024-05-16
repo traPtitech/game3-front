@@ -1,12 +1,12 @@
 <!-- `/admin` -->
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['need-admin']
+  middleware: ['need-admin'],
 })
 
 useSeoMeta({
   title: '管理者ページ',
-  ogTitle: '管理者ページ'
+  ogTitle: '管理者ページ',
 })
 </script>
 

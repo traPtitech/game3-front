@@ -2,28 +2,28 @@
 const props = defineProps({
   code: {
     type: String,
-    default: ''
+    default: '',
   },
   language: {
     type: String,
-    default: null
+    default: null,
   },
   filename: {
     type: String,
-    default: null
+    default: null,
   },
   highlights: {
     type: Array as () => number[],
-    default: () => []
+    default: () => [],
   },
   meta: {
     type: String,
-    default: null
+    default: null,
   },
   class: {
     type: String,
-    default: null
-  }
+    default: null,
+  },
 })
 </script>
 

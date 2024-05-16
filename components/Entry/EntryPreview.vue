@@ -3,9 +3,9 @@ import type { PostGameRequest, PatchGameRequest } from '~/lib/api'
 
 type Props = {
   gameReq: Partial<PostGameRequest | PatchGameRequest> & {
-    place?: string;
-  };
-};
+    place?: string
+  }
+}
 const props = defineProps<Props>()
 
 const iconImgSrc = computed(() => {

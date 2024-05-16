@@ -20,26 +20,27 @@ const { handleSubmit, meta, isSubmitting } = useForm<PatchTermRequest>({
   validationSchema: toTypedSchema(
     object({
       startAt: date(),
-      endAt: date()
-    })
+      endAt: date(),
+    }),
   ),
   initialValues: {
-    ...props.term
-  }
+    ...props.term,
+  },
 })
 const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync(
       {
         patchTermRequest: {
-          ...values
+          ...values,
         },
-        termId: props.term.id
-      }
+        termId: props.term.id,
+      },
     )
     $toast.success('イベントの編集が完了しました！')
     modalOpen.value = false
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('イベントの編集に失敗しました')
     console.error(e)
   }
@@ -58,7 +59,10 @@ const onSubmit = handleSubmit(async (values) => {
       <!-- TODO: delete button -->
     </div>
     <UIDialog>
-      <form class="w-full flex flex-col gap-4" @submit="onSubmit">
+      <form
+        class="w-full flex flex-col gap-4"
+        @submit="onSubmit"
+      >
         <UIDatePicker
           label="ターム開始日時"
           helper-text="日付に注意"

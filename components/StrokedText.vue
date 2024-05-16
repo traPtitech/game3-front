@@ -1,9 +1,9 @@
 <script setup lang="ts">
 interface StrokedTextProps {
-  width?: number;
+  width?: number
 }
 const props = withDefaults(defineProps<StrokedTextProps>(), {
-  width: 2
+  width: 2,
 })
 </script>
 

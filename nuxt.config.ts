@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     '@vuepic/vue-datepicker/dist/main.css',
     '~/assets/css/index.css',
     '~/assets/css/toast.css',
-    '~/assets/css/date-picker.css'
+    '~/assets/css/date-picker.css',
   ],
   modules: [
     '@nuxt/content',
@@ -15,75 +15,75 @@ export default defineNuxtConfig({
     'nuxt-simple-robots',
     '@nuxtjs/sitemap',
     'nuxt-gtag',
-    "@nuxt/eslint"
+    '@nuxt/eslint',
   ],
   devtools: {
     enabled: true,
     timeline: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
   ssr: true,
   // see: https://nuxt.com/docs/guide/concepts/rendering#hybrid-rendering
   routeRules: {
     '/**': {
-      ssr: true
+      ssr: true,
     },
     '/admin/**': {
-      ssr: false
+      ssr: false,
     },
     '/entry/**/edit': {
-      ssr: false
+      ssr: false,
     },
     '/entry/register': {
-      ssr: false
+      ssr: false,
     },
     '/login': {
-      ssr: false
+      ssr: false,
     },
     '/me': {
-      ssr: false
-    }
+      ssr: false,
+    },
   },
   build: {
     transpile: ['@vuepic/vue-datepicker'],
-    analyze: true
+    analyze: true,
   },
   googleFonts: {
     families: {
       'Noto Sans JP': {
-        wght: [400, 500, 700]
-      }
-    }
+        wght: [400, 500, 700],
+      },
+    },
   },
   content: {
     api: {
       // デフォルトでは`/api/_content`になっておりバックエンドと競合してしまうため変更
-      baseURL: '/content-api/_content'
+      baseURL: '/content-api/_content',
     },
     highlight: {
       theme: 'github-light',
-      langs: ['md']
-    }
+      langs: ['md'],
+    },
   },
   vite: {
     server: {
       proxy: {
-        '/api': 'http://localhost:8080'
-      }
-    }
+        '/api': 'http://localhost:8080',
+      },
+    },
   },
   robots: {
-    disallow: ['/admin', '/entry/register', '/entry/*/edit']
+    disallow: ['/admin', '/entry/register', '/entry/*/edit'],
   },
   sitemap: {
     sources: [
-      '/__sitemap__/urls'
-    ]
+      '/__sitemap__/urls',
+    ],
   },
   eslint: {
     config: {
-      stylistic: true
-    }
-  }
+      stylistic: true,
+    },
+  },
 })

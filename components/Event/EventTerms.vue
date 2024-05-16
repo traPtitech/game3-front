@@ -5,19 +5,19 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useVueTable,
-  type SortingState
+  type SortingState,
 } from '@tanstack/vue-table'
 import { h } from 'vue'
 import EventTermEditButton from './EventTermEditButton.vue'
 import type { TermWithName } from '~/lib/term'
 
 type Props = {
-  eventSlug: string;
-};
+  eventSlug: string
+}
 const props = defineProps<Props>()
 
 const { data: terms, suspense: suspenseTerms } = useEventTermsQuery({
-  eventSlug: props.eventSlug
+  eventSlug: props.eventSlug,
 })
 onServerPrefetch(async () => {
   await suspenseTerms().catch(() => {})
@@ -27,51 +27,51 @@ const termColumnHelper = createColumnHelper<TermWithName>()
 const columns = [
   termColumnHelper.accessor('name', {
     cell: info => info.getValue(),
-    header: 'ターム'
+    header: 'ターム',
   }),
   termColumnHelper.accessor('startAt', {
     cell: info =>
       info.getValue().toLocaleTimeString('ja-JP', {
-        timeZone: 'Asia/Tokyo'
+        timeZone: 'Asia/Tokyo',
       }),
-    header: '開始時刻'
+    header: '開始時刻',
   }),
   termColumnHelper.accessor('endAt', {
     cell: info =>
       info.getValue().toLocaleTimeString('ja-JP', {
-        timeZone: 'Asia/Tokyo'
+        timeZone: 'Asia/Tokyo',
       }),
-    header: '終了時刻'
+    header: '終了時刻',
   }),
   termColumnHelper.display({
     id: 'edit',
     cell: term =>
       h(EventTermEditButton, {
-        term: term.row.original
-      })
-  })
+        term: term.row.original,
+      }),
+  }),
 ]
 
 const sorting = ref<SortingState>([])
 
 const table = useVueTable({
-  get data () {
+  get data() {
     return terms.value ?? []
   },
   columns,
   state: {
-    get sorting () {
+    get sorting() {
       return sorting.value
-    }
+    },
   },
   onSortingChange: (updaterOrValue) => {
-    sorting.value =
-      typeof updaterOrValue === 'function'
+    sorting.value
+      = typeof updaterOrValue === 'function'
         ? updaterOrValue(sorting.value)
         : updaterOrValue
   },
   getCoreRowModel: getCoreRowModel(),
-  getSortedRowModel: getSortedRowModel()
+  getSortedRowModel: getSortedRowModel(),
 })
 </script>
 
@@ -108,15 +108,24 @@ const table = useVueTable({
                   v-else-if="header.column.getIsSorted() === 'desc'"
                   class="i-tabler:arrow-narrow-down"
                 />
-                <div v-else class="i-tabler:arrows-sort" />
+                <div
+                  v-else
+                  class="i-tabler:arrows-sort"
+                />
               </div>
             </div>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="row in table.getRowModel().rows" :key="row.id">
-          <td v-for="cell in row.getVisibleCells()" :key="cell.id">
+        <tr
+          v-for="row in table.getRowModel().rows"
+          :key="row.id"
+        >
+          <td
+            v-for="cell in row.getVisibleCells()"
+            :key="cell.id"
+          >
             <FlexRender
               :render="cell.column.columnDef.cell"
               :props="cell.getContext()"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type Props = {
-  slug?: string;
-};
+  slug?: string
+}
 const props = defineProps<Props>()
 const loadedSlug = usePathParams('slug')
 const eventSlug = computed(() => props.slug || loadedSlug)
@@ -10,7 +10,10 @@ const canPost = useCanPostGame(eventSlug.value)
 
 <template>
   <div v-if="canPost">
-    <div v-if="canPost.state === 'enabled'" class="w-full flex justify-center">
+    <div
+      v-if="canPost.state === 'enabled'"
+      class="w-full flex justify-center"
+    >
       <UIButton @click="navigateTo('/entry/register')">
         作品を登録する
       </UIButton>

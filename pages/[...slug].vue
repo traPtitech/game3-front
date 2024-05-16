@@ -10,7 +10,7 @@ if (error.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page Not Found',
-    message: 'ページが見つかりませんでした'
+    message: 'ページが見つかりませんでした',
   })
 }
 

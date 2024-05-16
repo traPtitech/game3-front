@@ -16,6 +16,6 @@ export const useRedirectParam = () => {
 
   return {
     redirect,
-    redirectPath: query
+    redirectPath: query,
   }
 }

@@ -9,14 +9,14 @@ import {
   blob,
   optional,
   union,
-  literal
+  literal,
 } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 import type { PostGameRequest } from '~/lib/api'
 
 definePageMeta({
-  middleware: ['need-login']
+  middleware: ['need-login'],
 })
 
 const { data: currentEvent, isLoading } = useCurrentEventQuery()
@@ -26,8 +26,8 @@ const canSubmit = computed(() => {
   }
   const today = new Date()
   return (
-    currentEvent.value.gameSubmissionPeriodStart <= today &&
-    today <= currentEvent.value.gameSubmissionPeriodEnd
+    currentEvent.value.gameSubmissionPeriodStart <= today
+    && today <= currentEvent.value.gameSubmissionPeriodEnd
   )
 })
 
@@ -35,34 +35,34 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
   validationSchema: toTypedSchema(
     object({
       title: string([
-        minLength(1, '作品タイトルは1文字以上で入力してください')
+        minLength(1, '作品タイトルは1文字以上で入力してください'),
       ]),
       gamePageUrl: optional(
         union(
           [
             literal(''),
-            string([url('ゲームページURLは正しいURL形式で入力してください')])
+            string([url('ゲームページURLは正しいURL形式で入力してください')]),
           ],
-          'ゲームページURLは正しいURL形式で入力してください'
-        )
+          'ゲームページURLは正しいURL形式で入力してください',
+        ),
       ),
       creatorName: string([
-        minLength(1, '出展者名は1文字以上で入力してください')
+        minLength(1, '出展者名は1文字以上で入力してください'),
       ]),
       creatorPageUrl: optional(
         union(
           [
             string([url('出展者ページURLは正しいURL形式で入力してください')]),
-            literal('')
+            literal(''),
           ],
-          'ゲームページURLは正しいURL形式で入力してください'
-        )
+          'ゲームページURLは正しいURL形式で入力してください',
+        ),
       ),
       icon: blob(),
       description: optional(string(), ''),
-      image: optional(blob())
-    })
-  )
+      image: optional(blob()),
+    }),
+  ),
 })
 
 const confirmModalOpen = ref(false)
@@ -74,7 +74,8 @@ const onSubmit = handleSubmit(async (values) => {
     const submittedGame = await mutateAsync(values)
     $toast.success('ゲームの登録が完了しました！')
     await navigateTo(`/entry/${submittedGame.id}`)
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('ゲームの登録に失敗しました')
     console.error(e)
   }
@@ -82,7 +83,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 useSeoMeta({
   title: '作品登録ページ',
-  ogTitle: '作品登録ページ'
+  ogTitle: '作品登録ページ',
 })
 </script>
 
@@ -94,7 +95,10 @@ useSeoMeta({
       <LoadingIndicator class="color-brand-violet" />
     </div>
     <div v-else>
-      <div v-if="currentEvent && canSubmit" class="w-full flex flex-col gap-4">
+      <div
+        v-if="currentEvent && canSubmit"
+        class="w-full flex flex-col gap-4"
+      >
         <div class="text-center text-brand-violet font-700 body">
           <div>現在の出展対象イベント：{{ currentEvent.title }} Game³</div>
           <div>
@@ -117,19 +121,28 @@ useSeoMeta({
           </div>
         </div>
         <form class="flex flex-col gap-4">
-          <UITextField label="ゲーム名" name="title" />
+          <UITextField
+            label="ゲーム名"
+            name="title"
+          />
           <UITextField
             label="ゲームページリンク"
             name="gamePageUrl"
             placeholder="https://example.com"
           />
-          <UITextField label="出展者名" name="creatorName" />
+          <UITextField
+            label="出展者名"
+            name="creatorName"
+          />
           <UITextField
             label="出展者ホームページ"
             name="creatorPageUrl"
             placeholder="https://example.com"
           />
-          <UITextAreaField label="ゲーム詳細" name="description" />
+          <UITextAreaField
+            label="ゲーム詳細"
+            name="description"
+          />
           <UIFileField
             label="ゲーム画像"
             accept="image/png, image/jpeg"
@@ -220,7 +233,10 @@ useSeoMeta({
           </div>
         </div>
       </div>
-      <div v-else class="text-center text-text-semantic-error">
+      <div
+        v-else
+        class="text-center text-text-semantic-error"
+      >
         現在申し込み対象のイベントがありません
       </div>
     </div>

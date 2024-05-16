@@ -21,25 +21,26 @@ const { handleSubmit, meta, isSubmitting } = useForm<PostTermRequest>({
     object({
       startAt: date(),
       endAt: date(),
-      eventSlug: string()
-    })
+      eventSlug: string(),
+    }),
   ),
   initialValues: {
-    eventSlug: props.eventSlug
-  }
+    eventSlug: props.eventSlug,
+  },
 })
 const onSubmit = handleSubmit(async (values) => {
   try {
     await mutateAsync(
       {
         postTermRequest: {
-          ...values
-        }
-      }
+          ...values,
+        },
+      },
     )
     $toast.success('イベントの編集が完了しました！')
     modalOpen.value = false
-  } catch (e) {
+  }
+  catch (e) {
     $toast.error('イベントの編集に失敗しました')
     console.error(e)
   }
@@ -55,7 +56,10 @@ const onSubmit = handleSubmit(async (values) => {
       ターム新規作成
     </UIButton>
     <UIDialog>
-      <form class="w-full flex flex-col gap-4" @submit="onSubmit">
+      <form
+        class="w-full flex flex-col gap-4"
+        @submit="onSubmit"
+      >
         <UIDatePicker
           label="ターム開始日時"
           helper-text="日付に注意"

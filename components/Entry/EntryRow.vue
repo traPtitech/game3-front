@@ -3,17 +3,17 @@ import {
   TooltipContent,
   TooltipPortal,
   TooltipRoot,
-  TooltipTrigger
+  TooltipTrigger,
 } from 'radix-vue'
 import type { Game } from '~/lib/api'
 
 type Props = {
-  game: Game;
-  variant?: 'eventPage' | 'myPage';
-};
+  game: Game
+  variant?: 'eventPage' | 'myPage'
+}
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'eventPage'
+  variant: 'eventPage',
 })
 
 const { data: events, suspense: suspenseEvents } = useEventsQuery()
@@ -23,10 +23,10 @@ onServerPrefetch(async () => {
 })
 
 const term = computed(
-  () => terms.value?.find(term => term.id === props.game.termId)
+  () => terms.value?.find(term => term.id === props.game.termId),
 )
 const event = computed(
-  () => events.value?.find(event => event.slug === term.value?.eventSlug)
+  () => events.value?.find(event => event.slug === term.value?.eventSlug),
 )
 </script>
 
