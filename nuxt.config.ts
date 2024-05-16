@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     'nuxt-simple-robots',
     '@nuxtjs/sitemap',
-    'nuxt-gtag'
+    'nuxt-gtag',
+    "@nuxt/eslint"
   ],
   devtools: {
     enabled: true,
