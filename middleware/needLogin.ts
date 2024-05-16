@@ -7,7 +7,7 @@ const isAuthenticated = () => {
 const loginPage = '/login'
 
 export default defineNuxtRouteMiddleware((to) => {
-  if (import.meta.server) { return }
+  if (import.meta.server) return
   if (!isAuthenticated()) {
     return navigateTo(loginPage + '?redirect=' + encodeURIComponent(to.path))
   }

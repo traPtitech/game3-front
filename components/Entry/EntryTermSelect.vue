@@ -48,7 +48,7 @@ const displayValue = (value: string | null) => {
   return (
     `${term.eventSlug} ${termGroups.value[term.eventSlug]?.find(
       t => t.id === value,
-    )?.name} - ${term.id}` ?? ''
+    )?.name} - ${term.id}`
   )
 }
 

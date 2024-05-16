@@ -88,7 +88,7 @@ export const useCurrentEventQuery = () =>
 export const useMutatePostEvent = () =>
   useMutation({
     mutationFn: (req: PostEventRequest) =>
-      eventsApi.postEvent(dateToString(req) as any as PostEventRequest),
+      eventsApi.postEvent(dateToString(req) as unknown as PostEventRequest),
     mutationKey: ['events'],
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -100,7 +100,7 @@ export const useMutatePostEvent = () =>
 export const useMutatePatchEvent = () =>
   useMutation({
     mutationFn: (req: PatchEventRequest) =>
-      eventsApi.patchEvent(dateToString(req) as any as PatchEventRequest),
+      eventsApi.patchEvent(dateToString(req) as unknown as PatchEventRequest),
     mutationKey: ['events'],
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -157,7 +157,7 @@ export const useTermsQuery = () =>
 export const useMutatePostTerm = () =>
   useMutation({
     mutationFn: (req: PostTermOperationRequest) =>
-      termsApi.postTerm(dateToString(req) as any as PostTermOperationRequest),
+      termsApi.postTerm(dateToString(req) as unknown as PostTermOperationRequest),
     mutationKey: ['terms'],
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -169,7 +169,7 @@ export const useMutatePostTerm = () =>
 export const useMutatePatchTerm = () =>
   useMutation({
     mutationFn: (req: PatchTermOperationRequest) =>
-      termsApi.patchTerm(dateToString(req) as any as PatchTermOperationRequest),
+      termsApi.patchTerm(dateToString(req) as unknown as PatchTermOperationRequest),
     mutationKey: ['terms'],
     onSuccess: () => {
       queryClient.invalidateQueries({
