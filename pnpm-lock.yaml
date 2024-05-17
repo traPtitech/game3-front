@@ -104,8 +104,8 @@ devDependencies:
     specifier: ^2.0.5
     version: 2.0.5
   nuxt-simple-robots:
-    specifier: 4.0.0-rc.14
-    version: 4.0.0-rc.14(@nuxt/devtools@1.3.1)(@vue/compiler-core@3.4.27)(nuxt@3.11.2)(postcss@8.4.38)(vite@5.2.11)(vue@3.4.27)(webpack@5.91.0)
+    specifier: 4.0.0-rc.17
+    version: 4.0.0-rc.17(@nuxt/devtools@1.3.1)(@vue/compiler-core@3.4.27)(nuxt@3.11.2)(postcss@8.4.38)(vite@5.2.11)(vue@3.4.27)(webpack@5.91.0)
   rimraf:
     specifier: ^5.0.5
     version: 5.0.7
@@ -2382,10 +2382,6 @@ packages:
 
   /@rushstack/eslint-patch@1.10.2:
     resolution: {integrity: sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==}
-    dev: true
-
-  /@shikijs/core@1.0.0-beta.3:
-    resolution: {integrity: sha512-SCwPom2Wn8XxNlEeqdzycU93SKgzYeVsedjqDsgZaz4XiiPpZUzlHt2NAEQTwTnPcHNZapZ6vbkwJ8P11ggL3Q==}
     dev: true
 
   /@shikijs/core@1.3.0:
@@ -7662,11 +7658,12 @@ packages:
       - vue
     dev: true
 
-  /nuxt-simple-robots@4.0.0-rc.14(@nuxt/devtools@1.3.1)(@vue/compiler-core@3.4.27)(nuxt@3.11.2)(postcss@8.4.38)(vite@5.2.11)(vue@3.4.27)(webpack@5.91.0):
-    resolution: {integrity: sha512-jJxOIGAj/wKvfSf/jblx3Jgwd+OzFVgfk+pVqsVZ0tsownqXdboBHCifEjkwAiJsb501100MefXb7Vmq2xu1VQ==}
+  /nuxt-simple-robots@4.0.0-rc.17(@nuxt/devtools@1.3.1)(@vue/compiler-core@3.4.27)(nuxt@3.11.2)(postcss@8.4.38)(vite@5.2.11)(vue@3.4.27)(webpack@5.91.0):
+    resolution: {integrity: sha512-iknbStSqQNc1762zBnQKgxxbLyezjWdV5RNctC725eg+++a3JgOw9pwxPHK8GxtQ8yQTQL5UJH4KKLZ8HqN1vg==}
     dependencies:
       '@nuxt/devtools-kit': 1.3.1(nuxt@3.11.2)(vite@5.2.11)
       '@nuxt/kit': 3.11.2
+      consola: 3.2.3
       defu: 6.1.4
       flatted: 3.3.1
       floating-vue: 5.2.2(@nuxt/kit@3.11.2)(vue@3.4.27)
@@ -7674,7 +7671,8 @@ packages:
       nuxt-site-config: 2.2.12(@nuxt/devtools@1.3.1)(@vue/compiler-core@3.4.27)(nuxt@3.11.2)(postcss@8.4.38)(vite@5.2.11)(vue@3.4.27)(webpack@5.91.0)
       nuxt-site-config-kit: 2.2.12(vue@3.4.27)
       pathe: 1.1.2
-      shiki: 1.0.0-beta.3
+      pkg-types: 1.1.1
+      shiki: 1.3.0
       sirv: 2.0.4
       std-env: 3.7.0
       ufo: 1.5.3
@@ -9159,12 +9157,6 @@ packages:
 
   /shell-quote@1.8.1:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
-    dev: true
-
-  /shiki@1.0.0-beta.3:
-    resolution: {integrity: sha512-z7cHTNSSvwGx2DfeLwjSNLo+HcVxifgNIzLm6Ye52eXcIwNHXT0wHbhy7FDOKSKveuEHBwt9opfj3Hoc8LE1Yg==}
-    dependencies:
-      '@shikijs/core': 1.0.0-beta.3
     dev: true
 
   /shiki@1.3.0:
