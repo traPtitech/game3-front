@@ -35,7 +35,7 @@
     "eslint-config-flat-gitignore": "^0.1.5",
     "msw": "^2.1.5",
     "msw-auto-mock": "^0.18.0",
-    "nuxt": "^3.10.1",
+    "nuxt": "^3.11.2",
     "nuxt-gtag": "^1.1.2",
     "nuxt-simple-robots": "4.0.0-rc.14",
     "rimraf": "^5.0.5",
@@ -80,5 +80,8 @@
         "musl"
       ]
     }
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
