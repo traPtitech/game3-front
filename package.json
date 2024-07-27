@@ -37,6 +37,7 @@
     "msw-auto-mock": "^0.18.0",
     "nuxt": "^3.12.4",
     "nuxt-gtag": "^2.0.5",
+    "nuxt-og-image": "3.0.0-rc.64",
     "rimraf": "^5.0.5",
     "unocss": "^0.60.2",
     "vue": "^3.3.8",

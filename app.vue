@@ -35,10 +35,18 @@ useSeoMeta({
   description: () => description.value,
   ogDescription: () => description.value,
   twitterDescription: () => description.value,
-  twitterCard: 'summary_large_image',
-  ogImage: () => ogImageUrl.value,
-  twitterImage: () => ogImageUrl.value,
+  // twitterCard: 'summary_large_image',
+  // ogImage: () => ogImageUrl.value,
+  // twitterImage: () => ogImageUrl.value,
   ogUrl: () => basePath + route.fullPath,
+})
+
+defineOgImageComponent('DefaultPage', {
+  title: currentEvent.value?.title,
+  displayDate: currentEvent.value?.date.toLocaleDateString('ja-JP', {
+    timeZone: 'Asia/Tokyo',
+  }),
+  imgSrc: ogImageUrl.value,
 })
 
 useHead({

@@ -17,7 +17,7 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-  <div class="h-full w-full flex bg-white font-700">
+  <div class="h-full w-full flex flex-row bg-white font-700">
     <img
       :src="imgSrc"
       width="600"
@@ -34,14 +34,10 @@ onServerPrefetch(async () => {
         v-text="`by ${creatorName}`"
       />
       <div class="text-20" />
-      <span class="text-8">
-        ゲーム制作者交流イベント
-      </span>
-      <div class="flex items-end">
+      <span class="text-8"> ゲーム制作者交流イベント </span>
+      <div class="flex">
         <div class="mr-8">
-          <span class="mb--6 text-6">
-            ゲームキューブ
-          </span>
+          <span class="mb--6 text-6"> ゲームキューブ </span>
           <div class="mb--4 text-20">
             Game³
           </div>

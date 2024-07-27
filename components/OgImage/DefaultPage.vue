@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="h-full w-full flex bg-white font-700">
+  <div class="h-full w-full flex flex-row bg-white font-700">
     <img
       :src="imgSrc"
       width="600"

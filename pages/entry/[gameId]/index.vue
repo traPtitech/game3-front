@@ -85,8 +85,14 @@ useSeoMeta({
   ogDescription: () => seoDescription.value,
   twitterDescription: () => seoDescription.value,
   twitterCard: 'summary',
-  ogImage: () => ogImageUrl,
-  twitterImage: () => ogImageUrl,
+  // ogImage: () => ogImageUrl,
+  // twitterImage: () => ogImageUrl,
+})
+
+defineOgImageComponent('EntryPage', {
+  title: game.value?.title,
+  creatorName: game.value?.creatorName,
+  imgSrc: ogImageUrl,
 })
 
 const loadFallbackImage = (e: Event) => {
