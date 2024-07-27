@@ -138,7 +138,7 @@ onMounted(() => {
           >
             <div class="flex items-center gap-4">
               <div
-                class="text-brand-violet font-700 space-y-2 h3-text"
+                class="text-brand-violet font-700 space-y-2 h2-text lg:h1-text"
               >
                 <div class="w-fit bg-surface-primary px-5 text-nowrap">
                   {{ currentEvent.slug }} Game³
@@ -187,7 +187,7 @@ $aspect-thin: 10/16;
 // ↕の間はイラストが上, 開催日が下, イベントタイトル・開催日部分は横に並べる
 
 // 横長レイアウトにする境界, イラストが左, 開催日が右, イベントタイトル・開催日部分も縦に積み重ねる
-$aspect-wide: 10/10;
+$aspect-wide: 12/10;
 
 .imageContainer {
   @apply grid h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden;
