@@ -159,9 +159,9 @@ export const useMutatePostTerm = () =>
     mutationFn: (req: PostTermOperationRequest) =>
       termsApi.postTerm(dateToString(req) as unknown as PostTermOperationRequest),
     mutationKey: ['terms'],
-    onSuccess: () => {
+    onSuccess: (req) => {
       queryClient.invalidateQueries({
-        queryKey: ['terms'],
+        queryKey: ['events', { eventSlug: req.eventSlug }, 'terms'],
       })
     },
   })
@@ -173,7 +173,7 @@ export const useMutatePatchTerm = () =>
     mutationKey: ['terms'],
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['terms'],
+        queryKey: ['events'],
       })
     },
   })

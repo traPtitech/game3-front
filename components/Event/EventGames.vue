@@ -49,6 +49,7 @@ const columns = [
         gameId: info.row.original.id,
         defaultTermId: info.row.original.termId,
         eventSlug: props.eventSlug,
+        isDefault: info.row.original.term?.isDefault ?? true,
       }),
     header: 'ターム',
   }),
@@ -121,7 +122,7 @@ const table = useVueTable({
     <ProseH2> 申請済みゲーム一覧 </ProseH2>
     <ProseP>
       タームを割り当て済みの作品のみがイベント詳細ページのゲーム一覧に表示されます。
-      ユーザーが申請した直後のゲームにはタームが割り当てられていません。
+      ユーザーが申請した直後のゲームにはタームが割り当てられていません(未割当用タームになっているゲーム)。ターム列をクリックしてタームを割り当てることができます。
     </ProseP>
     <ProseTable>
       <thead>
