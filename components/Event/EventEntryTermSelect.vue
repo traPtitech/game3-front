@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/valibot'
-import { object, string } from 'valibot'
+import * as v from 'valibot'
 import { useForm } from 'vee-validate'
 import { DialogRoot } from 'radix-vue'
 import type { PatchGameRequest } from '~/lib/api'
@@ -23,9 +23,9 @@ const { handleSubmit, meta } = useForm<
   Pick<PatchGameRequest, 'gameId' | 'termId'>
 >({
   validationSchema: toTypedSchema(
-    object({
-      gameId: string(),
-      termId: string(),
+    v.object({
+      gameId: v.string(),
+      termId: v.string(),
     }),
   ),
   initialValues: {

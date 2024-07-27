@@ -12,10 +12,11 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@unocss/nuxt',
     '@nuxtjs/google-fonts',
-    'nuxt-simple-robots',
+    '@nuxtjs/robots',
     '@nuxtjs/sitemap',
     'nuxt-gtag',
     '@nuxt/eslint',
+    '@vee-validate/nuxt',
   ],
   devtools: {
     enabled: true,
@@ -67,6 +68,9 @@ export default defineNuxtConfig({
     },
   },
   vite: {
+    optimizeDeps: {
+      exclude: ['vee-validate'],
+    },
     server: {
       proxy: {
         '/api': 'http://localhost:8080',
@@ -86,4 +90,5 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
+  compatibilityDate: '2024-07-27',
 })

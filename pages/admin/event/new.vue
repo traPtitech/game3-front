@@ -1,15 +1,7 @@
 <!-- `/entry/register` -->
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
-import {
-  object,
-  string,
-  minLength,
-  blob,
-  optional,
-  regex,
-  date,
-} from 'valibot'
+import { blob, date, minLength, object, optional, pipe, regex, string } from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 
@@ -20,13 +12,15 @@ definePageMeta({
 const { handleSubmit, meta, values, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     object({
-      title: string([
+      title: pipe(
+        string(),
         minLength(1, 'イベントタイトルは1文字以上で入力してください'),
-      ]),
-      slug: string([
+      ),
+      slug: pipe(
+        string(),
         minLength(1, 'slugは1文字以上で入力してください'),
         regex(/^[a-z0-9]+$/, 'slugは半角英数字のみで入力してください'),
-      ]),
+      ),
       date: date(),
       gameSubmissionPeriodStart: date(),
       gameSubmissionPeriodEnd: date(),

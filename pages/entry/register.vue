@@ -1,16 +1,7 @@
 <!-- `/entry/register` -->
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
-import {
-  object,
-  string,
-  minLength,
-  url,
-  blob,
-  optional,
-  union,
-  literal,
-} from 'valibot'
+import * as v from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 import type { PostGameRequest } from '~/lib/api'
@@ -33,34 +24,42 @@ const canSubmit = computed(() => {
 
 const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
   validationSchema: toTypedSchema(
-    object({
-      title: string([
-        minLength(1, '作品タイトルは1文字以上で入力してください'),
-      ]),
-      gamePageUrl: optional(
-        union(
+    v.object({
+      title: v.pipe(
+        v.string(),
+        v.minLength(1, '作品タイトルは1文字以上で入力してください'),
+      ),
+      gamePageUrl: v.optional(
+        v.union(
           [
-            literal(''),
-            string([url('ゲームページURLは正しいURL形式で入力してください')]),
+            v.literal(''),
+            v.pipe(
+              v.string(),
+              v.url('ゲームページURLは正しいURL形式で入力してください'),
+            ),
           ],
           'ゲームページURLは正しいURL形式で入力してください',
         ),
       ),
-      creatorName: string([
-        minLength(1, '出展者名は1文字以上で入力してください'),
-      ]),
-      creatorPageUrl: optional(
-        union(
+      creatorName: v.pipe(
+        v.string(),
+        v.minLength(1, '出展者名は1文字以上で入力してください'),
+      ),
+      creatorPageUrl: v.optional(
+        v.union(
           [
-            string([url('出展者ページURLは正しいURL形式で入力してください')]),
-            literal(''),
+            v.pipe(
+              v.string(),
+              v.url('出展者ページURLは正しいURL形式で入力してください'),
+            ),
+            v.literal(''),
           ],
           'ゲームページURLは正しいURL形式で入力してください',
         ),
       ),
-      icon: blob(),
-      description: optional(string(), ''),
-      image: optional(blob()),
+      icon: v.blob(),
+      description: v.optional(v.string(), ''),
+      image: v.optional(v.blob()),
     }),
   ),
 })
