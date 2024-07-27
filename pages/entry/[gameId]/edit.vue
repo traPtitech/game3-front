@@ -2,17 +2,7 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
-import {
-  object,
-  string,
-  minLength,
-  url,
-  blob,
-  optional,
-  union,
-  literal,
-  boolean,
-} from 'valibot'
+import * as v from 'valibot'
 import { useForm } from 'vee-validate'
 import { gamesApi } from '~/composables/useQuery'
 import type { PatchGameRequest } from '~/lib/api'
@@ -36,38 +26,46 @@ const imageDataPromise = gamesApi.getGameImage({ gameId })
 const { handleSubmit, meta, values, setFieldValue, isSubmitting }
   = useForm<PatchGameRequest>({
     validationSchema: toTypedSchema(
-      object({
-        gameId: string(),
-        termId: optional(string()),
-        title: string([
-          minLength(1, '作品タイトルは1文字以上で入力してください'),
-        ]),
-        gamePageUrl: optional(
-          union(
+      v.object({
+        gameId: v.string(),
+        termId: v.optional(v.string()),
+        title: v.pipe(
+          v.string(),
+          v.minLength(1, '作品タイトルは1文字以上で入力してください'),
+        ),
+        gamePageUrl: v.optional(
+          v.union(
             [
-              literal(''),
-              string([url('ゲームページURLは正しいURL形式で入力してください')]),
+              v.literal(''),
+              v.pipe(
+                v.string(),
+                v.url('ゲームページURLは正しいURL形式で入力してください'),
+              ),
             ],
             'ゲームページURLは正しいURL形式で入力してください',
           ),
         ),
-        creatorName: string([
-          minLength(1, '出展者名は1文字以上で入力してください'),
-        ]),
-        creatorPageUrl: optional(
-          union(
+        creatorName: v.pipe(
+          v.string(),
+          v.minLength(1, '出展者名は1文字以上で入力してください'),
+        ),
+        creatorPageUrl: v.optional(
+          v.union(
             [
-              string([url('出展者ページURLは正しいURL形式で入力してください')]),
-              literal(''),
+              v.pipe(
+                v.string(),
+                v.url('出展者ページURLは正しいURL形式で入力してください'),
+              ),
+              v.literal(''),
             ],
             'ゲームページURLは正しいURL形式で入力してください',
           ),
         ),
-        icon: blob(),
-        description: optional(string(), ''),
-        place: optional(string(), ''),
-        image: optional(blob()),
-        isPublished: optional(boolean()),
+        icon: v.blob(),
+        description: v.optional(v.string(), ''),
+        place: v.optional(v.string(), ''),
+        image: v.optional(v.blob()),
+        isPublished: v.optional(v.boolean()),
       }),
     ),
     initialValues: {
