@@ -10,6 +10,7 @@ type Props = {
   gameId: string
   defaultTermId: string
   eventSlug: string
+  isDefault: boolean
 }
 const props = defineProps<Props>()
 
@@ -53,7 +54,8 @@ const onSubmit = handleSubmit(async (values) => {
   <DialogRoot v-model:open="modalOpen">
     <button
       type="button"
-      class="h-full w-full"
+      class="h-full w-full data-[default]:text-red-6"
+      :data-default="props.isDefault ? true : undefined"
       @click="modalOpen = true"
     >
       {{ props.termName }}
