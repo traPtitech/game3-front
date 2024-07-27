@@ -43,34 +43,37 @@ onMounted(() => {
     >
       <AppHeader />
     </div>
-    <div
-      class="grid grid-cols-[auto] grid-rows-[1fr_auto] h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden lg:(grid-cols-[1fr_auto] grid-rows-[auto])"
-    >
+    <div :class="$style.imageContainer">
       <div class="relative h-full w-full overflow-hidden">
         <img
           v-if="currentEvent"
           :src="useEventImageUrl(currentEvent.slug)"
-          class="h-full w-full object-cover"
+          class="absolute z--1 h-full w-full object-cover blur-24"
+        >
+        <img
+          v-if="currentEvent"
+          :src="useEventImageUrl(currentEvent.slug)"
+          class="h-full w-full object-contain"
         >
         <img
           width="500px"
           src="/img/logo/Gamecube_logo_full.svg"
-          class="absolute bottom-0 right-0 max-w-500px w-full p-4 lg:w-500px"
+          class="absolute bottom-0 right-0 max-w-[min(100%,500px)] w-full p-4"
         >
         <div
           :class="[
-            'absolute bottom-0 right-0 w-full h-full bg-brand-orange',
+            'absolute bottom-0 right-0 w-full h-full bg-brand-orange [--delay:1100ms] ',
             {
-              '[--delay:1100ms] max-lg:animate-[300ms_var(--delay)_ease-out_forwards_slide-out-y] lg:animate-[300ms_var(--delay)_ease-out_forwards_slide-out-x]':
+              'animate-[300ms_var(--delay)_ease-out_forwards_slide-out-y]':
                 pageLoaded,
             },
           ]"
         />
         <div
           :class="[
-            'absolute bottom-0 right-0 w-full h-full bg-brand-violet',
+            'absolute bottom-0 right-0 w-full h-full bg-brand-violet [--delay:1000ms] ',
             {
-              '[--delay:1000ms] max-lg:animate-[300ms_var(--delay)_ease-out_forwards_slide-out-y] lg:animate-[300ms_var(--delay)_ease-out_forwards_slide-out-x]':
+              'animate-[300ms_var(--delay)_ease-out_forwards_slide-out-y]':
                 pageLoaded,
             },
           ]"
@@ -113,16 +116,14 @@ onMounted(() => {
         </div>
       </div>
       <div
-        class="h-full w-full flex flex-col items-end bg-brand-violet p-4 text-text-white sm:items-start lg:justify-center md:p-6"
+        class="h-full flex flex-col items-start justify-center bg-brand-violet p-4 text-text-white md:p-6"
       >
         <div
-          class="mb-2 break-keep break-anywhere text-right font-700 sm:text-left h4-text lg:h2-text sm:h3-text"
+          class="mb-2 break-keep break-anywhere font-700 h4-text"
         >
           ゲーム制作者<wbr>交流イベント
         </div>
-        <div
-          class="w-full flex flex-col items-end sm:(flex-row items-center justify-between) lg:(flex-col items-start gap-16)"
-        >
+        <div :class="$style.titleContainer">
           <div>
             <div class="mb--4 font-700 h5-text">
               ゲームキューブ
@@ -137,7 +138,7 @@ onMounted(() => {
           >
             <div class="flex items-center gap-4">
               <div
-                class="text-brand-violet font-700 space-y-2 h3-text lg:(text-12 space-y-6) md:text-8 xl:text-16"
+                class="text-brand-violet font-700 space-y-2 h3-text"
               >
                 <div class="w-fit bg-surface-primary px-5 text-nowrap">
                   {{ currentEvent.slug }} Game³
@@ -163,7 +164,9 @@ onMounted(() => {
       min-h-screen
       class="grid-rows-[1fr_auto]"
     >
-      <main class="h-full min-w-0 w-full flex flex-col items-center px-4 pb-16 pt-0">
+      <main
+        class="h-full min-w-0 w-full flex flex-col items-center px-4 pb-16 pt-0"
+      >
         <div class="max-w-240 w-full">
           <slot />
         </div>
@@ -175,4 +178,40 @@ onMounted(() => {
 
 <style lang="scss">
 @use "~/assets/css/top-page.scss";
+</style>
+
+<style lang="scss" module>
+// 縦長レイアウトにする境界, イラストが上, 開催日が下, イベントタイトル・開催日部分も縦に積み重ねる
+$aspect-thin: 10/16;
+
+// ↕の間はイラストが上, 開催日が下, イベントタイトル・開催日部分は横に並べる
+
+// 横長レイアウトにする境界, イラストが左, 開催日が右, イベントタイトル・開催日部分も縦に積み重ねる
+$aspect-wide: 10/10;
+
+.imageContainer {
+  @apply grid h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden;
+
+  @apply grid-cols-[auto] grid-rows-[auto_1fr];
+
+  @media screen and (min-aspect-ratio: $aspect-wide) {
+    @apply grid-cols-[minmax(max-content,50%)_minmax(auto,50%)] grid-rows-[auto];
+  }
+}
+
+.titleContainer {
+  @apply w-full flex;
+
+  @media screen and (max-aspect-ratio: $aspect-thin) {
+    @apply flex-col items-end;
+  }
+
+  @media screen and (min-aspect-ratio: $aspect-thin) and (max-aspect-ratio: $aspect-wide) {
+    @apply flex-row justify-between flex-wrap;
+  }
+
+  @media screen and (min-aspect-ratio: $aspect-wide) {
+    @apply flex-col gap-16;
+  }
+}
 </style>
