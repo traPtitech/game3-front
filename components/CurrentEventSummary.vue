@@ -11,7 +11,7 @@ onServerPrefetch(async () => {
 
 <template>
   <div v-if="currentEvent">
-    <div class="w-full flex justify-center gap-4">
+    <div class="w-full flex flex-wrap justify-center gap-4">
       <NuxtLink
         v-if="canPost?.state === 'enabled'"
         to="/entry/register"

@@ -163,7 +163,7 @@ onMounted(() => {
       min-h-screen
       class="grid-rows-[1fr_auto]"
     >
-      <main class="h-full w-full flex flex-col items-center px-4 pb-16 pt-0">
+      <main class="h-full min-w-0 w-full flex flex-col items-center px-4 pb-16 pt-0">
         <div class="max-w-240 w-full">
           <slot />
         </div>
