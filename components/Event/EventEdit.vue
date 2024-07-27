@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
-import { object, string, minLength, blob, optional, date } from 'valibot'
+import * as v from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 import type { Event } from '~/lib/api'
@@ -12,14 +12,15 @@ const props = defineProps<Props>()
 
 const { handleSubmit, meta, values, setValues, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
-    object({
-      title: string([
-        minLength(1, 'イベントタイトルは1文字以上で入力してください'),
-      ]),
-      date: date(),
-      gameSubmissionPeriodStart: date(),
-      gameSubmissionPeriodEnd: date(),
-      image: optional(blob()),
+    v.object({
+      title: v.pipe(
+        v.string(),
+        v.minLength(1, 'イベントタイトルは1文字以上で入力してください'),
+      ),
+      date: v.date(),
+      gameSubmissionPeriodStart: v.date(),
+      gameSubmissionPeriodEnd: v.date(),
+      image: v.optional(v.blob()),
     }),
   ),
   initialValues: {

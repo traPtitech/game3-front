@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/valibot'
-import { date, object } from 'valibot'
+import * as v from 'valibot'
 import { useForm } from 'vee-validate'
 import { DialogRoot } from 'radix-vue'
 import type { PatchTermRequest, Term } from '~/lib/api'
@@ -18,9 +18,9 @@ const { mutateAsync } = useMutatePatchTerm()
 
 const { handleSubmit, meta, isSubmitting } = useForm<PatchTermRequest>({
   validationSchema: toTypedSchema(
-    object({
-      startAt: date(),
-      endAt: date(),
+    v.object({
+      startAt: v.date(),
+      endAt: v.date(),
     }),
   ),
   initialValues: {
@@ -29,14 +29,12 @@ const { handleSubmit, meta, isSubmitting } = useForm<PatchTermRequest>({
 })
 const onSubmit = handleSubmit(async (values) => {
   try {
-    await mutateAsync(
-      {
-        patchTermRequest: {
-          ...values,
-        },
-        termId: props.term.id,
+    await mutateAsync({
+      patchTermRequest: {
+        ...values,
       },
-    )
+      termId: props.term.id,
+    })
     $toast.success('イベントの編集が完了しました！')
     modalOpen.value = false
   }
