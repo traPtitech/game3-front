@@ -102,9 +102,9 @@ export const useMutatePatchEvent = () =>
     mutationFn: (req: PatchEventRequest) =>
       eventsApi.patchEvent(dateToString(req) as unknown as PatchEventRequest),
     mutationKey: ['events'],
-    onSuccess: () => {
+    onSuccess: (_, req) => {
       queryClient.invalidateQueries({
-        queryKey: ['events'],
+        queryKey: ['events', { eventSlug: req.eventSlug }],
       })
     },
   })
@@ -138,9 +138,9 @@ export const useMutatePatchGame = () =>
   useMutation({
     mutationFn: (req: PatchGameRequest) => gamesApi.patchGame(req),
     mutationKey: ['games'],
-    onSuccess: () => {
+    onSuccess: (_, req) => {
       queryClient.invalidateQueries({
-        queryKey: ['games'],
+        queryKey: ['games', { gameId: req.gameId }],
       })
     },
   })
@@ -159,9 +159,9 @@ export const useMutatePostTerm = () =>
     mutationFn: (req: PostTermOperationRequest) =>
       termsApi.postTerm(dateToString(req) as unknown as PostTermOperationRequest),
     mutationKey: ['terms'],
-    onSuccess: (req) => {
+    onSuccess: (res) => {
       queryClient.invalidateQueries({
-        queryKey: ['events', { eventSlug: req.eventSlug }, 'terms'],
+        queryKey: ['events', { eventSlug: res.eventSlug }, 'terms'],
       })
     },
   })
