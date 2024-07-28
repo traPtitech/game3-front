@@ -8,11 +8,11 @@ defineProps<{
 
 <template>
   <div class="h-full w-full flex flex-row justify-center bg-[#3d1192] bg-white font-700">
-    <img
+    <!-- <img
       :src="imgSrc"
       height="600"
       class="object-contain"
-    >
+    > -->
     <div
       class="flex flex-col justify-center pl-4 pr-16 text-white"
     >
