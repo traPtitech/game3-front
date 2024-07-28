@@ -24,4 +24,4 @@ export const getParamsArray = (params: string | string[] | undefined) => {
 // see: https://nuxt.com/docs/guide/concepts/auto-imports#vue-and-nuxt-composables
 export const basePath = process.env.NODE_ENV === 'development'
   ? 'http://localhost:3000'
-  : 'https://game3.trap.games'
+  : 'https://ogp-test-game3.trap.show'
