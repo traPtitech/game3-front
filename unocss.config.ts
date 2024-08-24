@@ -186,6 +186,7 @@ export default defineConfig({
     'body': 'text-body-m md:text-body-l',
     'label': 'text-label-m md:text-label-l',
     'caption': 'text-caption-l md:text-caption-m',
+    'link': 'text-text-link underline visited:text-text-visited hover:no-underline break-anywhere',
   },
   rules: [
     [

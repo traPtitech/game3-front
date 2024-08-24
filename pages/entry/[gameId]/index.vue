@@ -148,7 +148,12 @@ const loadFallbackImage = (e: Event) => {
           {{ game.place }}
         </div>
       </div>
-      <ProseP>{{ game.description }}</ProseP>
+      <p
+        v-linkify
+        class="my-4 whitespace-pre-wrap break-keep break-anywhere body"
+      >
+        {{ game.description }}
+      </p>
       <div
         v-if="canEdit"
         class="w-full flex justify-center"

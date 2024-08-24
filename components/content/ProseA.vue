@@ -3,7 +3,7 @@
   <NuxtLink
     :href="href"
     :target="target"
-    class="text-text-link underline visited:text-text-visited hover:no-underline"
+    class="link"
   >
     <slot />
   </NuxtLink>
