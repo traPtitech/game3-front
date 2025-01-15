@@ -79,7 +79,7 @@ const props = defineProps<{
         >
           <img
             src="/img/logo/traP_logo_full_white.svg"
-            alt="東京工業大学デジタル創作同好会traPロゴ"
+            alt="東京科学大学デジタル創作同好会traPロゴ"
             class="h-auto max-w-full w-64 object-contain"
           ></a>
         <a

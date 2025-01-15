@@ -51,7 +51,7 @@ definePageMeta({
       軽食やお飲み物などをたしなみながら、ざっくばらんに話したり、ときにはゲームについて熱く語り合う場としてご活用ください。
     </ProseP>
     <ProseH2> 主催 </ProseH2>
-    <ProseH3> 東京工業大学デジタル創作同好会 </ProseH3>
+    <ProseH3> 東京科学大学デジタル創作同好会 </ProseH3>
     <a
       href="https://trap.jp"
       target="_blank"
@@ -60,11 +60,11 @@ definePageMeta({
     >
       <img
         src="/img/logo/traP_logo_full.svg"
-        alt="東京工業大学デジタル創作同好会traPロゴ"
+        alt="東京科学大学デジタル創作同好会traPロゴ"
         class="h-auto w-full object-contain"
       ></a>
     <ProseP>
-      東京工業大学デジタル創作同好会traPは、その名の通りデジタル創作を主な活動とするサークルです。
+      東京科学大学デジタル創作同好会traPは、その名の通りデジタル創作を主な活動とするサークルです。
       部員の得意分野は多岐にわたり、ゲーム、Webサービス、DTM、デジタルイラスト、競技プログラミングなど、幅広い分野で活躍しています。
     </ProseP>
     <ProseH2> 取材実績 </ProseH2>
