@@ -8,6 +8,7 @@ import UITextField from '~/components/UI/UITextField.vue'
 import UIButton from '~/components/UI/UIButton.vue'
 import StrokedText from '~/components/StrokedText.vue'
 import PaperEntry from '~/components/paper/PaperEntry.vue'
+import EmbossText from '~/components/EmbossText.vue'
 
 const eventSlug = usePathParams('slug')
 
@@ -43,6 +44,7 @@ const termGamesMap = computed(() => {
   const gameMap = Object.groupBy(games.value, game => game.termId)
   return eventTerms.value
     .filter(term => !term.isDefault)
+    .toSorted((a, b) => a.startAt.getTime() - b.startAt.getTime())
     .map(term => ({
       term,
       games: gameMap[term.id]?.toSorted(
@@ -109,7 +111,10 @@ onUnmounted(() => {
     >
       イベントペーパー
     </ProseH1>
-    <div ref="printTargetRef">
+    <div
+      ref="printTargetRef"
+      class="overflow-auto"
+    >
       <div class="h-297mm w-210mm bg-gray print-[size:A4_portrait]">
         <div class="grid grid-rows-[minmax(0,1fr)_auto] h-full w-full">
           <div class="relative">
@@ -117,20 +122,24 @@ onUnmounted(() => {
               :src="useEventImageUrl(eventSlug)"
               class="h-full w-full object-contain"
             >
-            <div class="absolute bottom-0 right-0 w-170">
+            <div class="absolute bottom-0 right-0 w-175mm">
               <div class="relative">
+                <div class="absolute left-62mm top-2mm text-36pt font-extrabold tracking-0.08em font-agency">
+                  <EmbossText>
+                    {{ event.slug }}
+                  </EmbossText>
+                </div>
                 <img
                   src="/img/logo/Gamecube_logo_full.svg"
-                  class="p-6"
+                  class="isolate p-6"
                 >
-                <div class="absolute left-60 top-1 text-12 font-extrabold">
-                  {{ event.slug }}
-                </div>
-                <div class="absolute bottom-0 left-63 text-10 font-extrabold">
-                  {{ format(event.date, "yyyy.MM.dd") }}
-                  <span class="text-7">
+                <div class="absolute bottom-1mm left-62mm text-33pt font-extrabold tracking-0.08em font-agency">
+                  <EmbossText>
+                    {{ format(event.date, "yyyy.MM.dd") }}
+                  </EmbossText>
+                  <EmbossText class="ml-2mm text-24pt">
                     {{ values.openWithIn }}
-                  </span>
+                  </EmbossText>
                 </div>
               </div>
             </div>
@@ -170,19 +179,28 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="relative h-297mm w-210mm print-[size:A4_portrait]">
-        <div class="absolute z--2 h-full w-full overflow-hidden b-2mm b-brand-yellow bg-brand-violet" />
-        <div class="h-full w-full overflow-hidden px-15mm py-5mm space-y-5mm">
+        <div
+          class="absolute z--2 h-full w-full overflow-hidden b-2mm b-brand-yellow"
+          style="background: linear-gradient(90deg,transparent,transparent 20mm,#fff 20mm,#fff 35mm, transparent 35mm,transparent 36mm,#fff 36mm,#fff 37mm, transparent 37mm,transparent 52mm,#fff 52mm,#fff 67mm, transparent 67mm,transparent 68mm,#fff 68mm,#fff 69mm, transparent 69mm,transparent 84mm,#fff 84mm,#fff 99mm, transparent 99mm,transparent 100mm,#fff 100mm,#fff 101mm, transparent 101mm), #3d1192;"
+        />
+        <div class="h-full w-full overflow-hidden px-10mm py-5mm space-y-4mm">
           <div
-            v-for="term in termGamesMap"
+            v-for="term, i in termGamesMap"
             :key="term.term.id"
+            class="relative"
           >
-            <div>
-              <span class="text-6">
-                {{ term.term.name }}
-              </span>
-              <span>
+            <div class="absolute right-0 top-0 isolate h-16mm flex items-start">
+              <div class="h-1mm w-30mm bg-white" />
+              <div class="h-full w-2mm bg-white" />
+              <div class="ml-1mm h-full w-1mm bg-white" />
+            </div>
+            <div class="mb-2mm font-extrabold tracking-0.08em font-agency">
+              <EmbossText class="text-36pt">
+                Term {{ i+1 }}
+              </EmbossText>
+              <EmbossText class="ml-2mm text-24pt">
                 {{ format(term.term.startAt, "HH:mm") }}-{{ format(term.term.endAt, "HH:mm") }}
-              </span>
+              </EmbossText>
             </div>
             <div class="grid grid-cols-5 gap-2">
               <PaperEntry
@@ -216,3 +234,7 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
+
+<style>
+@import url('https://fonts.cdnfonts.com/css/agency-fb?styles=17318');
+</style>

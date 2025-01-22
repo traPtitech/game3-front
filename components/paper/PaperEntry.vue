@@ -10,9 +10,9 @@ const props = defineProps<Props>()
 
 <template>
   <div class="relative h-auto w-full @container">
-    <div class="absolute left-0 top-0 z--1 mt--15cqw h-85cqw w-85cqw rotate-5 b-1mm b-brand-violet bg-brand-cyan outline-1mm outline-white outline" />
-    <div class="pl-5cqw pt-15cqw">
-      <div class="b-1mm b-brand-violet bg-brand-yellow outline-1mm outline-white outline">
+    <div class="absolute left-0 top-0 z--1 mt--15cqw h-85cqw w-85cqw rotate-5 b-1mm b-brand-violet bg-brand-cyan outline-0.5mm outline-white outline" />
+    <div class="pl-5cqw pt-18cqw">
+      <div class="b-1mm b-brand-violet bg-brand-yellow outline-0.5mm outline-white outline">
         <div
           class="grid grid-cols-[minmax(0,1fr)_auto] h-60cqw"
         >
