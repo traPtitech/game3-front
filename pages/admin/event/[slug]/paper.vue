@@ -1,4 +1,4 @@
-<!-- `/admin/event/:slug/event-paper` -->
+<!-- `/admin/event/:slug/paper` -->
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import * as v from 'valibot'
@@ -11,6 +11,10 @@ import StrokedText from '~/components/StrokedText.vue'
 import PaperEntry from '~/components/paper/PaperEntry.vue'
 import EmbossText from '~/components/EmbossText.vue'
 import UIFileField from '~/components/UI/UIFileField.vue'
+
+definePageMeta({
+  middleware: ['need-admin'],
+})
 
 const eventSlug = usePathParams('slug')
 
