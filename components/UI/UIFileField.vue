@@ -61,7 +61,11 @@ watch(blobValue, (newVal) => {
 })
 
 // トリミングしない場合の画像表示用src
-const imgSrc = computed(() => {
+const imgSrc = computed<string>((previous) => {
+  if (previous) {
+    URL.revokeObjectURL(previous)
+  }
+
   if (blobValue.value) {
     return URL.createObjectURL(blobValue.value)
   }

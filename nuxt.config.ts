@@ -74,6 +74,7 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api': 'https://game3.trap.games',
+        // '/api': 'http://localhost:8080',
       },
     },
   },

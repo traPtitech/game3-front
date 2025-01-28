@@ -9,6 +9,7 @@ import UIButton from '~/components/UI/UIButton.vue'
 import StrokedText from '~/components/StrokedText.vue'
 import PaperEntry from '~/components/paper/PaperEntry.vue'
 import EmbossText from '~/components/EmbossText.vue'
+import UIFileField from '~/components/UI/UIFileField.vue'
 
 const eventSlug = usePathParams('slug')
 
@@ -26,9 +27,7 @@ const { values } = useForm({
   validationSchema: toTypedSchema(
     v.object({
       place: v.string(),
-      mainIllust: v.blob(),
-      supportName: v.string(),
-      supportLogo: v.blob(),
+      supportLogo: v.optional(v.blob()),
       openWithIn: v.string(),
     }),
   ),
@@ -52,6 +51,23 @@ const termGamesMap = computed(() => {
       ) || [],
     }))
 })
+
+const supportLogoSrc = computed<string | undefined>((previous) => {
+  if (previous) {
+    URL.revokeObjectURL(previous)
+  }
+
+  if (values.supportLogo) {
+    try {
+      return URL.createObjectURL(values.supportLogo as Blob)
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
+  return undefined
+})
+
 const printTargetRef = ref<HTMLElement | null>(null)
 const handleBeforePrint = () => {
   if (printTargetRef.value) {
@@ -155,23 +171,26 @@ onUnmounted(() => {
                 開催場所 ・・・・・・ {{ values.place }}
               </StrokedText>
             </div>
-            <div class="grid grid-cols-2 bg-white text-6 c-brand-violet font-extrabold">
-              <div class="flex items-center justify-between px-8 pb-6mm pt-2">
-                <div class="shrink-0">
+            <div class="h-20mm flex justify-center bg-white text-6 c-brand-violet font-extrabold">
+              <div class="h-full flex items-center justify-center gap-12 px-8 pb-6mm pt-2">
+                <div>
                   主催
                 </div>
                 <img
                   src="/img/logo/traP_logo_full.svg"
-                  class="w-60"
+                  class="h-full w-auto object-contain"
                 >
               </div>
-              <div class="flex items-center justify-between px-8 pb-6mm pt-2">
+              <div
+                v-if="supportLogoSrc"
+                class="h-full flex items-center justify-center gap-12 px-8 pb-6mm pt-2"
+              >
                 <div class="shrink-0">
                   協賛
                 </div>
                 <img
-                  src="/img/logo/traP_logo_full.svg"
-                  class="w-60"
+                  :src="supportLogoSrc"
+                  class="h-full object-contain"
                 >
               </div>
             </div>
@@ -221,6 +240,14 @@ onUnmounted(() => {
         <UITextField
           label="開催場所"
           name="place"
+          helper-text="表面下部に記載されます。"
+        />
+        <UIFileField
+          label="協賛企業ロゴ画像"
+          accept="image/*"
+          name="supportLogo"
+          use-crop
+          helper-text="表面右下に表示されます。"
         />
         <div class="flex justify-center">
           <UIButton
