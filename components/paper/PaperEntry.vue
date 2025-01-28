@@ -6,6 +6,13 @@ type Props = {
   game: Game
 }
 const props = defineProps<Props>()
+
+// Intl.Segmenterで分割した作品タイトル
+const splittedTitle = computed(() => {
+  const segmenter = new Intl.Segmenter('ja', { granularity: 'word' })
+  const segments = Array.from(segmenter.segment(props.game.title))
+  return segments.map(segment => ({ segment: segment.segment }))
+})
 </script>
 
 <template>
@@ -33,12 +40,18 @@ const props = defineProps<Props>()
             </StrokedText>
           </div>
         </div>
-        <div class="px-1mm text-3 font-bold">
+        <div class="break-keep break-anywhere px-1mm text-3 font-bold">
           <StrokedText
             class="c-brand-violet text-stroke-white!"
             :width="1"
           >
-            {{ props.game.title }}
+            <!-- <wbr>で分割された作品タイトル -->
+            <template
+              v-for="(segment, index) in splittedTitle"
+              :key="index"
+            >
+              {{ segment.segment }}<wbr v-if="index < splittedTitle.length - 1">
+            </template>
           </StrokedText>
         </div>
       </div>
