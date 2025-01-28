@@ -4,6 +4,7 @@ import { useForm } from 'vee-validate'
 import * as v from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { format } from 'date-fns'
+import { vDraggable } from '@neodrag/vue'
 import UITextField from '~/components/UI/UITextField.vue'
 import UIButton from '~/components/UI/UIButton.vue'
 import StrokedText from '~/components/StrokedText.vue'
@@ -29,11 +30,13 @@ const { values } = useForm({
       place: v.string(),
       supportLogo: v.optional(v.blob()),
       openWithIn: v.string(),
+      entryCount: v.pipe(v.number(), v.integer(), v.minValue(1)),
     }),
   ),
   initialValues: {
     place: '東京科学大学 大岡山キャンパス 西講義棟2 XXX講義室',
     openWithIn: '13:00-18:00',
+    entryCount: 5,
   },
 })
 const termGamesMap = computed(() => {
@@ -69,6 +72,7 @@ const supportLogoSrc = computed<string | undefined>((previous) => {
 })
 
 const printTargetRef = ref<HTMLElement | null>(null)
+const bottomSurfaceRef = ref<HTMLElement | null>(null)
 const handleBeforePrint = () => {
   if (printTargetRef.value) {
     const copiedContent = printTargetRef.value.innerHTML
@@ -127,40 +131,78 @@ onUnmounted(() => {
     >
       イベントペーパー
     </ProseH1>
+    <p>
+      イベントペーパーを印刷/PDF出力することができます。
+    </p>
+    <ul class="list-disc pl-10">
+      <li>
+        ページ下部にあるフォームで、開催場所, 協賛企業ロゴ画像, 裏面での1行当たりの作品数を設定してください
+      </li>
+      <li>
+        表面のロゴ部分はドラッグで移動できます
+      </li>
+      <li>
+        表面のメイン画像部分はドラッグで上下移動できます
+      </li>
+      <li>
+        <strong>
+          必ずメイン画像とロゴ画像の位置を調整してください
+        </strong>
+      </li>
+    </ul>
     <div
       ref="printTargetRef"
       class="overflow-auto"
     >
-      <div class="h-297mm w-210mm bg-gray print-[size:A4_portrait]">
-        <div class="grid grid-rows-[minmax(0,1fr)_auto] h-full w-full">
+      <div class="h-297mm w-210mm print-[size:A4_portrait]">
+        <div class="grid grid-rows-[minmax(0,1fr)_auto] h-full w-full overflow-hidden">
           <div class="relative">
-            <img
-              :src="useEventImageUrl(eventSlug)"
-              class="h-full w-full object-contain"
+            <div
+              class="absolute w-full"
+              :style="{
+                height: `calc(100% + ${(bottomSurfaceRef?.clientHeight ?? 0) * 2}px)`,
+                top: `-${bottomSurfaceRef?.clientHeight ?? 0}px`,
+              }"
             >
-            <div class="absolute bottom-0 right-0 w-175mm">
-              <div class="relative">
-                <div class="absolute left-62mm top-2mm text-36pt font-extrabold tracking-0.08em font-agency">
-                  <EmbossText>
-                    {{ event.slug }}
-                  </EmbossText>
-                </div>
-                <img
-                  src="/img/logo/Gamecube_logo_full.svg"
-                  class="isolate p-6"
-                >
-                <div class="absolute bottom-1mm left-62mm text-33pt font-extrabold tracking-0.08em font-agency">
-                  <EmbossText>
-                    {{ format(event.date, "yyyy.MM.dd") }}
-                  </EmbossText>
-                  <EmbossText class="ml-2mm text-24pt">
-                    {{ values.openWithIn }}
-                  </EmbossText>
-                </div>
+              <img
+                v-draggable="{
+                  bounds: 'parent',
+                }"
+                :src="useEventImageUrl(eventSlug)"
+                class="h-auto w-full cursor-n-resize object-contain"
+                draggable="false"
+              >
+            </div>
+            <div
+              v-draggable="{
+                bounds: 'parent',
+              }"
+              class="relative w-175mm cursor-move"
+            >
+              <div class="absolute left-62mm top-2mm text-36pt font-extrabold tracking-0.08em font-agency">
+                <EmbossText>
+                  {{ event.slug }}
+                </EmbossText>
+              </div>
+              <img
+                src="/img/logo/Gamecube_logo_full.svg"
+                class="isolate p-6"
+                draggable="false"
+              >
+              <div class="absolute bottom-1mm left-62mm text-33pt font-extrabold tracking-0.08em font-agency">
+                <EmbossText>
+                  {{ format(event.date, "yyyy.MM.dd") }}
+                </EmbossText>
+                <EmbossText class="ml-2mm text-24pt">
+                  {{ values.openWithIn }}
+                </EmbossText>
               </div>
             </div>
           </div>
-          <div>
+          <div
+            ref="bottomSurfaceRef"
+            class="z-1"
+          >
             <div
               class="w-full from-#FFE001 via-#FFD004 to-#FE900F via-66% bg-gradient-to-b py-1 text-center font-extrabold"
             >
@@ -172,7 +214,7 @@ onUnmounted(() => {
               </StrokedText>
             </div>
             <div class="h-20mm flex justify-center bg-white text-6 c-brand-violet font-extrabold">
-              <div class="h-full flex items-center justify-center gap-12 px-8 pb-6mm pt-2">
+              <div class="grid grid-cols-[auto_minmax(0,1fr)] grid-rows-1 h-full max-w-50% items-center justify-center gap-10 px-4 pb-4mm pt-2mm">
                 <div>
                   主催
                 </div>
@@ -183,14 +225,14 @@ onUnmounted(() => {
               </div>
               <div
                 v-if="supportLogoSrc"
-                class="h-full flex items-center justify-center gap-12 px-8 pb-6mm pt-2"
+                class="grid grid-cols-[auto_minmax(0,1fr)] grid-rows-1 h-full max-w-50% items-center justify-center gap-10 overflow-hidden px-4 pb-4mm pt-2mm"
               >
-                <div class="shrink-0">
+                <div>
                   協賛
                 </div>
                 <img
                   :src="supportLogoSrc"
-                  class="h-full object-contain"
+                  class="h-full w-auto object-contain"
                 >
               </div>
             </div>
@@ -221,7 +263,12 @@ onUnmounted(() => {
                 {{ format(term.term.startAt, "HH:mm") }}-{{ format(term.term.endAt, "HH:mm") }}
               </EmbossText>
             </div>
-            <div class="grid grid-cols-5 gap-2">
+            <div
+              class="grid gap-2"
+              :style="{
+                'grid-template-columns': `repeat(${values.entryCount}, minmax(0, 1fr))`,
+              }"
+            >
               <PaperEntry
                 v-for="game in term.games"
                 :key="game.id"
@@ -248,6 +295,11 @@ onUnmounted(() => {
           name="supportLogo"
           use-crop
           helper-text="表面右下に表示されます。"
+        />
+        <UITextField
+          label="1行に表示する作品の数"
+          name="entryCount"
+          type="number"
         />
         <div class="flex justify-center">
           <UIButton
