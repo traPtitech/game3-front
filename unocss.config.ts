@@ -176,6 +176,9 @@ export default defineConfig({
         },
       ],
     },
+    fontFamily: {
+      agency: '\'Agency FB\', sans-serif',
+    },
   },
   shortcuts: {
     'h1-text': 'text-h-l-m md:text-h-l',

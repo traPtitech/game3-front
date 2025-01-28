@@ -62,5 +62,12 @@ const props = defineProps<Props>()
         </tr>
       </tbody>
     </ProseTable>
+    <div class="mt-4 w-full flex justify-center">
+      <UIButton
+        @click="navigateTo(`/admin/event/${props.event.slug}/paper`)"
+      >
+        イベントペーパー出力
+      </UIButton>
+    </div>
   </div>
 </template>
