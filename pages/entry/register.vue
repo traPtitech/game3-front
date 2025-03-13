@@ -5,16 +5,28 @@ import * as v from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 import type { PostGameRequest } from '~/lib/api'
+import { useMe } from '~/store/me'
 
 definePageMeta({
   middleware: ['need-login'],
 })
 
+const { useMeStore } = useMe()
+const me = useMeStore()
+
 const { data: currentEvent, isLoading } = useCurrentEventQuery()
 const canSubmit = computed(() => {
+  // 現在のイベントが取得できなかったら出展登録できない
   if (!currentEvent.value) {
     return false
   }
+
+  // Adminなら応募期間に関係なく出展登録できる
+  if (me.value.user?.role === 'admin') {
+    return true
+  }
+
+  // 応募期間内なら出展登録できる
   const today = new Date()
   return (
     currentEvent.value.gameSubmissionPeriodStart <= today
@@ -106,6 +118,12 @@ useSeoMeta({
                 timeZone: "Asia/Tokyo",
               })
             }}
+          </div>
+          <div
+            v-if="me.user?.role === 'admin'"
+            class="text-text-semantic-error"
+          >
+            <span>管理者としてアクセスしているため出展期間外でも出展可能になっています</span>
           </div>
           <div class="text-text-semantic-error">
             出展に関するご案内は
