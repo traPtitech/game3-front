@@ -26,6 +26,11 @@ useSeoMeta({
           イベント管理ページ
         </ProseA>
       </li>
+      <li>
+        <ProseA to="/admin/faq">
+          トラブルシューティング
+        </ProseA>
+      </li>
     </ProseUl>
   </div>
 </template>
