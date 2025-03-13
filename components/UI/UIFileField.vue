@@ -15,7 +15,7 @@ type Props = {
 } & (
   | {
     useCrop: true
-    aspectRatio: number
+    aspectRatio?: number
   }
   | {
     useCrop?: false
