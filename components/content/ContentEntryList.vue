@@ -70,9 +70,12 @@ watch(selectedTab, (newTab) => {
 })
 
 // クエリパラメータの変化を監視し、タブを更新
-watch(() => route.query.term, (newTab) => {
-  if (newTab && typeof newTab === 'string' && termGamesMap.value.some(t => t.term.id === newTab)) {
+watch(() => [route.query.term, termGamesMap.value] as const, ([newTab, newTermGamesMap]) => {
+  if (newTab && typeof newTab === 'string' && newTermGamesMap.some(t => t.term.id === newTab)) {
     selectedTab.value = newTab
+  }
+  else if (newTermGamesMap.length > 0) {
+    selectedTab.value = newTermGamesMap[0].term.id
   }
 })
 </script>
