@@ -50,6 +50,31 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
   minute: 'numeric',
   timeZone: 'Asia/Tokyo',
 }
+
+const route = useRoute()
+const router = useRouter()
+// クエリパラメータの `term` を取得し、デフォルト値を設定
+const selectedTab = ref(
+  route.query.term && typeof route.query.term === 'string' && termGamesMap.value.some(t => t.term.id === route.query.term)
+    ? route.query.term
+    : termGamesMap.value.length > 0
+      ? termGamesMap.value[0].term.id
+      : '',
+)
+
+// タブ変更時にクエリパラメータを更新
+watch(selectedTab, (newTab) => {
+  if (newTab) {
+    router.replace({ query: { ...route.query, term: newTab } })
+  }
+})
+
+// クエリパラメータの変化を監視し、タブを更新
+watch(() => route.query.term, (newTab) => {
+  if (newTab && typeof newTab === 'string' && termGamesMap.value.some(t => t.term.id === newTab)) {
+    selectedTab.value = newTab
+  }
+})
 </script>
 
 <template>
@@ -59,6 +84,7 @@ const localeTimeStringOptions: Intl.DateTimeFormatOptions = {
     </ProseH2>
     <TabsRoot
       v-if="showTerms"
+      v-model="selectedTab"
       :default-value="termGamesMap[0].term.id"
     >
       <TabsList class="relative mb-8 flex justify-around">
