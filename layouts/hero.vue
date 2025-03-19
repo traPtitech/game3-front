@@ -34,7 +34,7 @@ onMounted(() => {
     <!-- TODO: add effect animation -->
     <div
       :class="[
-        'fixed z-1 w-full shadow transition-property-[top] transition-200',
+        'fixed w-full shadow transition-property-[top] transition-200 z-1',
         {
           'top--100px': isPageTop,
           'top-0': !isPageTop,
@@ -48,12 +48,12 @@ onMounted(() => {
         <img
           v-if="currentEvent"
           :src="useEventImageUrl(currentEvent.slug)"
-          class="absolute z--1 h-full w-full object-cover blur-24"
+          class="absolute h-full w-full object-cover blur-24"
         >
         <img
           v-if="currentEvent"
           :src="useEventImageUrl(currentEvent.slug)"
-          class="h-full w-full object-contain"
+          class="isolate h-full w-full object-contain"
         >
         <img
           width="500px"
@@ -190,7 +190,7 @@ $aspect-thin: 10/16;
 $aspect-wide: 12/10;
 
 .imageContainer {
-  @apply grid h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden;
+  @apply isolate grid h-100dvh w-full animate-duration-200 animate-ease-out overflow-hidden;
 
   @apply grid-cols-[auto] grid-rows-[auto_1fr];
 

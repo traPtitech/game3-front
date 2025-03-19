@@ -100,9 +100,11 @@ const loadFallbackImage = (e: Event) => {
   <ClientOnly v-if="game !== undefined && isVisible === true">
     <div
       v-if="game.isPublished === false"
-      class="relative w-full break-anywhere py-4 text-center text-text-primary before:(absolute left-[min(0px,calc(50%-50vw))] top-0 z--1 block h-full w-100vw bg-brand-orange content-['']) h5-text"
+      class="relative w-full break-anywhere py-4 text-center text-text-primary before:(absolute left-[min(0px,calc(50%-50vw))] top-0 block h-full w-100vw bg-brand-orange content-['']) h5-text"
     >
-      ⚠この作品は運営による内容確認が完了していないため、作品登録者と運営のみが閲覧できる状態になっています。運営による確認作業をお待ちください
+      <div class="isolate">
+        ⚠この作品は運営による内容確認が完了していないため、作品登録者と運営のみが閲覧できる状態になっています。運営による確認作業をお待ちください
+      </div>
     </div>
     <ProseH1>{{ game.title }}</ProseH1>
     <div class="space-y-4">

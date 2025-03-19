@@ -40,7 +40,7 @@ onServerPrefetch(async () => {
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
-          class="z-10 w-[var(--radix-popover-trigger-width)] bg-#6A49AA px-6 py-4"
+          class="z-1 w-[var(--radix-popover-trigger-width)] bg-#6A49AA px-6 py-4"
         >
           <HeaderEventNav />
         </PopoverContent>

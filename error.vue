@@ -42,7 +42,7 @@ const props = defineProps<{
       </header>
     </div>
     <main
-      class="h-full w-full flex flex-col items-center overflow-x-hidden px-4 pb-16 pt-0"
+      class="isolate h-full w-full flex flex-col items-center overflow-x-hidden px-4 pb-16 pt-0"
     >
       <div class="max-w-240 w-full">
         <ProseH1>
