@@ -70,7 +70,7 @@ watch(selectedTab, (newTab) => {
 })
 
 // クエリパラメータの変化を監視し、タブを更新
-watch(() => route.query.tab, (newTab) => {
+watch(() => route.query.term, (newTab) => {
   if (newTab && typeof newTab === 'string' && termGamesMap.value.some(t => t.term.id === newTab)) {
     selectedTab.value = newTab
   }
