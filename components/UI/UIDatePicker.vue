@@ -37,6 +37,7 @@ const { value, errorMessage, meta } = useField<Date>(() => props.name)
       time-picker-inline
       format="yyyy/MM/dd (E) HH:mm"
       :data-invalid="meta.validated && !meta.valid"
+      :teleport="true"
       class="data-[invalid=true]:[--dp-border-color:#EC0000]"
     />
     <div

@@ -40,6 +40,10 @@
   --dp-transition-timing: ease-out; /*Timing on slide animations*/
 }
 
+.dp--menu-wrapper {
+  pointer-events: auto;
+}
+
 .dp__theme_light {
   --dp-background-color: #fff;
   --dp-text-color: #212121;

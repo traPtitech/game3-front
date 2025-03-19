@@ -17,10 +17,10 @@ const emitsAsProps = useEmitAsProps(emits)
 
 <template>
   <DialogPortal>
-    <DialogOverlay class="fixed inset-0 z-100 bg-#0008 animate-duration-100! motion-safe:data-[state=open]:animate-fade-in" />
+    <DialogOverlay class="fixed inset-0 z-1 bg-#0008 animate-duration-100! motion-safe:data-[state=open]:animate-fade-in" />
     <DialogContent
       v-bind="{ ...props, ...emitsAsProps }"
-      class="fixed left-50% top-50% z-1000 max-h-[calc(100%-16px)] max-w-[calc(100%-16px)] translate-x--50% translate-y--50% overflow-x-hidden overflow-y-auto break-anywhere rounded-2 bg-surface-primary p-8 text-wrap shadow data-[state=open]:animate-fade-in animate-duration-100! focus:outline-none"
+      class="fixed left-50% top-50% z-2 max-h-[calc(100%-16px)] max-w-[calc(100%-16px)] translate-x--50% translate-y--50% overflow-x-hidden overflow-y-auto break-anywhere rounded-2 bg-surface-primary p-8 text-wrap shadow data-[state=open]:animate-fade-in animate-duration-100! focus:outline-none"
     >
       <slot />
       <DialogClose

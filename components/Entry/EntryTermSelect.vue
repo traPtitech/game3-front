@@ -92,7 +92,7 @@ const { value, errorMessage, meta } = useField<string>(() => props.name)
       <ComboboxPortal>
         <ComboboxContent
           position="popper"
-          class="z-100000 mt-2 max-h-600px w-[--radix-combobox-trigger-width] overflow-hidden overflow-y-auto b-1 b-border-secondary rounded-2 bg-surface-primary p-4 shadow"
+          class="z-999 mt-2 max-h-600px w-[--radix-combobox-trigger-width] overflow-hidden overflow-y-auto b-1 b-border-secondary rounded-2 bg-surface-primary p-4 shadow"
         >
           <ComboboxViewport>
             <ComboboxGroup
