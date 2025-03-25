@@ -153,12 +153,22 @@ onUnmounted(() => {
           必ずメイン画像とロゴ画像の位置を調整してください
         </strong>
       </li>
+      <li>
+        <strong>
+          "余白無し", "背景画像を印刷する" 設定で出力してください。
+        </strong>
+      </li>
+      <li>
+        <strong>
+          出力した内容が正しいか確認してから印刷してください。表示がおかしい場合はSysAd Game3担当に問い合わせてください。
+        </strong>
+      </li>
     </ul>
     <div
       ref="printTargetRef"
       class="overflow-auto"
     >
-      <div class="h-297mm w-210mm print-[size:A4_portrait]">
+      <div class="[-webkit-print-color-adjust:exact] [print-color-adjust:exact] h-297mm w-210mm print-[size:A4_portrait]">
         <div class="grid grid-rows-[minmax(0,1fr)_auto] h-full w-full overflow-hidden">
           <div class="relative">
             <div
@@ -243,7 +253,7 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-      <div class="relative h-297mm w-210mm print-[size:A4_portrait]">
+      <div class="[-webkit-print-color-adjust:exact] [print-color-adjust:exact] relative h-297mm w-210mm print-[size:A4_portrait]">
         <div
           class="absolute z--2 h-full w-full overflow-hidden b-2mm b-brand-yellow"
           style="background: linear-gradient(90deg,transparent,transparent 20mm,#fff 20mm,#fff 35mm, transparent 35mm,transparent 36mm,#fff 36mm,#fff 37mm, transparent 37mm,transparent 52mm,#fff 52mm,#fff 67mm, transparent 67mm,transparent 68mm,#fff 68mm,#fff 69mm, transparent 69mm,transparent 84mm,#fff 84mm,#fff 99mm, transparent 99mm,transparent 100mm,#fff 100mm,#fff 101mm, transparent 101mm), #3d1192;"
