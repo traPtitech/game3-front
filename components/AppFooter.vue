@@ -18,7 +18,7 @@ const me = useMeStore()
           class="h-auto max-w-full w-64 object-contain"
         ></a>
       <a
-        href="https://twitter.com/traPtitech"
+        href="https://x.com/traPisct"
         class="ml-auto h-10 w-10 flex shrink-0 items-center justify-center p-2"
       >
         <img
@@ -50,7 +50,7 @@ const me = useMeStore()
         <StrokedText> ログイン </StrokedText>
       </NuxtLink>
       <StrokedText class="ml-auto">
-        © 2024 traP TokyoTech
+        © 2025 Digital Creators Club traP
       </StrokedText>
     </div>
   </footer>
