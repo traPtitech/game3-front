@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import {
   AuthApi,
   Configuration,
@@ -20,7 +20,6 @@ import {
 } from '~/lib/api'
 import { addTermName, termsWithName } from '~/lib/term'
 import { basePath } from '~/lib/url'
-import { queryClient } from '~/plugins/01.vue-query'
 
 // 本来なら
 // const config = useRuntimeConfig()
@@ -85,8 +84,10 @@ export const useCurrentEventQuery = () =>
     queryFn: () => eventsApi.getCurrentEvent(),
   })
 
-export const useMutatePostEvent = () =>
-  useMutation({
+export const useMutatePostEvent = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
     mutationFn: (req: PostEventRequest) =>
       eventsApi.postEvent(dateToString(req) as unknown as PostEventRequest),
     mutationKey: ['events'],
@@ -96,9 +97,12 @@ export const useMutatePostEvent = () =>
       })
     },
   })
+}
 
-export const useMutatePatchEvent = () =>
-  useMutation({
+export const useMutatePatchEvent = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
     mutationFn: (req: PatchEventRequest) =>
       eventsApi.patchEvent(dateToString(req) as unknown as PatchEventRequest),
     mutationKey: ['events'],
@@ -108,6 +112,7 @@ export const useMutatePatchEvent = () =>
       })
     },
   })
+}
 
 export const gamesApi = new GamesApi(apiConfig)
 
@@ -123,8 +128,10 @@ export const useGameQuery = (req: GetGameRequest) =>
     queryFn: () => gamesApi.getGame(req),
   })
 
-export const useMutatePostGame = () =>
-  useMutation({
+export const useMutatePostGame = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
     mutationFn: (req: PostGameRequest) => gamesApi.postGame(req),
     mutationKey: ['games'],
     onSuccess: () => {
@@ -133,9 +140,12 @@ export const useMutatePostGame = () =>
       })
     },
   })
+}
 
-export const useMutatePatchGame = () =>
-  useMutation({
+export const useMutatePatchGame = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
     mutationFn: (req: PatchGameRequest) => gamesApi.patchGame(req),
     mutationKey: ['games'],
     onSuccess: (_, req) => {
@@ -144,6 +154,7 @@ export const useMutatePatchGame = () =>
       })
     },
   })
+}
 
 const termsApi = new TermsApi(apiConfig)
 
@@ -154,8 +165,10 @@ export const useTermsQuery = () =>
     select: data => termsWithName(data),
   })
 
-export const useMutatePostTerm = () =>
-  useMutation({
+export const useMutatePostTerm = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
     mutationFn: (req: PostTermOperationRequest) =>
       termsApi.postTerm(dateToString(req) as unknown as PostTermOperationRequest),
     mutationKey: ['terms'],
@@ -165,9 +178,12 @@ export const useMutatePostTerm = () =>
       })
     },
   })
+}
 
-export const useMutatePatchTerm = () =>
-  useMutation({
+export const useMutatePatchTerm = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
     mutationFn: (req: PatchTermOperationRequest) =>
       termsApi.patchTerm(dateToString(req) as unknown as PatchTermOperationRequest),
     mutationKey: ['terms'],
@@ -177,6 +193,7 @@ export const useMutatePatchTerm = () =>
       })
     },
   })
+}
 
 export const authApi = new AuthApi(apiConfig)
 
