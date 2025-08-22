@@ -46,6 +46,9 @@ const redirectRules: {
   '/event/17th': {
     redirect: 'https://game3.trap.jp/17th/',
   },
+  '/event/21th': {
+    redirect: 'https://game3.trap.games/event/21st',
+  },
 }
 
 export default defineNuxtRouteMiddleware((to) => {
