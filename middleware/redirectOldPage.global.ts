@@ -47,7 +47,7 @@ const redirectRules: {
     redirect: 'https://game3.trap.jp/17th/',
   },
   '/event/21th': {
-    redirect: 'https://game3.trap.games/event/21st/',
+    redirect: 'https://game3.trap.games/event/21st',
   },
 }
 
