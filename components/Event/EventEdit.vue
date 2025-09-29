@@ -90,7 +90,7 @@ const onSubmit = handleSubmit(async (values) => {
         />
         <UIFileField
           label="イベントトップ画像"
-          helper-text="最大辺のサイズ1024px程度を推奨。トップページ等で使用します。"
+          helper-text="トップページ等で使用します。アップロード時に横幅600pxにリサイズされます。"
           accept="image/png, image/jpeg"
           name="image"
         />
