@@ -130,7 +130,7 @@ const loadFallbackImage = (e: Event) => {
           </ProseP>
         </div>
         <div
-          v-if="game.creatorPageUrl"
+          v-if="game.gamePageUrl"
           class="flex items-center gap-1"
         >
           <div class="i-tabler:link h-1.5em w-1.5em" />
