@@ -50,7 +50,7 @@ const me = useMeStore()
         <StrokedText> ログイン </StrokedText>
       </NuxtLink>
       <StrokedText class="ml-auto">
-        © 2025 Digital Creators Club traP
+        © 2026 Digital Creators Club traP
       </StrokedText>
     </div>
   </footer>
