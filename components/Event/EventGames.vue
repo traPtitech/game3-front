@@ -59,7 +59,7 @@ const columns = [
   }),
   termColumnHelper.accessor('creatorName', {
     cell: info => info.getValue(),
-    header: '出展者名',
+    header: '出展団体名',
   }),
   termColumnHelper.accessor('isPublished', {
     cell: info => (info.getValue() ? '全体公開中' : '非公開'),

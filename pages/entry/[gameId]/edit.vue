@@ -47,14 +47,14 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting }
         ),
         creatorName: v.pipe(
           v.string(),
-          v.minLength(1, '出展者名は1文字以上で入力してください'),
+          v.minLength(1, '出展団体名は1文字以上で入力してください'),
         ),
         creatorPageUrl: v.optional(
           v.union(
             [
               v.pipe(
                 v.string(),
-                v.url('出展者ページURLは正しいURL形式で入力してください'),
+                v.url('出展団体ページURLは正しいURL形式で入力してください'),
               ),
               v.literal(''),
             ],
@@ -164,11 +164,11 @@ useSeoMeta({
           placeholder="https://example.com"
         />
         <UITextField
-          label="出展者名"
+          label="出展団体名"
           name="creatorName"
         />
         <UITextField
-          label="出展者ホームページ"
+          label="出展団体ホームページ"
           name="creatorPageUrl"
           placeholder="https://example.com"
         />
@@ -234,9 +234,9 @@ useSeoMeta({
                   <div>
                     ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}
                   </div>
-                  <div>出展者名：{{ values.creatorName }}</div>
+                  <div>出展団体名：{{ values.creatorName }}</div>
                   <div>
-                    出展者ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
+                    出展団体ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
                   </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
                   <div v-if="me.user?.role === 'admin'">

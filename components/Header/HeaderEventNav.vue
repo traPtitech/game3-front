@@ -53,7 +53,7 @@ onServerPrefetch(async () => {
             class="text-stroke-white"
             :width="3"
           >
-            出展者一覧
+            出展団体一覧
           </StrokedText>
         </NuxtLink>
       </li>
