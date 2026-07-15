@@ -70,6 +70,9 @@ export interface PatchGameRequest {
 export interface PostGameRequest {
     title: string;
     creatorName: string;
+    representativeName: string;
+    isStudentOrganization: boolean;
+    teamSize: number;
     description: string;
     icon: Blob;
     creatorPageUrl?: string;
@@ -378,6 +381,18 @@ export class GamesApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('creatorName','Required parameter requestParameters.creatorName was null or undefined when calling postGame.');
         }
 
+        if (requestParameters.representativeName === null || requestParameters.representativeName === undefined) {
+            throw new runtime.RequiredError('representativeName','Required parameter requestParameters.representativeName was null or undefined when calling postGame.');
+        }
+
+        if (requestParameters.isStudentOrganization === null || requestParameters.isStudentOrganization === undefined) {
+            throw new runtime.RequiredError('isStudentOrganization','Required parameter requestParameters.isStudentOrganization was null or undefined when calling postGame.');
+        }
+
+        if (requestParameters.teamSize === null || requestParameters.teamSize === undefined) {
+            throw new runtime.RequiredError('teamSize','Required parameter requestParameters.teamSize was null or undefined when calling postGame.');
+        }
+
         if (requestParameters.description === null || requestParameters.description === undefined) {
             throw new runtime.RequiredError('description','Required parameter requestParameters.description was null or undefined when calling postGame.');
         }
@@ -414,6 +429,18 @@ export class GamesApi extends runtime.BaseAPI {
 
         if (requestParameters.creatorName !== undefined) {
             formParams.append('creatorName', requestParameters.creatorName as any);
+        }
+
+        if (requestParameters.representativeName !== undefined) {
+            formParams.append('representativeName', requestParameters.representativeName as any);
+        }
+
+        if (requestParameters.isStudentOrganization !== undefined) {
+            formParams.append('isStudentOrganization', requestParameters.isStudentOrganization as any);
+        }
+
+        if (requestParameters.teamSize !== undefined) {
+            formParams.append('teamSize', requestParameters.teamSize as any);
         }
 
         if (requestParameters.creatorPageUrl !== undefined) {

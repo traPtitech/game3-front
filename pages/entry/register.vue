@@ -7,6 +7,10 @@ import { DialogRoot } from 'radix-vue'
 import type { PostGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
+type RegisterFormValues = Omit<PostGameRequest, 'teamSize'> & {
+  teamSize: string
+}
+
 definePageMeta({
   middleware: ['need-login'],
 })
@@ -34,7 +38,7 @@ const canSubmit = computed(() => {
   )
 })
 
-const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
+const { handleSubmit, meta, values, isSubmitting } = useForm<RegisterFormValues>({
   validationSchema: toTypedSchema(
     v.object({
       title: v.pipe(
@@ -57,6 +61,15 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
         v.string(),
         v.minLength(1, '出展団体名は1文字以上で入力してください'),
       ),
+      representativeName: v.pipe(
+        v.string(),
+        v.minLength(1, '団体の代表者名は1文字以上で入力してください'),
+      ),
+      isStudentOrganization: v.boolean(),
+      teamSize: v.pipe(
+        v.string(),
+        v.regex(/^[1-9]\\d*$/, '当日のチーム人数は1以上の整数で入力してください'),
+      ),
       creatorPageUrl: v.optional(
         v.union(
           [
@@ -74,6 +87,9 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
       image: v.optional(v.blob()),
     }),
   ),
+  initialValues: {
+    isStudentOrganization: false,
+  },
 })
 
 const confirmModalOpen = ref(false)
@@ -82,7 +98,10 @@ const { $toast } = useNuxtApp()
 const { mutateAsync } = useMutatePostGame()
 const onSubmit = handleSubmit(async (values) => {
   try {
-    const submittedGame = await mutateAsync(values)
+    const submittedGame = await mutateAsync({
+      ...values,
+      teamSize: Number(values.teamSize),
+    })
     $toast.success('ゲームの登録が完了しました！')
     await navigateTo(`/entry/${submittedGame.id}`)
   }
@@ -152,6 +171,22 @@ useSeoMeta({
             name="creatorName"
           />
           <UITextField
+            label="団体の代表者名"
+            name="representativeName"
+          />
+          <UISwitch
+            label="学生団体かどうか"
+            name="isStudentOrganization"
+            true-state="学生団体"
+            false-state="学生団体ではない"
+          />
+          <UITextField
+            label="当日のチーム人数"
+            name="teamSize"
+            type="number"
+            placeholder="3"
+          />
+          <UITextField
             label="出展団体ホームページ"
             name="creatorPageUrl"
             placeholder="https://example.com"
@@ -199,6 +234,13 @@ useSeoMeta({
                       ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}
                     </div>
                     <div>出展団体名：{{ values.creatorName }}</div>
+                    <div>団体の代表者名：{{ values.representativeName }}</div>
+                    <div>
+                      学生団体かどうか：{{
+                        values.isStudentOrganization ? "学生団体" : "学生団体ではない"
+                      }}
+                    </div>
+                    <div>当日のチーム人数：{{ values.teamSize }}人</div>
                     <div>
                       出展団体ホームページ：{{
                         values.creatorPageUrl ?? "未指定"
