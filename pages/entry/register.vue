@@ -8,7 +8,7 @@ import type { PostGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
 type RegisterFormValues = Omit<PostGameRequest, 'teamSize'> & {
-  teamSize: string
+  teamSize: number
 }
 
 definePageMeta({
@@ -67,8 +67,9 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<RegisterFormValues>
       ),
       isStudentOrganization: v.boolean(),
       teamSize: v.pipe(
-        v.string(),
-        v.regex(/^[1-9]\\d*$/, '当日のチーム人数は1以上の整数で入力してください'),
+        v.number('当日のチーム人数は1以上の整数で入力してください'),
+        v.integer('当日のチーム人数は1以上の整数で入力してください'),
+        v.minValue(1, '当日のチーム人数は1以上の整数で入力してください'),
       ),
       creatorPageUrl: v.optional(
         v.union(
@@ -85,6 +86,7 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<RegisterFormValues>
       icon: v.blob(),
       description: v.optional(v.string(), ''),
       image: v.optional(v.blob()),
+      build: v.optional(v.blob()),
     }),
   ),
   initialValues: {
@@ -94,14 +96,14 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<RegisterFormValues>
 
 const confirmModalOpen = ref(false)
 const { $toast } = useNuxtApp()
+const previewValues = computed(() => ({
+  ...values,
+}))
 
 const { mutateAsync } = useMutatePostGame()
 const onSubmit = handleSubmit(async (values) => {
   try {
-    const submittedGame = await mutateAsync({
-      ...values,
-      teamSize: Number(values.teamSize),
-    })
+    const submittedGame = await mutateAsync(values)
     $toast.success('ゲームの登録が完了しました！')
     await navigateTo(`/entry/${submittedGame.id}`)
   }
@@ -209,9 +211,15 @@ useSeoMeta({
             :aspect-ratio="1"
             helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
           />
+          <UIFileField
+            label="ゲームビルド (任意)"
+            accept=".zip,application/zip"
+            name="build"
+            helper-text="Webゲーム以外の場合はZIPファイルを提出できます。"
+          />
           <ProseH3> 登録内容プレビュー </ProseH3>
           <div class="b-1 b-border-secondary rounded p-4">
-            <EntryPreview :game-req="values" />
+            <EntryPreview :game-req="previewValues" />
           </div>
           <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
           <div class="flex justify-center">
@@ -247,6 +255,9 @@ useSeoMeta({
                       }}
                     </div>
                     <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
+                    <div>
+                      ゲームビルド：{{ values.build ? "提出あり" : "提出なし" }}
+                    </div>
                   </div>
                   <div class="flex flex-col items-center gap-2 md:flex-row">
                     <UIButton

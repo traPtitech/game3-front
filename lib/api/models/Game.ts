@@ -56,6 +56,24 @@ export interface Game {
      */
     creatorName: string;
     /**
+     * 団体の代表者名
+     * @type {string}
+     * @memberof Game
+     */
+    representativeName: string;
+    /**
+     * 学生団体かどうか
+     * @type {boolean}
+     * @memberof Game
+     */
+    isStudentOrganization: boolean;
+    /**
+     * 当日のチーム人数
+     * @type {number}
+     * @memberof Game
+     */
+    teamSize: number;
+    /**
      * ゲーム作成者のページのURL
      * @type {string}
      * @memberof Game
@@ -73,6 +91,12 @@ export interface Game {
      * @memberof Game
      */
     description: string;
+    /**
+     * ゲームビルドが提出されているかどうか
+     * @type {boolean}
+     * @memberof Game
+     */
+    hasBuild: boolean;
     /**
      * 展示場所
      * @type {string}
@@ -92,7 +116,11 @@ export function instanceOfGame(value: object): boolean {
     isInstance = isInstance && "isPublished" in value;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "creatorName" in value;
+    isInstance = isInstance && "representativeName" in value;
+    isInstance = isInstance && "isStudentOrganization" in value;
+    isInstance = isInstance && "teamSize" in value;
     isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "hasBuild" in value;
 
     return isInstance;
 }
@@ -113,9 +141,13 @@ export function GameFromJSONTyped(json: any, ignoreDiscriminator: boolean): Game
         'isPublished': json['isPublished'],
         'title': json['title'],
         'creatorName': json['creatorName'],
+        'representativeName': json['representativeName'],
+        'isStudentOrganization': json['isStudentOrganization'],
+        'teamSize': json['teamSize'],
         'creatorPageUrl': !exists(json, 'creatorPageUrl') ? undefined : json['creatorPageUrl'],
         'gamePageUrl': !exists(json, 'gamePageUrl') ? undefined : json['gamePageUrl'],
         'description': json['description'],
+        'hasBuild': json['hasBuild'],
         'place': !exists(json, 'place') ? undefined : json['place'],
     };
 }
@@ -135,9 +167,13 @@ export function GameToJSON(value?: Game | null): any {
         'isPublished': value.isPublished,
         'title': value.title,
         'creatorName': value.creatorName,
+        'representativeName': value.representativeName,
+        'isStudentOrganization': value.isStudentOrganization,
+        'teamSize': value.teamSize,
         'creatorPageUrl': value.creatorPageUrl,
         'gamePageUrl': value.gamePageUrl,
         'description': value.description,
+        'hasBuild': value.hasBuild,
         'place': value.place,
     };
 }

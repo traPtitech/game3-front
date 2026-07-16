@@ -45,6 +45,10 @@ export interface GetGameImageRequest {
     gameId: string;
 }
 
+export interface GetGameBuildRequest {
+    gameId: string;
+}
+
 export interface GetGamesRequest {
     termId?: string;
     eventSlug?: string;
@@ -54,6 +58,9 @@ export interface GetGamesRequest {
 
 export interface PatchGameRequest {
     gameId: string;
+    isStudentOrganization?: boolean;
+    representativeName?: string;
+    teamSize?: number;
     termId?: string;
     discordUserId?: string;
     title?: string;
@@ -65,6 +72,7 @@ export interface PatchGameRequest {
     place?: string;
     icon?: Blob;
     image?: Blob;
+    build?: Blob;
 }
 
 export interface PostGameRequest {
@@ -78,6 +86,7 @@ export interface PostGameRequest {
     creatorPageUrl?: string;
     gamePageUrl?: string;
     image?: Blob;
+    build?: Blob;
 }
 
 /**
@@ -236,6 +245,36 @@ export class GamesApi extends runtime.BaseAPI {
     }
 
     /**
+     * 提出されたゲームビルドを取得
+     */
+    async getGameBuildRaw(requestParameters: GetGameBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        if (requestParameters.gameId === null || requestParameters.gameId === undefined) {
+            throw new runtime.RequiredError('gameId','Required parameter requestParameters.gameId was null or undefined when calling getGameBuild.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/games/{gameId}/build`.replace(`{${"gameId"}}`, encodeURIComponent(String(requestParameters.gameId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * 提出されたゲームビルドを取得
+     */
+    async getGameBuild(requestParameters: GetGameBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.getGameBuildRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * ゲームのリストを取得 GET /games?termId=X&eventSlug=X&userId=X&includeUnpublished=true
      */
     async getGamesRaw(requestParameters: GetGamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Game>>> {
@@ -311,6 +350,18 @@ export class GamesApi extends runtime.BaseAPI {
             formParams.append('termId', requestParameters.termId as any);
         }
 
+        if (requestParameters.isStudentOrganization !== undefined) {
+            formParams.append('isStudentOrganization', requestParameters.isStudentOrganization as any);
+        }
+
+        if (requestParameters.representativeName !== undefined) {
+            formParams.append('representativeName', requestParameters.representativeName as any);
+        }
+
+        if (requestParameters.teamSize !== undefined) {
+            formParams.append('teamSize', requestParameters.teamSize as any);
+        }
+
         if (requestParameters.discordUserId !== undefined) {
             formParams.append('discordUserId', requestParameters.discordUserId as any);
         }
@@ -349,6 +400,10 @@ export class GamesApi extends runtime.BaseAPI {
 
         if (requestParameters.image !== undefined) {
             formParams.append('image', requestParameters.image as any);
+        }
+
+        if (requestParameters.build !== undefined) {
+            formParams.append('build', requestParameters.build as any);
         }
 
         const response = await this.request({
@@ -461,6 +516,10 @@ export class GamesApi extends runtime.BaseAPI {
 
         if (requestParameters.image !== undefined) {
             formParams.append('image', requestParameters.image as any);
+        }
+
+        if (requestParameters.build !== undefined) {
+            formParams.append('build', requestParameters.build as any);
         }
 
         const response = await this.request({

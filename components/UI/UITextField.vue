@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { InputTypeHTMLAttribute } from 'vue'
 import { useField } from 'vee-validate'
 
@@ -11,6 +12,7 @@ type Props = {
 }
 const props = defineProps<Props>()
 const { value, errorMessage, meta } = useField(() => props.name)
+const isNumberField = computed(() => props.type === 'number')
 </script>
 
 <template>
@@ -31,7 +33,18 @@ const { value, errorMessage, meta } = useField(() => props.name)
       {{ props.helperText }}
     </div>
     <input
+      v-if="!isNumberField"
       v-model="value"
+      :type="props.type"
+      :name="props.name"
+      :aria-invalid="meta.validated && !meta.valid"
+      :data-invalid="meta.validated && !meta.valid"
+      :placeholder="props.placeholder"
+      class="w-full border b-border-primary rounded-2 px-4 py-3 data-[invalid=true]:b-border-semantic-error focus-visible:(outline-2 outline-brand-violet outline)"
+    >
+    <input
+      v-else
+      v-model.number="value"
       :type="props.type"
       :name="props.name"
       :aria-invalid="meta.validated && !meta.valid"

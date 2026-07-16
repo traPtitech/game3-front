@@ -6,6 +6,9 @@ export const useGameImageUrl = (gameId: string, absolute?: boolean) => {
 export const useGameIconUrl = (gameId: string, absolute?: boolean) => {
   return (absolute ? basePath : '') + `/api/games/${gameId}/icon`
 }
+export const useGameBuildUrl = (gameId: string, absolute?: boolean) => {
+  return (absolute ? basePath : '') + `/api/games/${gameId}/build`
+}
 export const useEventImageUrl = (eventSlug: string, absolute?: boolean) => {
   return (absolute ? basePath : '') + `/api/events/${eventSlug}/image`
 }

@@ -8,6 +8,10 @@ import { gamesApi } from '~/composables/useQuery'
 import type { PatchGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
+type EditFormValues = Omit<PatchGameRequest, 'teamSize'> & {
+  teamSize?: string
+}
+
 definePageMeta({
   middleware: ['need-login'],
 })
@@ -24,7 +28,7 @@ const iconDataPromise = gamesApi.getGameIcon({ gameId })
 const imageDataPromise = gamesApi.getGameImage({ gameId })
 
 const { handleSubmit, meta, values, setFieldValue, isSubmitting }
-  = useForm<PatchGameRequest>({
+  = useForm<EditFormValues>({
     validationSchema: toTypedSchema(
       v.object({
         gameId: v.string(),
@@ -49,6 +53,15 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting }
           v.string(),
           v.minLength(1, '出展団体名は1文字以上で入力してください'),
         ),
+        representativeName: v.pipe(
+          v.string(),
+          v.minLength(1, '団体の代表者名は1文字以上で入力してください'),
+        ),
+        isStudentOrganization: v.boolean(),
+        teamSize: v.pipe(
+          v.string(),
+          v.regex(/^[1-9]\\d*$/, '当日のチーム人数は1以上の整数で入力してください'),
+        ),
         creatorPageUrl: v.optional(
           v.union(
             [
@@ -65,11 +78,13 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting }
         description: v.optional(v.string(), ''),
         place: v.optional(v.string(), ''),
         image: v.optional(v.blob()),
+        build: v.optional(v.blob()),
         isPublished: v.optional(v.boolean()),
       }),
     ),
     initialValues: {
       gameId,
+      isStudentOrganization: false,
     },
   })
 
@@ -77,6 +92,9 @@ const setGameData = suspenseGame().then((gameData) => {
   setFieldValue('title', gameData.data?.title)
   setFieldValue('gamePageUrl', gameData.data?.gamePageUrl)
   setFieldValue('creatorName', gameData.data?.creatorName)
+  setFieldValue('representativeName', gameData.data?.representativeName)
+  setFieldValue('isStudentOrganization', gameData.data?.isStudentOrganization)
+  setFieldValue('teamSize', gameData.data?.teamSize?.toString())
   setFieldValue('creatorPageUrl', gameData.data?.creatorPageUrl)
   setFieldValue('description', gameData.data?.description)
 
@@ -102,6 +120,10 @@ const setImageData = imageDataPromise.then((image) => {
 const { pending } = useLazyAsyncData(() =>
   Promise.all([setGameData, setIconData, setImageData]),
 )
+const previewValues = computed(() => ({
+  ...values,
+  teamSize: values.teamSize ? Number(values.teamSize) : undefined,
+}))
 
 const confirmModalOpen = ref(false)
 const { $toast } = useNuxtApp()
@@ -110,7 +132,10 @@ const { mutateAsync } = useMutatePatchGame()
 const onSubmit = handleSubmit(async (values) => {
   try {
     if (me.value.user?.role === 'admin') {
-      await mutateAsync(values)
+      await mutateAsync({
+        ...values,
+        teamSize: values.teamSize ? Number(values.teamSize) : undefined,
+      })
     }
     else {
       await mutateAsync({
@@ -118,10 +143,14 @@ const onSubmit = handleSubmit(async (values) => {
         title: values.title,
         gamePageUrl: values.gamePageUrl,
         creatorName: values.creatorName,
+        representativeName: values.representativeName,
+        isStudentOrganization: values.isStudentOrganization,
+        teamSize: values.teamSize ? Number(values.teamSize) : undefined,
         creatorPageUrl: values.creatorPageUrl,
         description: values.description,
         icon: values.icon,
         image: values.image,
+        build: values.build,
       })
     }
     $toast.success('ゲームの編集が完了しました！')
@@ -168,6 +197,22 @@ useSeoMeta({
           name="creatorName"
         />
         <UITextField
+          label="団体の代表者名"
+          name="representativeName"
+        />
+        <UISwitch
+          label="学生団体かどうか"
+          name="isStudentOrganization"
+          true-state="学生団体"
+          false-state="学生団体ではない"
+        />
+        <UITextField
+          label="当日のチーム人数"
+          name="teamSize"
+          type="number"
+          placeholder="3"
+        />
+        <UITextField
           label="出展団体ホームページ"
           name="creatorPageUrl"
           placeholder="https://example.com"
@@ -189,6 +234,12 @@ useSeoMeta({
           use-crop
           :aspect-ratio="1"
           helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
+        />
+        <UIFileField
+          label="ゲームビルド (任意)"
+          accept=".zip,application/zip"
+          name="build"
+          helper-text="差し替える場合のみZIPファイルを選択してください。"
         />
         <UITextField
           v-if="me.user?.role === 'admin'"
@@ -212,7 +263,7 @@ useSeoMeta({
         />
         <ProseH3> 登録内容プレビュー </ProseH3>
         <div class="b-1 b-border-secondary rounded p-4">
-          <EntryPreview :game-req="values" />
+          <EntryPreview :game-req="previewValues" />
         </div>
         <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
         <div class="flex justify-center">
@@ -235,10 +286,20 @@ useSeoMeta({
                     ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}
                   </div>
                   <div>出展団体名：{{ values.creatorName }}</div>
+                  <div>団体の代表者名：{{ values.representativeName }}</div>
+                  <div>
+                    学生団体かどうか：{{
+                      values.isStudentOrganization ? "学生団体" : "学生団体ではない"
+                    }}
+                  </div>
+                  <div>当日のチーム人数：{{ values.teamSize ?? "未指定" }}人</div>
                   <div>
                     出展団体ホームページ：{{ values.creatorPageUrl ?? "未指定" }}
                   </div>
                   <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
+                  <div>
+                    ゲームビルド：{{ values.build ? "差し替えあり" : "差し替えなし" }}
+                  </div>
                   <div v-if="me.user?.role === 'admin'">
                     タームID：{{ values.termId ?? "未指定" }}
                   </div>
