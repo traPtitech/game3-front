@@ -212,7 +212,7 @@ useSeoMeta({
             helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
           />
           <UIFileField
-            label="ゲームビルド (任意)"
+            label="ゲームビルド"
             accept=".zip,application/zip"
             name="build"
             helper-text="Webゲーム以外の場合はZIPファイルを提出できます。"

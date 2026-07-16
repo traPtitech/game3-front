@@ -36,7 +36,7 @@ const { value, errorMessage, meta } = useField<boolean>(() => props.name)
           class="my-auto block h-24px w-24px translate-x-0.5 rounded-full bg-white shadow transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-20px"
         />
       </SwitchRoot>
-      現在の状態：{{ value ? props.trueState : props.falseState }}
+      {{ value ? props.trueState : props.falseState }}
     </div>
     <div
       v-if="errorMessage"
