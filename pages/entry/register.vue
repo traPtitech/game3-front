@@ -182,10 +182,9 @@ useSeoMeta({
             true-state="学生団体"
             false-state="学生団体ではない"
           />
-          <UITextField
+          <UINumberField
             label="当日のチーム人数"
             name="teamSize"
-            type="number"
             placeholder="3"
           />
           <UITextField

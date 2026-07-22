@@ -9,7 +9,7 @@ import type { PatchGameRequest } from '~/lib/api'
 import { useMe } from '~/store/me'
 
 type EditFormValues = Omit<PatchGameRequest, 'teamSize'> & {
-  teamSize?: string
+  teamSize?: number
 }
 
 definePageMeta({
@@ -59,8 +59,9 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting }
         ),
         isStudentOrganization: v.boolean(),
         teamSize: v.pipe(
-          v.string(),
-          v.regex(/^[1-9]\\d*$/, '当日のチーム人数は1以上の整数で入力してください'),
+          v.number('当日のチーム人数は1以上の整数で入力してください'),
+          v.integer('当日のチーム人数は1以上の整数で入力してください'),
+          v.minValue(1, '当日のチーム人数は1以上の整数で入力してください'),
         ),
         creatorPageUrl: v.optional(
           v.union(
@@ -94,7 +95,7 @@ const setGameData = suspenseGame().then((gameData) => {
   setFieldValue('creatorName', gameData.data?.creatorName)
   setFieldValue('representativeName', gameData.data?.representativeName)
   setFieldValue('isStudentOrganization', gameData.data?.isStudentOrganization)
-  setFieldValue('teamSize', gameData.data?.teamSize?.toString())
+  setFieldValue('teamSize', gameData.data?.teamSize)
   setFieldValue('creatorPageUrl', gameData.data?.creatorPageUrl)
   setFieldValue('description', gameData.data?.description)
 
@@ -122,7 +123,6 @@ const { pending } = useLazyAsyncData(() =>
 )
 const previewValues = computed(() => ({
   ...values,
-  teamSize: values.teamSize ? Number(values.teamSize) : undefined,
 }))
 
 const confirmModalOpen = ref(false)
@@ -134,7 +134,6 @@ const onSubmit = handleSubmit(async (values) => {
     if (me.value.user?.role === 'admin') {
       await mutateAsync({
         ...values,
-        teamSize: values.teamSize ? Number(values.teamSize) : undefined,
       })
     }
     else {
@@ -145,7 +144,7 @@ const onSubmit = handleSubmit(async (values) => {
         creatorName: values.creatorName,
         representativeName: values.representativeName,
         isStudentOrganization: values.isStudentOrganization,
-        teamSize: values.teamSize ? Number(values.teamSize) : undefined,
+        teamSize: values.teamSize,
         creatorPageUrl: values.creatorPageUrl,
         description: values.description,
         icon: values.icon,
@@ -206,7 +205,7 @@ useSeoMeta({
           true-state="学生団体"
           false-state="学生団体ではない"
         />
-        <UITextField
+        <UINumberField
           label="当日のチーム人数"
           name="teamSize"
           type="number"
