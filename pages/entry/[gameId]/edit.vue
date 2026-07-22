@@ -235,7 +235,7 @@ useSeoMeta({
           :aspect-ratio="1"
           helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
         />
-        <UIFileField
+        <UIZipFileField
           label="ゲームビルド"
           accept=".zip,application/zip"
           name="build"
