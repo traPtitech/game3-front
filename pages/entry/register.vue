@@ -5,7 +5,12 @@ import * as v from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 import type { PostGameRequest } from '~/lib/api'
+import { zipFile } from '~/lib/file'
 import { useMe } from '~/store/me'
+
+type RegisterFormValues = Omit<PostGameRequest, 'teamSize'> & {
+  teamSize: number
+}
 
 definePageMeta({
   middleware: ['need-login'],
@@ -34,7 +39,7 @@ const canSubmit = computed(() => {
   )
 })
 
-const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
+const { handleSubmit, meta, values, isSubmitting } = useForm<RegisterFormValues>({
   validationSchema: toTypedSchema(
     v.object({
       title: v.pipe(
@@ -55,14 +60,24 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
       ),
       creatorName: v.pipe(
         v.string(),
-        v.minLength(1, '出展者名は1文字以上で入力してください'),
+        v.minLength(1, '出展団体名は1文字以上で入力してください'),
+      ),
+      representativeName: v.pipe(
+        v.string(),
+        v.minLength(1, '団体の代表者名は1文字以上で入力してください'),
+      ),
+      isStudentOrganization: v.boolean(),
+      teamSize: v.pipe(
+        v.number('当日のチーム人数は1以上の整数で入力してください'),
+        v.integer('当日のチーム人数は1以上の整数で入力してください'),
+        v.minValue(1, '当日のチーム人数は1以上の整数で入力してください'),
       ),
       creatorPageUrl: v.optional(
         v.union(
           [
             v.pipe(
               v.string(),
-              v.url('出展者ページURLは正しいURL形式で入力してください'),
+              v.url('出展団体ページURLは正しいURL形式で入力してください'),
             ),
             v.literal(''),
           ],
@@ -72,12 +87,19 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<PostGameRequest>({
       icon: v.blob(),
       description: v.optional(v.string(), ''),
       image: v.optional(v.blob()),
+      build: v.optional(zipFile()),
     }),
   ),
+  initialValues: {
+    isStudentOrganization: false,
+  },
 })
 
 const confirmModalOpen = ref(false)
 const { $toast } = useNuxtApp()
+const previewValues = computed(() => ({
+  ...values,
+}))
 
 const { mutateAsync } = useMutatePostGame()
 const onSubmit = handleSubmit(async (values) => {
@@ -148,11 +170,26 @@ useSeoMeta({
             placeholder="https://example.com"
           />
           <UITextField
-            label="出展者名"
+            label="出展団体名"
             name="creatorName"
           />
           <UITextField
-            label="出展者ホームページ"
+            label="団体の代表者名"
+            name="representativeName"
+          />
+          <UISwitch
+            label="学生団体かどうか"
+            name="isStudentOrganization"
+            true-state="学生団体"
+            false-state="学生団体ではない"
+          />
+          <UINumberField
+            label="当日のチーム人数"
+            name="teamSize"
+            placeholder="3"
+          />
+          <UITextField
+            label="出展団体ホームページ"
             name="creatorPageUrl"
             placeholder="https://example.com"
           />
@@ -174,9 +211,15 @@ useSeoMeta({
             :aspect-ratio="1"
             helper-text="作品一覧ページやSNSシェア時に表示されます。正方形にトリミングされます。"
           />
+          <UIZipFileField
+            label="ゲームビルド"
+            accept=".zip,application/zip"
+            name="build"
+            helper-text="Webゲーム以外の場合はZIP形式でビルドを提出できます。企業賞の選定をより適切に行うため、できる限り提出をお願いします。"
+          />
           <ProseH3> 登録内容プレビュー </ProseH3>
           <div class="b-1 b-border-secondary rounded p-4">
-            <EntryPreview :game-req="values" />
+            <EntryPreview :game-req="previewValues" />
           </div>
           <span>※運営による内容確認で問題がなかった場合、ホームページに公開されます</span>
           <div class="flex justify-center">
@@ -198,13 +241,23 @@ useSeoMeta({
                     <div>
                       ゲームページリンク：{{ values.gamePageUrl ?? "未指定" }}
                     </div>
-                    <div>出展者名：{{ values.creatorName }}</div>
+                    <div>出展団体名：{{ values.creatorName }}</div>
+                    <div>団体の代表者名：{{ values.representativeName }}</div>
                     <div>
-                      出展者ホームページ：{{
+                      学生団体かどうか：{{
+                        values.isStudentOrganization ? "学生団体" : "学生団体ではない"
+                      }}
+                    </div>
+                    <div>当日のチーム人数：{{ values.teamSize }}人</div>
+                    <div>
+                      出展団体ホームページ：{{
                         values.creatorPageUrl ?? "未指定"
                       }}
                     </div>
                     <div>ゲーム詳細：{{ values.description ?? "未指定" }}</div>
+                    <div>
+                      ゲームビルド：{{ values.build ? "提出あり" : "提出なし" }}
+                    </div>
                   </div>
                   <div class="flex flex-col items-center gap-2 md:flex-row">
                     <UIButton

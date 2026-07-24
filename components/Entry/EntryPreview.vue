@@ -37,7 +37,7 @@ onUnmounted(() => {
       <div class="flex flex-col gap-1 lg:(flex-row gap-4) body text-text-secondary!">
         <div class="flex items-center gap-1">
           <div class="i-tabler:user h-1.5em w-1.5em" />
-          {{ props.gameReq.creatorName ?? "出展者名を入力してください" }}
+          {{ props.gameReq.creatorName ?? "出展団体名を入力してください" }}
         </div>
         <div class="flex items-center gap-1">
           <div class="i-tabler:map-pin h-1.5em w-1.5em" />

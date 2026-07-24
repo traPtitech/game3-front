@@ -1,5 +1,7 @@
 <!-- `/entry/:gameId` -->
 <script setup lang="ts">
+import { useGameBuildUrl } from '~/composables/useImageURL'
+
 const gameId = usePathParams('gameId')
 
 const { data: game, suspense: suspenseGame } = useGameQuery({ gameId })
@@ -15,6 +17,7 @@ onServerPrefetch(async () => {
 
 const { useMeStore } = useLogin()
 const me = useMeStore()
+const isAdmin = computed(() => me.value.user?.role === 'admin')
 
 const canEdit = computed(() => {
   if (import.meta.server) {
@@ -143,6 +146,19 @@ const loadFallbackImage = (e: Event) => {
           </ProseA>
         </div>
         <div
+          v-if="canEdit && game.hasBuild"
+          class="flex items-center gap-1"
+        >
+          <div class="i-tabler:file-zip h-1.5em w-1.5em" />
+          <ProseA
+            :href="useGameBuildUrl(gameId)"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            提出ビルドをダウンロード
+          </ProseA>
+        </div>
+        <div
           v-if="game.place"
           class="flex items-center gap-1"
         >
@@ -156,6 +172,31 @@ const loadFallbackImage = (e: Event) => {
       >
         {{ game.description }}
       </p>
+      <div
+        v-if="isAdmin && (game.representativeName?.trim() || game.isStudentOrganization != null || game.teamSize != null)"
+        class="rounded bg-brand-violet/8 p-4"
+      >
+        <div class="mb-2 text-brand-violet font-700 label">
+          管理者向け情報
+        </div>
+        <div class="space-y-1 body text-text-secondary!">
+          <div>
+            団体の代表者名：{{ game.representativeName ?? "未指定" }}
+          </div>
+          <div>
+            学生団体かどうか：{{
+              game.isStudentOrganization === undefined
+                ? "未指定"
+                : game.isStudentOrganization
+                  ? "学生団体"
+                  : "学生団体ではない"
+            }}
+          </div>
+          <div>
+            当日のチーム人数：{{ game.teamSize !== undefined ? `${game.teamSize}人` : "未指定" }}
+          </div>
+        </div>
+      </div>
       <div
         v-if="canEdit"
         class="w-full flex justify-center"
