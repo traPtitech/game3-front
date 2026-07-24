@@ -96,7 +96,7 @@ export interface Game {
      * @type {boolean}
      * @memberof Game
      */
-    hasBuild: boolean;
+    hasBuild?: boolean;
     /**
      * 展示場所
      * @type {string}
@@ -120,7 +120,6 @@ export function instanceOfGame(value: object): boolean {
     isInstance = isInstance && "isStudentOrganization" in value;
     isInstance = isInstance && "teamSize" in value;
     isInstance = isInstance && "description" in value;
-    isInstance = isInstance && "hasBuild" in value;
 
     return isInstance;
 }

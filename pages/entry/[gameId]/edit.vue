@@ -6,6 +6,7 @@ import * as v from 'valibot'
 import { useForm } from 'vee-validate'
 import { gamesApi } from '~/composables/useQuery'
 import type { PatchGameRequest } from '~/lib/api'
+import { zipFile } from '~/lib/file'
 import { useMe } from '~/store/me'
 
 type EditFormValues = Omit<PatchGameRequest, 'teamSize'> & {
@@ -79,7 +80,7 @@ const { handleSubmit, meta, values, setFieldValue, isSubmitting }
         description: v.optional(v.string(), ''),
         place: v.optional(v.string(), ''),
         image: v.optional(v.blob()),
-        build: v.optional(v.blob()),
+        build: v.optional(zipFile()),
         isPublished: v.optional(v.boolean()),
       }),
     ),
@@ -208,7 +209,6 @@ useSeoMeta({
         <UINumberField
           label="当日のチーム人数"
           name="teamSize"
-          type="number"
           placeholder="3"
         />
         <UITextField

@@ -173,7 +173,7 @@ const loadFallbackImage = (e: Event) => {
         {{ game.description }}
       </p>
       <div
-        v-if="isAdmin && (game.representativeName !== undefined || game.isStudentOrganization !== undefined || game.teamSize !== undefined)"
+        v-if="isAdmin && (game.representativeName?.trim() || game.isStudentOrganization != null || game.teamSize != null)"
         class="rounded bg-brand-violet/8 p-4"
       >
         <div class="mb-2 text-brand-violet font-700 label">

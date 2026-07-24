@@ -5,6 +5,7 @@ import * as v from 'valibot'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { DialogRoot } from 'radix-vue'
 import type { PostGameRequest } from '~/lib/api'
+import { zipFile } from '~/lib/file'
 import { useMe } from '~/store/me'
 
 type RegisterFormValues = Omit<PostGameRequest, 'teamSize'> & {
@@ -86,7 +87,7 @@ const { handleSubmit, meta, values, isSubmitting } = useForm<RegisterFormValues>
       icon: v.blob(),
       description: v.optional(v.string(), ''),
       image: v.optional(v.blob()),
-      build: v.optional(v.blob()),
+      build: v.optional(zipFile()),
     }),
   ),
   initialValues: {
@@ -214,7 +215,7 @@ useSeoMeta({
             label="ゲームビルド"
             accept=".zip,application/zip"
             name="build"
-            helper-text="Webゲーム以外の場合はZIPファイルを提出できます。"
+            helper-text="Webゲーム以外の場合はZIP形式でビルドを提出できます。企業賞の選定をより適切に行うため、できる限り提出をお願いします。"
           />
           <ProseH3> 登録内容プレビュー </ProseH3>
           <div class="b-1 b-border-secondary rounded p-4">
