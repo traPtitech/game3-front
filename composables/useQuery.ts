@@ -20,6 +20,7 @@ import {
 } from '~/lib/api'
 import { addTermName, termsWithName } from '~/lib/term'
 import { basePath } from '~/lib/url'
+import { resizeImage } from '~/lib/imageResize'
 
 // 本来なら
 // const config = useRuntimeConfig()
@@ -88,8 +89,24 @@ export const useMutatePostEvent = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (req: PostEventRequest) =>
-      eventsApi.postEvent(dateToString(req) as unknown as PostEventRequest),
+    mutationFn: async (req: PostEventRequest) => {
+      let processedReq = req
+
+      if (req.image && req.image instanceof Blob) {
+        try {
+          const resizedImage = await resizeImage(req.image, 600)
+          processedReq = {
+            ...req,
+            image: resizedImage,
+          }
+        }
+        catch (error) {
+          console.warn('Image resize failed, using original image:', error)
+        }
+      }
+
+      return eventsApi.postEvent(dateToString(processedReq) as unknown as PostEventRequest)
+    },
     mutationKey: ['events'],
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -103,8 +120,24 @@ export const useMutatePatchEvent = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (req: PatchEventRequest) =>
-      eventsApi.patchEvent(dateToString(req) as unknown as PatchEventRequest),
+    mutationFn: async (req: PatchEventRequest) => {
+      let processedReq = req
+
+      if (req.image && req.image instanceof Blob) {
+        try {
+          const resizedImage = await resizeImage(req.image, 600)
+          processedReq = {
+            ...req,
+            image: resizedImage,
+          }
+        }
+        catch (error) {
+          console.warn('Image resize failed, using original image:', error)
+        }
+      }
+
+      return eventsApi.patchEvent(dateToString(processedReq) as unknown as PatchEventRequest)
+    },
     mutationKey: ['events'],
     onSuccess: (_, req) => {
       queryClient.invalidateQueries({
